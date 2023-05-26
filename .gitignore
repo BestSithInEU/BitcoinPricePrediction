@@ -24,3 +24,6 @@ __pycache__/
 # Visual Studio Code
 .vscode/
 
+# Keras Tuning & Checkpoint
+models/keras_tuning/
+*.h5

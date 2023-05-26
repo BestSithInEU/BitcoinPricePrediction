@@ -233,17 +233,23 @@ class RollingWindowTrainer:
                 return model_info
         return None
 
-    def get_best_model(self):
-        return self.best_model
-
     def get_best_models(self):
         return self.best_models
+
+    def set_best_models(self, best_models):
+        self.best_models = best_models
 
     def get_all_models(self):
         return self.all_models
 
+    def set_all_models(self, all_models):
+        self.all_models = all_models
+
     def get_histories(self):
         return self.histories
+
+    def set_histories(self, histories):
+        self.histories = histories
 
     def train_nn_model_with_window(
         self, X_train, y_train, X_val, y_val, checkpoint_callback
