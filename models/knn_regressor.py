@@ -5,7 +5,7 @@ from sklearn.neighbors import KNeighborsRegressor
 class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
     def __init__(self, n_neighbors=2, weights="uniform", p=1):
         super().__init__(n_neighbors=n_neighbors, weights=weights, p=p)
-        self.model_name = "KNN Regressor Model"
+        self.model_name = "KNNRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

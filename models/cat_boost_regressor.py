@@ -19,7 +19,7 @@ class CatBoostRegressorModel(BaseRegressor):
         self.iterations = iterations
         self.learning_rate = learning_rate
         self.depth = depth
-        self.model_name = "Cat Boost Regressor Model"
+        self.model_name = "CatBoostRegressorModel"
 
     def fit(self, X, y):
         return self.catboost_model.fit(X, y)

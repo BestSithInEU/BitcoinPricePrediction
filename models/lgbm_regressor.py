@@ -19,7 +19,7 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
             random_state=random_state,
         )
 
-        self.model_name = "Light Gradient Boosting Regressor Model"
+        self.model_name = "LightGradientBoostingRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

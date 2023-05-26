@@ -98,7 +98,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
                 ),
                 loss="mean_squared_error",
             )
-            model.model_name = "CNN Regressor Model"
+            model.model_name = "CNNRegressorModel"
             return model
 
         tuner = Hyperband(

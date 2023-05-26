@@ -10,7 +10,7 @@ class SupportVectorRegressorModel(BaseRegressor, SVR):
             C=C,
             epsilon=epsilon,
         )
-        self.model_name = "Support Vector Regressor Model"
+        self.model_name = "SupportVectorRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

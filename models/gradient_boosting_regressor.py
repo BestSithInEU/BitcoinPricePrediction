@@ -20,7 +20,7 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
             min_samples_leaf=min_samples_leaf,
             max_features=max_features,
         )
-        self.model_name = "Gradient Boosting Regressor Model"
+        self.model_name = "GradientBoostingRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

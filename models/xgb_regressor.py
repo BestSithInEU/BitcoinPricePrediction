@@ -22,7 +22,7 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
             subsample=subsample,
             colsample_bytree=colsample_bytree,
         )
-        self.model_name = "eXtreme Gradient Boosting Regressor Model"
+        self.model_name = "eXtremeGradientBoostingRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

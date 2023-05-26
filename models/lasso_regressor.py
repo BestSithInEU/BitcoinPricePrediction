@@ -8,7 +8,7 @@ class LassoRegressorModel(BaseRegressor, Lasso):
         alpha=1.0,
     ):
         super().__init__(alpha=alpha)
-        self.model_name = "Lasso Regressor Model"
+        self.model_name = "LassoRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {"alpha": [0.1, 0.5, 1.0, 2.0, 5.0]}

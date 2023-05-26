@@ -108,7 +108,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
                 loss="mean_squared_error",
                 optimizer=Adam(hp.Choice("learning_rate", [1e-2, 1e-3, 1e-4])),
             )
-            model.model_name = "NN Regressor Model"
+            model.model_name = "NNRegressorModel"
             return model
 
         tuner = Hyperband(

@@ -14,7 +14,7 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
             n_estimators=n_estimators,
             random_state=random_state,
         )
-        self.model_name = "Bagging Regressor Model"
+        self.model_name = "BaggingRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

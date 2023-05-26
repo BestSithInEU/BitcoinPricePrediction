@@ -110,7 +110,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
                 ),
                 loss="mean_squared_error",
             )
-            model.model_name = "LSTM Regressor Model"
+            model.model_name = "LSTMRegressorModel"
             return model
 
         tuner = Hyperband(

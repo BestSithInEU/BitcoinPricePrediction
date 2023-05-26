@@ -5,7 +5,7 @@ from sklearn.ensemble import StackingRegressor
 class StackingRegressorModel(BaseRegressor, StackingRegressor):
     def __init__(self, estimators, final_estimator=None, cv=None):
         super().__init__(estimators=estimators, final_estimator=final_estimator, cv=cv)
-        self.model_name = "Stacking Regressor Model"
+        self.model_name = "StackingRegressorModel"
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {
