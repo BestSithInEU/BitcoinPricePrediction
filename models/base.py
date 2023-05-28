@@ -12,6 +12,7 @@ from sklearn.model_selection import GridSearchCV
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+import logging
 
 
 class BaseModelNN:
@@ -47,7 +48,6 @@ class BaseModelNN:
     def save_model(self, filename):
         self.model.save(filename)
 
-    @staticmethod
     def load_model(filename):
         return tf.keras.models.load_model(filename)
 
@@ -68,25 +68,8 @@ class BaseModelNN:
 
 
 class BaseRegressor:
-    def get_metrics(self, y_true, y_pred, n_features):
-        mse = mean_squared_error(y_true, y_pred)
-        rmse = np.sqrt(mse)
-        mae = mean_absolute_error(y_true, y_pred)
-        r2 = r2_score(y_true, y_pred)
-        n = len(y_true)
-        adjusted_r2 = 1 - ((1 - r2) * (n - 1) / (n - n_features - 1))
-        mape = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
-
-        metrics = {
-            "MSE": mse,
-            "RMSE": rmse,
-            "MAE": mae,
-            "R^2": r2,
-            "Adjusted R^2": adjusted_r2,
-            "MAPE": mape,
-        }
-
-        return metrics
+    def __init__(self):
+        self.logger = logging.getLogger(self.__class__.__name__)
 
     def save_model(self, file_path):
         dump(self.model, file_path)
@@ -95,8 +78,16 @@ class BaseRegressor:
         self.model = load(file_path)
 
     def tune_model(self, X_train, X_val, y_train, y_val, param_grid, model):
-        print(f"Tuning {model.model_name}...")
-        self.grid_search = GridSearchCV(
+        self.logger.info(f"Tuning {model.name}...")
+        self.grid_search = self.grid_search_cv(model, param_grid, X_train, y_train)
+        best_params = self.grid_search.best_params_
+        self.logger.info(f"Best parameters: {best_params}")
+        self.log_cv_score()
+        self.log_validation_score(X_val, y_val)
+        return self.grid_search.best_estimator_, best_params
+
+    def grid_search_cv(self, model, param_grid, X_train, y_train):
+        return GridSearchCV(
             model,
             param_grid,
             cv=5,
@@ -104,11 +95,12 @@ class BaseRegressor:
             return_train_score=True,
             n_jobs=-1,
             verbose=1,
-        )
-        self.grid_search.fit(X_train, y_train)
-        print("Best parameters: ", self.grid_search.best_params_)
-        print("Best cross-validation score: ", np.sqrt(-self.grid_search.best_score_))
-        print(
-            "Validation score: ", np.sqrt(-self.grid_search.score(X_val, y_val)), "\n"
-        )
-        return self.grid_search.best_estimator_
+        ).fit(X_train, y_train)
+
+    def log_cv_score(self):
+        cv_score = np.sqrt(-self.grid_search.best_score_)
+        self.logger.info(f"Best cross-validation score: {cv_score}")
+
+    def log_validation_score(self, X_val, y_val):
+        val_score = np.sqrt(-self.grid_search.score(X_val, y_val))
+        self.logger.info(f"Validation score: {val_score}")
