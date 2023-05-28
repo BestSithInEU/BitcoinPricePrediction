@@ -26,6 +26,10 @@ def process_data(
     if "Price Movement" in df.columns:
         df = df.drop(columns="Price Movement", axis=1)
 
+    # # Drop 'Change %' column if it exists
+    if "Change %" in df.columns:
+        df = df.drop(columns="Change %", axis=1)
+
     # Rename certain columns
     df = df.rename(columns={"0": "Vader Neg", "1": "Vader Neutral", "2": "Vader Pos"})
 
