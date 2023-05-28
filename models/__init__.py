@@ -8,7 +8,6 @@ from .knn_regressor import KNNRegressorModel
 from .lasso_regressor import LassoRegressorModel
 from .lgbm_regressor import LGBMRegressorModel
 from .lstm_regressor import LSTMRegressor
-from .model_manager import ModelManager
 from .neural_network_regressor import NeuralNetworkRegressor
 from .random_forest_regressor import RandomForestRegressorModel
 from .ridge_regressor import RidgeRegressorModel

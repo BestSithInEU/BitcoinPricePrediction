@@ -8,8 +8,13 @@ class ElasticNetRegressorModel(BaseRegressor, ElasticNet):
         alpha=1.0,
         l1_ratio=0.5,
     ):
-        super().__init__(alpha=alpha, l1_ratio=l1_ratio)
-        self.model_name = "ElasticNetRegressorModel"
+        ElasticNet.__init__(
+            self,
+            alpha=alpha,
+            l1_ratio=l1_ratio,
+        )
+        self.name = "ElasticNetRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

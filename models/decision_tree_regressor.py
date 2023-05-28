@@ -10,13 +10,15 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
         min_samples_leaf=1,
         max_features=None,
     ):
-        super().__init__(
+        DecisionTreeRegressor.__init__(
+            self,
             max_depth=max_depth,
             min_samples_split=min_samples_split,
             min_samples_leaf=min_samples_leaf,
             max_features=max_features,
         )
-        self.model_name = "DecisionTreeRegressorModel"
+        self.name = "DecisionTreeRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

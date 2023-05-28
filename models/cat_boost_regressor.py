@@ -2,7 +2,7 @@ from .base import BaseRegressor
 from catboost import CatBoostRegressor
 
 
-class CatBoostRegressorModel(BaseRegressor):
+class CatBoostRegressorModel(BaseRegressor, CatBoostRegressor):
     def __init__(
         self,
         iterations=500,
@@ -10,22 +10,15 @@ class CatBoostRegressorModel(BaseRegressor):
         depth=6,
         loss_function="RMSE",
     ):
-        self.catboost_model = CatBoostRegressor(
+        CatBoostRegressor.__init__(
+            self,
             iterations=iterations,
             learning_rate=learning_rate,
             depth=depth,
             loss_function=loss_function,
         )
-        self.iterations = iterations
-        self.learning_rate = learning_rate
-        self.depth = depth
-        self.model_name = "CatBoostRegressorModel"
-
-    def fit(self, X, y):
-        return self.catboost_model.fit(X, y)
-
-    def predict(self, X):
-        return self.catboost_model.predict(X)
+        self.name = "CatBoostRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

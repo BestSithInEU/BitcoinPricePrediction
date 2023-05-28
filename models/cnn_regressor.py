@@ -33,14 +33,11 @@ class CNNRegressor(HyperModel, BaseModelNN):
         self.hyperband_iterations = hyperband_iterations
         self.patience = patience
         self.tuner_epochs = tuner_epochs
-        self.model_name = (
-            f"CNN_Regressor_Model_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-        )
+        self.name = "CnnRegressorModel"
         self.model = self.build_model()
 
     def build_model(self):
-        model_name = f"cnn_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-        model = Sequential(name=model_name)
+        model = Sequential(name="CnnRegressorModel")
         model.add(
             Conv1D(
                 filters=64,
@@ -74,7 +71,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
         callbacks=None,
     ):
         def build_model(hp):
-            model = Sequential()
+            model = Sequential(name="CnnRegressorModel")
             model.add(
                 Conv1D(
                     filters=hp.Int("filters", min_value=32, max_value=256, step=32),
@@ -98,7 +95,6 @@ class CNNRegressor(HyperModel, BaseModelNN):
                 ),
                 loss="mean_squared_error",
             )
-            model.model_name = "CNNRegressorModel"
             return model
 
         tuner = Hyperband(
@@ -129,6 +125,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
             )
 
         best_model = tuner.get_best_models(num_models=1)[0]
+        best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
         history = best_model.fit(
             x=X_train,
             y=y_train,
@@ -138,7 +135,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
             callbacks=callbacks,
         )
 
-        return best_model, history
+        return best_model, history, best_hps
 
     def get_params(self, deep=True):
         return {

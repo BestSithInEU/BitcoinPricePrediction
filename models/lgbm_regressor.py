@@ -11,15 +11,16 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
         num_leaves=31,
         random_state=95,
     ):
-        super().__init__(
+        LGBMRegressor.__init__(
+            self,
             n_estimators=n_estimators,
             learning_rate=learning_rate,
             max_depth=max_depth,
             num_leaves=num_leaves,
             random_state=random_state,
         )
-
-        self.model_name = "LightGradientBoostingRegressorModel"
+        self.name = "LightGradientBoostingRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {
@@ -38,4 +39,5 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
             "learning_rate": self.learning_rate,
             "max_depth": self.max_depth,
             "num_leaves": self.num_leaves,
+            "random_state": self.random_state,
         }

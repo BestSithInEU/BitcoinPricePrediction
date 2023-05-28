@@ -31,14 +31,11 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         self.hyperband_iterations = hyperband_iterations
         self.patience = patience
         self.tuner_epochs = tuner_epochs
-        self.model_name = (
-            f"LSTM_Regressor_Model_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-        )
+        self.name = "LstmRegressorModel"
         self.model = self.build_model()
 
     def build_model(self):
-        model_name = f"lstm_{datetime.now().strftime('%Y%m%d%H%M%S')}"
-        model = Sequential(name=model_name)
+        model = Sequential(name="LstmRegressorModel")
         model.add(
             LSTM(
                 100,
@@ -83,7 +80,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         callbacks=None,
     ):
         def build_model(hp):
-            model = Sequential()
+            model = Sequential(name="LstmRegressorModel")
             model.add(
                 LSTM(
                     units=hp.Int("units", min_value=32, max_value=512, step=32),
@@ -110,7 +107,6 @@ class LSTMRegressor(HyperModel, BaseModelNN):
                 ),
                 loss="mean_squared_error",
             )
-            model.model_name = "LSTMRegressorModel"
             return model
 
         tuner = Hyperband(
@@ -123,8 +119,6 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         )
 
         tuner.search_space_summary()
-
-        stop_early = EarlyStopping(monitor="loss", patience=self.patience)
 
         if X_val is not None and y_val is not None:
             tuner.search(
@@ -143,6 +137,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
             )
 
         best_model = tuner.get_best_models(num_models=1)[0]
+        best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
         history = best_model.fit(
             x=X_train,
             y=y_train,
@@ -152,7 +147,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
             callbacks=callbacks,
         )
 
-        return best_model, history
+        return best_model, history, best_hps
 
     def get_params(self, deep=True):
         return {

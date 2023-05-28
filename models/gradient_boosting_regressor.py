@@ -12,7 +12,8 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
         min_samples_leaf=1,
         max_features=None,
     ):
-        super().__init__(
+        GradientBoostingRegressor.__init__(
+            self,
             n_estimators=n_estimators,
             learning_rate=learning_rate,
             max_depth=max_depth,
@@ -20,7 +21,8 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
             min_samples_leaf=min_samples_leaf,
             max_features=max_features,
         )
-        self.model_name = "GradientBoostingRegressorModel"
+        self.name = "GradientBoostingRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

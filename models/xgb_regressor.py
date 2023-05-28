@@ -13,7 +13,8 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
         subsample=1,
         colsample_bytree=1,
     ):
-        super().__init__(
+        XGBRegressor.__init__(
+            self,
             n_estimators=n_estimators,
             learning_rate=learning_rate,
             max_depth=max_depth,
@@ -22,7 +23,8 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
             subsample=subsample,
             colsample_bytree=colsample_bytree,
         )
-        self.model_name = "eXtremeGradientBoostingRegressorModel"
+        self.name = "eXtremeGradientBoostingRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {

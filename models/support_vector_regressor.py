@@ -4,13 +4,15 @@ from sklearn.svm import SVR
 
 class SupportVectorRegressorModel(BaseRegressor, SVR):
     def __init__(self, kernel="rbf", degree=3, C=1.0, epsilon=0.1):
-        super().__init__(
+        SVR.__init__(
+            self,
             kernel=kernel,
             degree=degree,
             C=C,
             epsilon=epsilon,
         )
-        self.model_name = "SupportVectorRegressorModel"
+        self.name = "SupportVectorRegressorModel"
+        BaseRegressor.__init__(self)
 
     def tune_model(self, X_train, X_val, y_train, y_val):
         param_grid = {
