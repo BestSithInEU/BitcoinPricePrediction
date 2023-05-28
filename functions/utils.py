@@ -202,3 +202,27 @@ def organize_models(all_models, time_consumption, all_val_metric):
     df = pd.DataFrame(data)
 
     return df
+
+
+def find_best_models(metric_data):
+    best_models = []
+
+    best_val_metrics = {}
+
+    for data in metric_data:
+        step = data["step"]
+        model = data["model"]
+        val_metric = data["val_metric"]
+
+        if step not in best_val_metrics or val_metric < best_val_metrics[step]:
+            best_val_metrics[step] = val_metric
+            best_model = {"step": step, "model": model, "val_metric": val_metric}
+
+            existing_steps = [model["step"] for model in best_models]
+            if step in existing_steps:
+                index = existing_steps.index(step)
+                best_models[index] = best_model
+            else:
+                best_models.append(best_model)
+
+    return best_models
