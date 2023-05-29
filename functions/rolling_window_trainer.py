@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error
 from models import BaseModelNN
 import numpy as np
 import pandas as pd
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 from .utils import mean_absolute_percentage_error, root_mean_squared_log_error
 from sklearn.metrics import (
     mean_absolute_error,
@@ -61,26 +61,26 @@ class RollingWindowTrainer:
     def __init__(
         self,
         scaler,
-        lstm_stop_early,
-        nn_stop_early,
-        cnn_stop_early,
         X_train_val,
         y_train_val,
         train_window=100,
         val_window=20,
         step_size=5,
         checkpoint_path="models/save/checkpoints/",
+        early_stopping_values={
+            "lstm": {"patience": 10, "min_delta": 0.0001, "monitor": "val_loss"},
+            "nn": {"patience": 5, "min_delta": 0.0002, "monitor": "val_loss"},
+            "cnn": {"patience": 7, "min_delta": 0.0003, "monitor": "val_loss"},
+        },
         model_list=None,
     ):
         self.model_list = model_list if model_list is not None else []
-        self.lstm_stop_early = lstm_stop_early
-        self.nn_stop_early = nn_stop_early
-        self.cnn_stop_early = cnn_stop_early
         self.X_train_val = X_train_val
         self.y_train_val = y_train_val
         self.train_window = train_window
         self.val_window = val_window
         self.step_size = step_size
+        self.early_stopping_values = early_stopping_values
         self.stop_training = False
         self.pause_training = False
         self.current_step = 0
@@ -224,6 +224,12 @@ class RollingWindowTrainer:
                             "GradientBoostingRegressorModel",
                             "RandomForestRegressorModel",
                             "SupportVectorRegressorModel",
+                            "BayesianRidgeRegressorModel",
+                            "NuSVRRegressorModel",
+                            "TweedieRegressorModel",
+                            "PassiveAggressiveRegressorModel",
+                            "AdaBoostRegressorModel",
+                            "ExtraTreesRegressorModel",
                         ]
 
                         logger.info(f"Shape of y_train: {y_train_window.shape}")
@@ -404,10 +410,16 @@ class RollingWindowTrainer:
                 print(f"No file found at {file_path_lstm}")
 
     def train_nn_model_with_window(
-        self, X_train, y_train, X_val, y_val, checkpoint_callback
+        self,
+        X_train,
+        y_train,
+        X_val,
+        y_val,
+        checkpoint_callback,
     ):
         model_flag = 0
         best_hps = None
+
         if hasattr(self.model, "tune_model_with_window_lstm"):
             X_train_lstm = np.reshape(
                 X_train.to_numpy(), (X_train.shape[0], 1, X_train.shape[1])
@@ -418,30 +430,51 @@ class RollingWindowTrainer:
             )
             y_val_lstm = np.reshape(y_val.to_numpy(), (y_val.shape[0], 1))
 
+            early_stopping_params = self.early_stopping_values.get("lstm", {})
+            early_stopping = EarlyStopping(
+                monitor=early_stopping_params.get("monitor", "val_loss"),
+                patience=early_stopping_params.get("patience", 10),
+                min_delta=early_stopping_params.get("min_delta", 0.0001),
+            )
+
             tuned_model, history, best_hps = self.model.tune_model_with_window_lstm(
                 X_train_lstm,
                 y_train_lstm,
                 X_val_lstm,
                 y_val_lstm,
-                callbacks=[self.lstm_stop_early, checkpoint_callback],
+                callbacks=[early_stopping, checkpoint_callback],
             )
             model_flag = 1
         elif hasattr(self.model, "tune_model_with_window_nn"):
+            early_stopping_params = self.early_stopping_values.get("nn", {})
+            early_stopping = EarlyStopping(
+                monitor=early_stopping_params.get("monitor", "val_loss"),
+                patience=early_stopping_params.get("patience", 10),
+                min_delta=early_stopping_params.get("min_delta", 0.0001),
+            )
+
             tuned_model, history, best_hps = self.model.tune_model_with_window_nn(
                 X_train,
                 y_train,
                 X_val,
                 y_val,
-                callbacks=[self.nn_stop_early, checkpoint_callback],
+                callbacks=[early_stopping, checkpoint_callback],
             )
             model_flag = 2
         elif hasattr(self.model, "tune_model_with_window_cnn"):
+            early_stopping_params = self.early_stopping_values.get("cnn", {})
+            early_stopping = EarlyStopping(
+                monitor=early_stopping_params.get("monitor", "val_loss"),
+                patience=early_stopping_params.get("patience", 10),
+                min_delta=early_stopping_params.get("min_delta", 0.0001),
+            )
+
             tuned_model, history, best_hps = self.model.tune_model_with_window_cnn(
                 X_train,
                 y_train,
                 X_val,
                 y_val,
-                callbacks=[self.cnn_stop_early, checkpoint_callback],
+                callbacks=[early_stopping, checkpoint_callback],
             )
             model_flag = 3
 
@@ -491,22 +524,11 @@ class RollingWindowTrainer:
             self.time_consumption[name].append(time_taken)
 
     def predict_best_models(self, X):
-        """
-        Predicts the target variable given input features, using the best models.
-
-        Args:
-        X (pd.DataFrame or np.array): The input features.
-
-        Returns:
-        A dataframe of predictions from the best models.
-        """
-
         all_predictions = {}
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
             step = model_info["step"]
 
-            # Adjust X if necessary based on the model's training window
             window_start = max(
                 0, len(X) - self.train_window * (self.total_windows - step)
             )
@@ -517,21 +539,19 @@ class RollingWindowTrainer:
                 X_window = np.reshape(
                     X_window.to_numpy(), (X_window.shape[0], 1, X_window.shape[1])
                 )
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
             else:
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
 
-        # Convert to DataFrame if X is a DataFrame
+            model_predictions = np.array(predictions).flatten()
+            all_predictions[name] = pd.Series(
+                model_predictions, index=X.index[window_start:]
+            )
+
         if isinstance(X, pd.DataFrame):
-            for name in all_predictions:
-                model_predictions = np.array(all_predictions[name]).flatten()
-                all_predictions[name] = pd.Series(
-                    model_predictions, index=X.index[window_start:]
-                )
-
+            all_predictions = pd.DataFrame(all_predictions)
             all_predictions = (
-                pd.DataFrame(all_predictions)
-                .mean(axis=1)
+                all_predictions.mean(axis=1)
                 .to_frame()
                 .rename(columns={0: "Predictions"})
             )
@@ -546,49 +566,43 @@ class RollingWindowTrainer:
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
             step = model_info["step"]
-
-            # Adjust X if necessary based on the model's training window
             window_start = max(
                 0, len(X) - self.train_window * (self.total_windows - step)
             )
             X_window = X[window_start:]
-
             name = f"{model.name}_{step}"
+
             if name.lower().startswith("lstmregressormodel"):
                 X_window = np.reshape(
                     X_window.to_numpy(), (X_window.shape[0], 1, X_window.shape[1])
                 )
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
             else:
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
 
-            # Use inverse of validation error as weight
+            model_predictions = np.array(predictions).flatten()
+            all_predictions[name] = pd.Series(
+                model_predictions, index=X.index[window_start:]
+            )
+
             model_weights[name] = 1.0 / model_info["val_metric"]
             total_weights += model_weights[name]
 
-        # Normalize weights
         for name in model_weights:
             model_weights[name] /= total_weights
 
-        # Convert to DataFrame if X is a DataFrame
         if isinstance(X, pd.DataFrame):
             weighted_predictions = pd.DataFrame()
             for name in all_predictions:
-                model_predictions = np.array(all_predictions[name]).flatten()
-                weighted_model_prediction = pd.Series(
-                    model_predictions * model_weights[name],
-                    index=X.index[window_start:],
-                )
+                weighted_model_prediction = all_predictions[name] * model_weights[name]
                 weighted_predictions = pd.concat(
                     [weighted_predictions, weighted_model_prediction], axis=1
                 )
 
-            # Sum all the weighted predictions
             weighted_predictions["Predictions"] = weighted_predictions.sum(axis=1)
             weighted_predictions = weighted_predictions[["Predictions"]]
 
         else:
-            # Weighted averaging of predictions
             weighted_predictions = None
             for name, prediction in all_predictions.items():
                 if weighted_predictions is None:
@@ -603,34 +617,35 @@ class RollingWindowTrainer:
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
             step = model_info["step"]
-
-            # Adjust X if necessary based on the model's training window
             window_start = max(
                 0, len(X) - self.train_window * (self.total_windows - step)
             )
             X_window = X[window_start:]
-
             name = f"{model.name}_{step}"
+
             if name.lower().startswith("lstmregressormodel"):
                 X_window = np.reshape(
                     X_window.to_numpy(), (X_window.shape[0], 1, X_window.shape[1])
                 )
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
             else:
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
 
-        # Perform voting
+            model_predictions = np.array(predictions).flatten()
+            all_predictions[name] = pd.Series(
+                model_predictions, index=X.index[window_start:]
+            )
+
         vote_predictions = []
         for i in range(X.shape[0]):
             model_votes = []
             for prediction in all_predictions.values():
                 vote = prediction[i]
                 if isinstance(vote, np.ndarray) and vote.size == 1:
-                    vote = vote.item()  # convert single-element arrays to scalars
+                    vote = vote.item()
                 model_votes.append(vote)
             vote_predictions.append(Counter(model_votes).most_common(1)[0][0])
 
-        # Convert to DataFrame if X is a DataFrame
         if isinstance(X, pd.DataFrame):
             vote_predictions_series = pd.Series(
                 vote_predictions, index=X.index[window_start:]
@@ -642,69 +657,51 @@ class RollingWindowTrainer:
         return all_predictions
 
     def predict_all_models(self, X):
-        """
-        Predicts the target variable given input features, using all trained models.
-
-        Args:
-        X (pd.DataFrame or np.array): The input features.
-
-        Returns:
-        The mean of predictions from all models.
-        """
-
         all_predictions = {}
         for model_idx, model_info in enumerate(self.all_models):
             model = model_info["model"]
             step = model_info["step"]
-
-            # Adjust X if necessary based on the model's training window
             window_start = max(
                 0, len(X) - self.train_window * (self.total_windows - step)
             )
             X_window = X[window_start:]
-
             name = f"{model.name}_{step}"
+
             if name.lower().startswith("lstmregressormodel"):
                 X_window = np.reshape(
                     X_window.to_numpy(), (X_window.shape[0], 1, X_window.shape[1])
                 )
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
             else:
-                all_predictions[name] = model.predict(X_window)
+                predictions = model.predict(X_window)
 
-        # Convert to DataFrame if X is a DataFrame
+            model_predictions = np.array(predictions).flatten()
+            all_predictions[name] = pd.Series(
+                model_predictions, index=X.index[window_start:]
+            )
+
         if isinstance(X, pd.DataFrame):
             for name in all_predictions:
-                # Check if predictions are in a nested list form, if yes flatten them
                 if isinstance(all_predictions[name][0], list) or isinstance(
                     all_predictions[name][0], np.ndarray
                 ):
                     all_predictions[name] = [
                         item for sublist in all_predictions[name] for item in sublist
                     ]
-                model_predictions = np.array(all_predictions[name]).flatten()
-                all_predictions[name] = pd.Series(
-                    model_predictions, index=X.index[window_start:]
-                )
 
             all_predictions = pd.DataFrame(all_predictions)
             df_predictions = pd.DataFrame(all_predictions)
 
-            # Create a mapping of model names to their columns
             model_column_groups = {}
             for col in df_predictions.columns:
-                name = col.split("_")[
-                    0
-                ]  # Adjust this as necessary to correctly identify the model name
+                name = col.split("_")[0]
                 if name not in model_column_groups:
                     model_column_groups[name] = []
                 model_column_groups[name].append(col)
 
-            # Calculate mean for each model
             for name, cols in model_column_groups.items():
                 df_predictions[name + " mean"] = df_predictions[cols].mean(axis=1)
 
-            # Drop the original columns
             df_predictions = df_predictions[
                 [col for col in df_predictions.columns if " mean" in col]
             ]
