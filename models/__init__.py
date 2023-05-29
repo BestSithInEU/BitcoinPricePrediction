@@ -11,6 +11,12 @@ from .lstm_regressor import LSTMRegressor
 from .neural_network_regressor import NeuralNetworkRegressor
 from .random_forest_regressor import RandomForestRegressorModel
 from .ridge_regressor import RidgeRegressorModel
-from .stacking_regressor import StackingRegressorModel
 from .support_vector_regressor import SupportVectorRegressorModel
 from .xgb_regressor import XGBRegressorModel
+from .bayesian_ridge_regressor import BayesianRidgeRegressorModel
+from .gaussian_regressor import GaussianProcessRegressorModel
+from .nu_svr_regressor import NuSVRRegressorModel
+from .tweedie_regressor import TweedieRegressorModel
+from .passive_aggressive_regressor import PassiveAggressiveRegressorModel
+from .ada_boost_regressor import AdaBoostRegressorModel
+from .extra_trees_regressor import ExtraTreesRegressorModel
