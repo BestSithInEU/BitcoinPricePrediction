@@ -106,7 +106,7 @@ def split_data(X_scaled, y_scaled, test_ratio):
     return X_scaled_train_val, y_scaled_train_val, X_scaled_test, y_scaled_test
 
 
-def doubleQuotationRemover(input_file_name_v1, delimiter=","):
+def double_quotation_remover(input_file_name_v1, delimiter=","):
     """
     Removes double quotation marks from specified columns in a CSV file.
 
@@ -127,7 +127,7 @@ def doubleQuotationRemover(input_file_name_v1, delimiter=","):
     df.to_csv(input_file_name_v1, index=False, sep=delimiter)
 
 
-def modifyDateFormat(
+def modify_date_format(
     input_file_name_v1, date_column_name, date_format="%b %d, %Y", delimiter=","
 ):
     """
@@ -179,7 +179,7 @@ def modifyDateFormat(
             writer.writerow(row)
 
 
-def combineData(
+def combine_data(
     output_file_name="combined_data",
     input_file_name_v1="bitcoin_price.csv",
     input_file_name_v2="headlines_sentiment.csv",
@@ -196,7 +196,7 @@ def combineData(
         None
     """
 
-    output_file_name = f"data/{output_file_name}.csv"
+    output_file_name = f"{output_file_name}.csv"
 
     bitcoin_price = pd.read_csv(input_file_name_v1, delimiter=",")
 

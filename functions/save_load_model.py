@@ -58,6 +58,7 @@ def load_trained_models(root_dir, log_file):
         model_dir = os.path.join(root_dir, model_name)
         for step_dir in os.listdir(model_dir):
             step_dir_path = os.path.join(model_dir, step_dir)
+            step = int(step_dir)
             for file in os.listdir(step_dir_path):
                 filename = os.path.join(step_dir_path, file)
                 if file.endswith(".h5"):
@@ -72,14 +73,15 @@ def load_trained_models(root_dir, log_file):
                     print(f"Unsupported file type: {file}")
                     continue
 
-                # Parse step and validation metric from the filename
-                base_name = os.path.basename(filename)
-                step = int(base_name.split("_")[0])
-
                 val_metric = val_metrics.get((model_name, step), None)
                 if val_metric is not None:
                     trained_models.append(
-                        {"step": step, "model": model, "val_metric": val_metric}
+                        {
+                            "step": step,
+                            "model": model,
+                            "val_metric": val_metric,
+                            "model_type": model_type,
+                        }
                     )
 
     return trained_models
