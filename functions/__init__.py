@@ -17,9 +17,12 @@ from .utils import (
     reverse_values,
     find_best_models,
     read_model_metrics,
-    visualize_metrics,
+    save_metrics,
     save_dataframe,
     save_keras_models,
     group_by_model,
+    create_subsets,
+    plot_heatmaps,
+    resize_and_remove_background,
 )
 from .web_scrapper import WebScraper
