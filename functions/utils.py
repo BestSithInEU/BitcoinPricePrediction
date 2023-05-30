@@ -5,8 +5,83 @@ import os
 import re
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import plotly.graph_objects as go
+import plotly.figure_factory as ff
 from keras.utils import plot_model
+from PIL import Image
+
+
+def resize_and_remove_background(image_path, output_path, size=(800, 800)):
+    # Open an image file
+    with Image.open(image_path) as img:
+        # Resize the image
+        img = img.resize(size, Image.ANTIALIAS)
+
+        # Assuming that the image is in RGBA format and the background is white
+        img = img.convert("RGBA")
+        data = img.getdata()
+
+        new_data = []
+        for item in data:
+            # Change all white (also shades of whites)
+            # (also shades of grey if you want) to transparent
+            if item[0] in list(range(200, 256)):
+                new_data.append((255, 255, 255))
+            else:
+                new_data.append(item)
+
+        img.putdata(new_data)
+
+        # Crop the image to the area containing non-transparent pixels
+        img = img.crop(img.getbbox())
+
+        # Save the image
+        img.save(output_path)
+
+
+def create_subsets(X, y, num_subsets):
+    # Calculate number of columns per subset
+    cols_per_subset = X.shape[1] // num_subsets
+
+    # Create list to store subsets
+    subsets = []
+
+    for i in range(num_subsets):
+        if i == num_subsets - 1:  # for the last subset, add all remaining columns
+            subset = pd.concat([X.iloc[:, i * cols_per_subset :], y], axis=1)
+        else:
+            subset = pd.concat(
+                [X.iloc[:, i * cols_per_subset : (i + 1) * cols_per_subset], y], axis=1
+            )
+        subsets.append(subset)
+
+    return subsets
+
+
+def plot_heatmaps(subsets):
+    for i, subset in enumerate(subsets):
+        corr = subset.corr()
+
+        fig = ff.create_annotated_heatmap(
+            z=corr.values,
+            x=list(corr.columns),
+            y=list(corr.index),
+            annotation_text=corr.round(2).values,
+            showscale=True,
+            colorscale="plotly3",
+        )
+
+        fig.update_layout(
+            title=f"Correlation Heatmap of Subset {i+1}",
+            height=1200,
+            width=1200,
+            autosize=True,
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+        )
+        fig.show()
+        fig.write_image(f"heatmaps/heatmap_subset_{i+1}.png", scale=2)
 
 
 def group_by_model(df):
@@ -71,7 +146,7 @@ def save_dataframe(df_list, image_dir="model_images/all_models/"):
         "AdaBoostRegressorModel": "Ada Boost",
         "BaggingRegressorModel": "Bagging",
         "BayesianRidgeRegressorModel": "Bayesian Ridge",
-        "CNNRegressorModel": "CNN",
+        "CnnRegressorModel": "CNN",
         "DecisionTreeRegressorModel": "Decision Tree",
         "ElasticNetRegressorModel": "Elastic Net",
         "ExtraTreesRegressorModel": "Extra Trees",
@@ -80,7 +155,7 @@ def save_dataframe(df_list, image_dir="model_images/all_models/"):
         "KNNRegressorModel": "k-Nearest Neighbors",
         "LassoRegressorModel": "Lasso",
         "LightGradientBoostingRegressorModel": "LGBM",
-        "LSTMRegressorModel": "LSTM",
+        "LstmRegressorModel": "LSTM",
         "NnRegressorModel": "Neural Network",
         "NuSVRRegressorModel": "NuSVR",
         "PassiveAggressiveRegressorModel": "Passive Aggressive",
@@ -184,7 +259,7 @@ def read_model_metrics(log_filename):
     return df_sorted
 
 
-def visualize_metrics(df, image_dir="model_images/metrics/"):
+def save_metrics(df, image_dir="model_images/metrics/"):
     # Create directory if it doesn't exist
     os.makedirs(image_dir, exist_ok=True)
 
@@ -205,8 +280,6 @@ def visualize_metrics(df, image_dir="model_images/metrics/"):
             xaxis_title="Step",
             yaxis_title="Validation Metric",
             autosize=True,
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
         )
 
         fig.write_image(
