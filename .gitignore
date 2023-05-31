@@ -31,3 +31,9 @@ models/keras_tuning/
 
 # Images
 *.png
+
+# Jupyter Notebook
+*.ipynb
+
+# Docs
+docs/
