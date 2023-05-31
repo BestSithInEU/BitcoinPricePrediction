@@ -12,6 +12,42 @@ import seaborn as sns
 
 
 class SentimentAnalysis:
+    """
+    A class for performing sentiment analysis on text data using VADER sentiment analysis and RoBERTa tokenization.
+
+    The SentimentAnalysis class provides methods for data preprocessing, sentiment score computation,
+    tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save
+    the processed data to a CSV file.
+
+    Attributes:
+    -----------
+    df : DataFrame
+        The input dataset containing text data.
+    seed : int
+        Random seed used for reproducibility.
+    stopwords : set
+        Set of stopwords for text cleaning.
+    sid : SentimentIntensityAnalyzer
+        An instance of the SentimentIntensityAnalyzer from the NLTK library.
+
+    Methods:
+    --------
+    preprocess():
+        Preprocesses the data by cleaning text and computing VADER sentiment scores.
+    tweet_to_words(tweet):
+        Cleans a tweet by removing non-alphanumeric characters and stopwords, and applies stemming.
+    unlist(list):
+        Joins a list of words into a string.
+    compute_vader_scores(df, label):
+        Computes VADER sentiment scores for each tweet in the dataset.
+    process_inputs(max_len):
+        Tokenizes inputs using RoBERTa for training, validation, and testing.
+    aggregate_by_date():
+        Aggregates VADER sentiment scores by date.
+    save_df(filename):
+        Aggregates the dataframe by date and saves it to a CSV file.
+    """
+
     def __init__(self, path, delimiter, seed=42):
         self.df = pd.read_csv(path, delimiter=delimiter)
         self.seed = seed
@@ -20,6 +56,15 @@ class SentimentAnalysis:
         self.df["Date"] = pd.to_datetime(self.df["Date"])
 
     def preprocess(self):
+        """
+        Preprocesses the data by cleaning text and computing VADER sentiment scores.
+
+        Returns:
+        --------
+        DataFrame
+            The processed dataframe.
+        """
+
         self.df = self.df.rename(columns={"News": "content"})
         self.df["cleantext"] = [
             self.tweet_to_words(item) for item in tqdm(self.df["content"])
@@ -28,6 +73,21 @@ class SentimentAnalysis:
         return self.df
 
     def tweet_to_words(self, tweet):
+        """
+        Cleans a tweet by removing non-alphanumeric characters and stopwords,
+        and applies stemming.
+
+        Parameters:
+        -----------
+        tweet : str
+            A tweet.
+
+        Returns:
+        --------
+        list
+            A list of cleaned words from the tweet.
+        """
+
         text = tweet.lower()
         text = re.sub(r"[^a-zA-Z0-9]", " ", text)
         words = text.split()
@@ -36,10 +96,40 @@ class SentimentAnalysis:
         return words
 
     def unlist(self, list):
+        """
+        Joins a list of words into a string.
+
+        Parameters:
+        -----------
+        list : list
+            A list of words.
+
+        Returns:
+        --------
+        str
+            A string with words separated by spaces.
+        """
+
         words = " ".join(list)
         return words
 
     def compute_vader_scores(self, df, label):
+        """
+        Computes VADER sentiment scores (negative, neutral, positive, compound) for each tweet.
+
+        Parameters:
+        -----------
+        df : DataFrame
+            The dataframe.
+        label : str
+            The column in the dataframe containing the text to analyze.
+
+        Returns:
+        --------
+        DataFrame
+            The dataframe with the added VADER sentiment scores.
+        """
+
         sid = SentimentIntensityAnalyzer()
         self.df["vader_neg"] = self.df[label].apply(
             lambda x: sid.polarity_scores(self.unlist(x))["neg"]
@@ -68,6 +158,15 @@ class SentimentAnalysis:
         return self.df
 
     def process_inputs(self, max_len):
+        """
+        Tokenizes inputs using RoBERTa for training, validation, and testing.
+
+        Parameters:
+        -----------
+        max_len : int
+            Maximum length for tokenization.
+        """
+
         self.train_input_ids, self.train_attention_masks = self.tokenize_roberta(
             self.X_train, max_len
         )
@@ -79,24 +178,37 @@ class SentimentAnalysis:
         )
 
     def aggregate_by_date(self):
-        # Define aggregation function
+        """
+        Aggregates VADER sentiment scores by date.
+
+        Returns:
+        --------
+        DataFrame
+            The aggregated dataframe.
+        """
+
         aggregation_function = {
             "vader_neg": lambda x: float(x[x > 0].count()),
             "vader_neu": lambda x: float(x[x > 0].count()),
             "vader_pos": lambda x: float(x[x > 0].count()),
         }
 
-        # Group by date and apply aggregation function
         aggregated_df = self.df.groupby("Date").agg(aggregation_function).reset_index()
-
-        # Rename columns
         aggregated_df.columns = ["Date", "vader_neg", "vader_neu", "vader_pos"]
-
         self.df = aggregated_df
 
         return self.df
 
     def save_df(self, filename):
+        """
+        Aggregates the dataframe by date and saves it to a CSV file.
+
+        Parameters:
+        -----------
+        filename : str
+            The name of the output CSV file.
+        """
+
         self.aggregate_by_date()
         self.df["Date"] = self.df["Date"].dt.strftime("%b %d, %Y")
         self.df.to_csv(filename, index=False)

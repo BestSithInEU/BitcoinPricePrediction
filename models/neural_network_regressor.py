@@ -15,6 +15,44 @@ from keras.optimizers import Adam
 
 
 class NeuralNetworkRegressor(HyperModel, BaseModelNN):
+    """
+    NeuralNetworkRegressor is a regression model based on a neural network.
+
+    Parameters:
+    ----------
+        n_features (int): The number of input features.
+        max_epochs (int): The maximum number of epochs to train the model. Default is 5.
+        max_batch_size (int): The maximum batch size for training. Default is 5.
+        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.
+        patience (int): The number of epochs with no improvement after which training will be stopped if early stopping is used. Default is 5.
+        tuner_epochs (int): The number of epochs to train the tuner. Default is 5.
+
+    Methods:
+    -------
+        build_model():
+            Builds and compiles the neural network model.
+
+        tune_model_with_window_nn(X_train, y_train, X_val, y_val, callbacks=None):
+            Tunes the hyperparameters of the NeuralNetworkRegressor using Hyperband tuner.
+
+        get_params(deep=True):
+            Returns the current hyperparameters of the NeuralNetworkRegressor.
+
+        set_params(**parameters):
+            Sets the value of the specified hyperparameters.
+
+    Attributes:
+    ----------
+        n_features (int): The number of input features.
+        max_epochs (int): The maximum number of epochs to train the model.
+        max_batch_size (int): The maximum batch size for training.
+        hyperband_iterations (int): The number of Hyperband iterations.
+        patience (int): The number of epochs with no improvement after which training will be stopped if early stopping is used.
+        tuner_epochs (int): The number of epochs to train the tuner.
+        name (str): The name of the NeuralNetworkRegressor model.
+        model (Sequential): The compiled neural network model.
+    """
+
     def __init__(
         self,
         n_features,
@@ -30,11 +68,18 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         self.hyperband_iterations = hyperband_iterations
         self.patience = patience
         self.tuner_epochs = tuner_epochs
-        self.name = "NnRegressorModel"
+        self.name = "NeuralNetworkRegressor"
         self.model = self.build_model()
 
     def build_model(self):
-        model = Sequential(name="NnRegressorModel")
+        """
+        Builds and compiles the neural network model.
+
+        Returns:
+        -------
+            Sequential: The compiled neural network model.
+        """
+        model = Sequential(name="NeuralNetworkRegressor")
         model.add(
             Dense(
                 128,
@@ -78,8 +123,24 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         y_val,
         callbacks=None,
     ):
+        """
+        Tunes the hyperparameters of the NeuralNetworkRegressor using Hyperband tuner.
+
+        Parameters:
+        ----------
+            X_train (array-like): The training input samples.
+            y_train (array-like): The target values for the training samples.
+            X_val (array-like): The validation input samples.
+            y_val (array-like): The target values for the validation samples.
+            callbacks (list): List of Keras callbacks. Default is None.
+
+        Returns:
+        -------
+            tuple: A tuple containing the best model, training history, and best hyperparameters.
+        """
+
         def build_model(hp):
-            model = Sequential(name="NnRegressorModel")
+            model = Sequential(name="NeuralNetworkRegressor")
             model.add(
                 Dense(
                     hp.Int("units_input", 32, 256, 32),
@@ -150,6 +211,13 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         return best_model, history, best_hps
 
     def get_params(self, deep=True):
+        """
+        Returns the current hyperparameters of the NeuralNetworkRegressor.
+
+        Returns:
+        -------
+            dict: A dictionary of the current hyperparameters.
+        """
         return {
             "n_features": self.n_features,
             "max_epochs": self.max_epochs,
@@ -159,6 +227,13 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         }
 
     def set_params(self, **parameters):
+        """
+        Sets the value of the specified hyperparameters.
+
+        Returns:
+        -------
+            self
+        """
         for parameter, value in parameters.items():
             setattr(self, parameter, value)
         return self

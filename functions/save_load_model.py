@@ -9,6 +9,20 @@ import re
 
 
 def get_val_metrics_from_log(log_file):
+    """
+    Extract validation metrics from a given log file.
+
+    Parameters:
+    -----------
+    log_file : str
+        Path to the log file.
+
+    Returns:
+    --------
+    dict
+        A dictionary where the keys are tuples of (model_name, step) and the values are validation metrics.
+    """
+
     val_metrics = {}
     with open(log_file, "r") as file:
         for line in file.readlines():
@@ -24,6 +38,17 @@ def get_val_metrics_from_log(log_file):
 
 
 def save_trained_models(trained_models, root_dir):
+    """
+    Saves trained models to a specified directory.
+
+    Parameters:
+    -----------
+    trained_models : list of dicts
+        A list of dictionaries, where each dictionary contains details about a trained model.
+    root_dir : str
+        The root directory where the models will be saved.
+    """
+
     for model_dict in trained_models:
         i = model_dict["step"]
         model = model_dict["model"]
@@ -52,6 +77,24 @@ def save_trained_models(trained_models, root_dir):
 
 
 def load_trained_models(root_dir, log_file):
+    """
+    Loads trained models from a specified directory. The models are filtered based on the
+    validation metrics provided in a log file.
+
+    Parameters:
+    -----------
+    root_dir : str
+        The root directory from where the models will be loaded.
+    log_file : str
+        Path to the log file containing validation metrics.
+
+    Returns:
+    --------
+    list
+        A list of dictionaries, where each dictionary contains details about a trained model
+        and its validation metric.
+    """
+
     val_metrics = get_val_metrics_from_log(log_file)
     trained_models = []
     for model_name in os.listdir(root_dir):

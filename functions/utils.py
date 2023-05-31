@@ -1,5 +1,8 @@
 from plotly.subplots import make_subplots
-from sklearn.metrics import mean_squared_log_error
+from sklearn.metrics import (
+    mean_squared_log_error,
+    mean_squared_error,
+)
 
 import os
 import re
@@ -12,7 +15,67 @@ from keras.utils import plot_model
 from PIL import Image
 
 
+def calculate_metrics(preds, y_test):
+    """
+    Calculates Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) for the given predictions and actual values.
+    It also calculates daily MSE and RMSE and stores them in a pandas DataFrame.
+
+    Parameters
+    ----------
+    preds : np.ndarray or pd.Series
+        The predicted values.
+    y_test : np.ndarray or pd.Series
+        The actual values.
+
+    Returns
+    -------
+    mse : float
+        The Mean Squared Error.
+    rmse : float
+        The Root Mean Squared Error.
+    metrics_df : pd.DataFrame
+        A dataframe containing daily MSE and RMSE.
+    """
+
+    # Check if the inputs are numpy arrays and convert them to pandas Series
+    if isinstance(preds, np.ndarray):
+        preds = pd.Series(preds.flatten())
+    if isinstance(y_test, np.ndarray):
+        y_test = pd.Series(y_test.flatten())
+
+    # Compute MSE and RMSE
+    mse = mean_squared_error(y_test, preds)
+    rmse = np.sqrt(mse)
+
+    # Compute daily MSE and RMSE
+    daily_mse = (y_test - preds) ** 2
+    daily_rmse = np.sqrt(daily_mse)
+
+    # Create a DataFrame to store the results
+    metrics_df = pd.DataFrame(
+        {
+            "MSE": daily_mse,
+            "RMSE": daily_rmse,
+        }
+    )
+
+    return mse, rmse, metrics_df
+
+
 def resize_and_remove_background(image_path, output_path, size=(800, 800)):
+    """
+    Resizes an image to the specified size, removes its background, and saves it in the specified output path.
+
+    Parameters
+    ----------
+    image_path : str
+        The path to the input image.
+    output_path : str
+        The path to save the output image.
+    size : tuple of int, optional
+        The desired output size. Default is (800, 800).
+    """
+
     # Open an image file
     with Image.open(image_path) as img:
         # Resize the image
@@ -41,6 +104,24 @@ def resize_and_remove_background(image_path, output_path, size=(800, 800)):
 
 
 def create_subsets(X, y, num_subsets):
+    """
+    Divides the features (X) into a specified number of subsets and concatenates each subset with the target (y).
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        The input features.
+    y : pd.Series
+        The target values.
+    num_subsets : int
+        The number of subsets to divide X into.
+
+    Returns
+    -------
+    subsets : list of pd.DataFrame
+        A list of dataframes, each consisting of a subset of features and the target.
+    """
+
     # Calculate number of columns per subset
     cols_per_subset = X.shape[1] // num_subsets
 
@@ -60,6 +141,15 @@ def create_subsets(X, y, num_subsets):
 
 
 def plot_heatmaps(subsets):
+    """
+    Plots and saves correlation heatmaps for each subset of data.
+
+    Parameters
+    ----------
+    subsets : list of pd.DataFrame
+        A list of dataframes for which to plot the correlation heatmaps.
+    """
+
     for i, subset in enumerate(subsets):
         corr = subset.corr()
 
@@ -85,6 +175,20 @@ def plot_heatmaps(subsets):
 
 
 def group_by_model(df):
+    """
+    Groups the data by model and calculates the cumulative sum of time consumption for each model.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input dataframe containing model information.
+
+    Returns
+    -------
+    df_list : list of pd.DataFrame
+        A list of dataframes, each containing the information for one model.
+    """
+
     df_list = []
     model_groups = df.groupby("model")
 
@@ -97,6 +201,20 @@ def group_by_model(df):
 
 
 def format_number(value):
+    """
+    Formats a number to a string with suffixes (B for billion, M for million, k for thousand).
+
+    Parameters
+    ----------
+    value : int or float
+        The number to format.
+
+    Returns
+    -------
+    str
+        The formatted number.
+    """
+
     if abs(value) >= 1e9:
         return "{:.1f}B".format(value / 1e9)
     elif abs(value) >= 1e6:
@@ -108,6 +226,15 @@ def format_number(value):
 
 
 def save_keras_models(best_models):
+    """
+    Saves the diagrams of best Keras models in PNG format.
+
+    Parameters
+    ----------
+    best_models : list of dict
+        A list of dictionaries, each containing a Keras model and other related information.
+    """
+
     # Create a directory to store the images
     os.makedirs("model_images", exist_ok=True)
 
@@ -130,6 +257,17 @@ def save_keras_models(best_models):
 
 
 def save_dataframe(df_list, image_dir="model_images/all_models/"):
+    """
+    Saves the dataframes as images in the specified directory.
+
+    Parameters
+    ----------
+    df_list : list of pd.DataFrame
+        A list of dataframes to be saved as images.
+    image_dir : str, optional
+        The directory to save the images. Default is 'model_images/all_models/'.
+    """
+
     os.makedirs(image_dir, exist_ok=True)
 
     # Mapping of old column names to new column names
@@ -236,6 +374,20 @@ def save_dataframe(df_list, image_dir="model_images/all_models/"):
 
 
 def read_model_metrics(log_filename):
+    """
+    Reads a log file and extracts model metrics into a pandas DataFrame.
+
+    Parameters
+    ----------
+    log_filename : str
+        The path to the log file.
+
+    Returns
+    -------
+    df_sorted : pd.DataFrame
+        A dataframe containing the extracted model metrics, sorted by model and step.
+    """
+
     metrics = []
     with open(log_filename, "r") as file:
         for line in file.readlines():
@@ -260,6 +412,16 @@ def read_model_metrics(log_filename):
 
 
 def save_metrics(df, image_dir="model_images/metrics/"):
+    """
+    Saves each model's metrics as a separate PNG image in the specified directory.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input dataframe containing model information.
+    image_dir : str, optional
+        The directory to save the images. Default is 'model_images/metrics/'."""
+
     # Create directory if it doesn't exist
     os.makedirs(image_dir, exist_ok=True)
 
@@ -288,15 +450,56 @@ def save_metrics(df, image_dir="model_images/metrics/"):
 
 
 def mean_absolute_percentage_error(y_true, y_pred):
+    """
+    Calculates the Mean Absolute Percentage Error (MAPE) between the true and predicted values.
+
+    Parameters:
+    -------
+        y_true (np.ndarray): The actual values.
+        y_pred (np.ndarray): The predicted values.
+
+    Returns:
+    -------
+        float: The MAPE.
+    """
+
     y_true, y_pred = np.array(y_true), np.array(y_pred)
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
 
 
 def root_mean_squared_log_error(y_true, y_pred):
+    """
+    Calculates the Root Mean Squared Logarithmic Error (RMSLE) between the true and predicted values.
+
+    Parameters:
+    -------
+        y_true (np.ndarray): The actual values.
+        y_pred (np.ndarray): The predicted values.
+
+    Returns:
+    -------
+        float: The RMSLE.
+    """
+
     return np.sqrt(mean_squared_log_error(y_true, y_pred))
 
 
 def plot_price_prediction(X_test, y_test, predictions, title):
+    """
+    Plots the predicted and actual values for the test data.
+
+    Parameters:
+    -------
+        X_test (pd.DataFrame): The test features.
+        y_test (pd.Series): The actual values for the test data.
+        predictions (pd.Series): The predicted values for the test data.
+        title (str): The title of the plot.
+
+    Returns:
+    -------
+        plotly.graph_objects._figure.Figure: The figure object of the plot.
+    """
+
     # Ensure dates are sorted in ascending order
     X_test = X_test.sort_index(ascending=True)
     y_test = y_test.sort_index(ascending=True)
@@ -375,6 +578,14 @@ def plot_price_prediction(X_test, y_test, predictions, title):
 
 
 def plot_histories(histories):
+    """
+    Plots the loss histories for different training epochs.
+
+    Parameters:
+    -------
+        histories (list of keras.callbacks.History): The list of history objects for each training epoch.
+    """
+
     subplot_titles = [f"History at Window {i+1}" for i in range(len(histories))]
 
     rows = len(histories) // 4 if len(histories) % 4 == 0 else len(histories) // 4 + 1
@@ -442,6 +653,23 @@ def plot_histories(histories):
 
 
 def reverse_values(predictions, X_scaled, y_scaled, scaler):
+    """
+    Reverses the effect of scaling on the predictions and the scaled features and target.
+
+    Parameters:
+    -------
+        predictions (pd.DataFrame): The predicted values.
+        X_scaled (pd.DataFrame): The scaled features.
+        y_scaled (pd.Series): The scaled target.
+        scaler (sklearn.preprocessing.StandardScaler): The scaler used to scale the data.
+
+    Returns:
+    -------
+        reverse_predictions_df (pd.DataFrame): The unscaled predictions.
+        reverse_x_df (pd.DataFrame): The unscaled features.
+        reverse_y_df (pd.Series): The unscaled target.
+    """
+
     reverse_predictions_df = pd.DataFrame(index=predictions.index)
 
     for column in predictions.columns:
@@ -464,6 +692,18 @@ def reverse_values(predictions, X_scaled, y_scaled, scaler):
 
 
 def find_best_models(metric_data):
+    """
+    Finds the best models based on their validation metric.
+
+    Parameters:
+    -------
+        metric_data (list of dict): A list of dictionaries, each containing the information for one model.
+
+    Returns:
+    -------
+        best_models (list of dict): A list of dictionaries, each containing the information for one best model.
+    """
+
     best_models = []
 
     best_val_metrics = {}

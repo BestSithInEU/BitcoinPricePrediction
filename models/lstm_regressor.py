@@ -16,6 +16,38 @@ from keras.optimizers import Adam
 
 
 class LSTMRegressor(HyperModel, BaseModelNN):
+    """
+    LSTMRegressor is a class that implements a Long Short-Term Memory (LSTM) model for regression tasks.
+    It utilizes hyperparameter tuning with the Keras Tuner library to optimize the model's performance.
+
+    Parameters:
+    ----------
+        n_features (int): The number of input features.
+        max_epochs (int): The maximum number of epochs to train the model. Default is 5.
+        max_batch_size (int): The maximum batch size for training the model. Default is 5.
+        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.
+        patience (int): The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.
+        tuner_epochs (int): The number of epochs to train the tuner. Default is 5.
+
+    Attributes:
+    ----------
+        n_features (int): The number of input features.
+        max_epochs (int): The maximum number of epochs to train the model.
+        max_batch_size (int): The maximum batch size for training the model.
+        hyperband_iterations (int): The number of Hyperband iterations.
+        patience (int): The number of epochs to wait for improvement in validation loss before early stopping.
+        tuner_epochs (int): The number of epochs to train the tuner.
+        name (str): The name of the LSTMRegressor model.
+        model (keras.models.Sequential): The LSTMRegressor model.
+
+    Methods:
+    -------
+        build_model(): Build the LSTM regression model.
+        tune_model_with_window_lstm(): Tune the hyperparameters of the LSTMRegressor model using the Hyperband tuner.
+        get_params(): Get the current hyperparameters of the LSTMRegressor.
+        set_params(): Set the value of the specified hyperparameters.
+    """
+
     def __init__(
         self,
         n_features,
@@ -35,7 +67,14 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         self.model = self.build_model()
 
     def build_model(self):
-        model = Sequential(name="LstmRegressorModel")
+        """
+        Builds the LSTM regression model.
+
+        Returns:
+        -------
+            keras.models.Sequential: The constructed LSTM regression model.
+        """
+        model = Sequential(name="LSTMRegressorModel")
         model.add(
             LSTM(
                 100,
@@ -79,8 +118,24 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         y_val,
         callbacks=None,
     ):
+        """
+        Tunes the hyperparameters of the LSTMRegressor using Hyperband tuner.
+
+        Parameters:
+        ----------
+            X_train (array-like): The training input samples.
+            y_train (array-like): The target values for the training samples.
+            X_val (array-like): The validation input samples.
+            y_val (array-like): The target values for the validation samples.
+            callbacks (list): List of Keras callbacks. Default is None.
+
+        Returns:
+        -------
+            tuple: A tuple containing the best model, training history, and best hyperparameters.
+        """
+
         def build_model(hp):
-            model = Sequential(name="LstmRegressorModel")
+            model = Sequential(name="LSTMRegressorModel")
             model.add(
                 LSTM(
                     units=hp.Int("units", min_value=32, max_value=512, step=32),
@@ -150,6 +205,13 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         return best_model, history, best_hps
 
     def get_params(self, deep=True):
+        """
+        Gets the current hyperparameters of the LSTMRegressor.
+
+        Returns:
+        ------
+            dict: A dictionary of hyperparameter names and their values.
+        """
         return {
             "n_features": self.n_features,
             "max_epochs": self.max_epochs,
@@ -159,6 +221,13 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         }
 
     def set_params(self, **parameters):
+        """
+        Sets the value of the specified hyperparameters.
+
+        Returns:
+        ------
+            self
+        """
         for parameter, value in parameters.items():
             setattr(self, parameter, value)
         return self

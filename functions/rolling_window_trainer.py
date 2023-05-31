@@ -58,6 +58,88 @@ metrics_logger.addHandler(metrics_f_handler)
 
 
 class RollingWindowTrainer:
+    """
+    This class provides methods for training and evaluating machine learning models using a rolling window approach.
+    The rolling window approach is a time series forecasting technique where the model is retrained at each time step,
+    using only the most recent data as training data.
+
+    ...
+
+    Attributes
+    ----------
+    model_list : list
+        a list of models to be trained.
+    X_train_val : DataFrame
+        the feature dataset for training and validation.
+    y_train_val : DataFrame
+        the target dataset for training and validation.
+    train_window : int, optional
+        the size of the training window, by default 100.
+    val_window : int, optional
+        the size of the validation window, by default 20.
+    step_size : int, optional
+        the step size to move the window for each iteration, by default 5.
+    early_stopping_values : dict, optional
+        a dictionary with keys as the model names and values as a dictionary containing early stopping parameters.
+    checkpoint_path : str, optional
+        path to save the model checkpoints, by default "models/save/checkpoints/".
+    scaler : class
+        the scaler class to scale the predictions.
+
+    Methods
+    -------
+    start_training():
+        Start the training process.
+    get_all_val_metrics():
+        Return all validation metrics collected during training.
+    get_window_indices(step):
+        Return the indices for training and validation windows based on the current step.
+    get_train_window(start, end):
+        Return the training feature and target data based on the provided indices.
+    get_val_window(start, end):
+        Return the validation feature and target data based on the provided indices.
+    get_checkpoint_dir():
+        Return the directory path for storing model checkpoints.
+    get_checkpoint_callback(checkpoint_dir):
+        Return the model checkpoint callback function.
+    get_best_model_at_window(window):
+        Return the best model at a specific window.
+    get_best_models():
+        Return a list of the best models.
+    set_best_models(loaded_models):
+        Set the best models list using loaded models.
+    get_all_models():
+        Return a list of all models.
+    set_all_models(loaded_models):
+        Set the all models list using loaded models.
+    print_model_info():
+        Print the information of the best models.
+    get_histories():
+        Return the history of all models.
+    save_histories(file_name_nn="nn_history", file_name_cnn="cnn_history", file_name_lstm="lstm_history"):
+        Save the training history of all models into pickle files.
+    load_and_set_histories(file_name_nn="nn_history", file_name_cnn="cnn_history", file_name_lstm="lstm_history"):
+        Load the training history of all models from pickle files and set the histories attribute.
+    train_nn_model_with_window(X_train, y_train, X_val, y_val, window, checkpoint_callback):
+        Train a neural network model with a specific window.
+    check_overfitting(step, history):
+        Check if the model is overfitting.
+    tune_non_nn_model(X_train, X_val, y_train, y_val):
+        Tune a non-neural network model.
+    update_time_consumption(start_time):
+        Update the time consumption attribute.
+    predict_best_models(X):
+        Predict using the best models.
+    weighted_predict_best_models(X):
+        Predict using the best models with weights.
+    vote_predict_best_models(X):
+        Predict using the best models with voting.
+    predict_all_models(X):
+        Predict using all models.
+    generate_mean_df(predictions_all):
+        Generate a dataframe with the mean of all predictions.
+    """
+
     def __init__(
         self,
         scaler,
@@ -303,9 +385,32 @@ class RollingWindowTrainer:
         logger.info("Training complete.")
 
     def get_all_val_metrics(self):
+        """
+        Returns all validation metrics.
+
+        Returns:
+        --------
+        list:
+            List of all validation metrics.
+        """
+
         return self.all_val_metrics
 
     def get_window_indices(self, step):
+        """
+        Returns the start and end indices for the given window step.
+
+        Parameters:
+        -----------
+        step : int
+            The window step.
+
+        Returns:
+        --------
+        tuple:
+            Tuple containing the start and end indices for the window.
+        """
+
         train_start = step * self.step_size
         train_end = train_start + self.train_window
         val_start = train_end
@@ -313,19 +418,76 @@ class RollingWindowTrainer:
         return train_start, train_end, val_start, val_end
 
     def get_train_window(self, start, end):
+        """
+        Retrieves the training window data.
+
+        Parameters:
+        -----------
+        start : int
+            Start index of the training window.
+        end : int
+            End index of the training window.
+
+        Returns:
+        --------
+        pd.DataFrame, pd.Series:
+            X_train_window: Input data for the training window.
+            y_train_window: Target data for the training window.
+        """
+
         X_train_window = self.X_train_val.iloc[start:end]
         y_train_window = self.y_train_val.iloc[start:end]
         return X_train_window, y_train_window
 
     def get_val_window(self, start, end):
+        """
+        Retrieves the validation window data.
+
+        Parameters:
+        -----------
+        start : int
+            Start index of the validation window.
+        end : int
+            End index of the validation window.
+
+        Returns:
+        --------
+        pd.DataFrame, pd.Series:
+            X_val_window: Input data for the validation window.
+            y_val_window: Target data for the validation window.
+        """
+
         X_val_window = self.X_train_val.iloc[start:end]
         y_val_window = self.y_train_val.iloc[start:end]
         return X_val_window, y_val_window
 
     def get_checkpoint_dir(self):
+        """
+        Returns the checkpoint directory for saving the best model.
+
+        Returns:
+        --------
+        str:
+            Checkpoint directory for saving the best model.
+        """
+
         return os.path.join(self.checkpoint_path, self.model.name)
 
     def get_checkpoint_callback(self, checkpoint_dir):
+        """
+        Returns the checkpoint callback for saving the best model.
+
+        Parameters:
+        -----------
+        checkpoint_dir : str
+            Directory path for saving the best model checkpoint.
+
+        Returns:
+        --------
+        ModelCheckpoint:
+            Checkpoint callback for saving the best model.
+        """
+
         return ModelCheckpoint(
             filepath=os.path.join(checkpoint_dir, "best_model.h5"),
             save_best_only=True,
@@ -334,30 +496,94 @@ class RollingWindowTrainer:
         )
 
     def get_best_model_at_window(self, window):
+        """
+        Returns the best model information for the specified window step.
+
+        Parameters:
+        -----------
+        window : int
+            Window step for which to retrieve the best model.
+
+        Returns:
+        --------
+        dict or None:
+            Model information dictionary for the best model at the given window step.
+            Returns None if no best model is found for the specified window.
+        """
+
         for model_info in self.best_models:
             if model_info["step"] == window:
                 return model_info
         return None
 
     def get_best_models(self):
+        """
+        Returns the list of best models.
+
+        Returns:
+        --------
+        list:
+            List of best models.
+        """
+
         return self.best_models
 
     def set_best_models(self, loaded_models):
+        """
+        Sets the list of best models.
+
+        Parameters:
+        -----------
+        loaded_models : list
+            List of loaded best models.
+        """
+
         self.best_models = loaded_models
 
     def get_all_models(self):
+        """
+        Returns the list of all models.
+
+        Returns:
+        --------
+        list:
+            List of all models.
+        """
+
         return self.all_models
 
     def set_all_models(self, loaded_models):
+        """
+        Sets the list of all models.
+
+        Parameters:
+        -----------
+        loaded_models : list
+            List of loaded all models.
+        """
+
         self.all_models = loaded_models
 
     def print_model_info(self):
+        """
+        Prints information about the models.
+        """
+
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
             step = model_info["step"]
             print(model_info)
 
     def get_histories(self):
+        """
+        Returns the histories of neural network, CNN, and LSTM models.
+
+        Returns:
+        --------
+        tuple:
+            Tuple containing the histories of neural network, CNN, and LSTM models.
+        """
+
         return self.histories_nn, self.histories_cnn, self.histories_lstm
 
     def save_histories(
@@ -366,6 +592,19 @@ class RollingWindowTrainer:
         file_name_cnn="cnn_history",
         file_name_lstm="lstm_history",
     ):
+        """
+        Saves the histories of neural network, CNN, and LSTM models as pickle files.
+
+        Parameters:
+        -----------
+        file_name_nn : str, optional
+            Name of the file to save the neural network history, by default "nn_history".
+        file_name_cnn : str, optional
+            Name of the file to save the CNN history, by default "cnn_history".
+        file_name_lstm : str, optional
+            Name of the file to save the LSTM history, by default "lstm_history".
+        """
+
         base_dir = "models/save/histories"
         os.makedirs(base_dir, exist_ok=True)
 
@@ -385,6 +624,19 @@ class RollingWindowTrainer:
         file_name_cnn="cnn_history",
         file_name_lstm="lstm_history",
     ):
+        """
+        This method loads and sets the training history of the models from the specified files.
+
+        Parameters:
+        ----------
+        file_name_nn: str, optional
+            The file name for the history of the Neural Network model.
+        file_name_cnn: str, optional
+            The file name for the history of the Convolutional Neural Network model.
+        file_name_lstm: str, optional
+            The file name for the history of the LSTM model.
+        """
+
         base_dir = "models/save/histories"
 
         if file_name_nn is not None:
@@ -417,6 +669,23 @@ class RollingWindowTrainer:
         y_val,
         checkpoint_callback,
     ):
+        """
+        This method trains a Neural Network model with a rolling window approach.
+
+        Parameters:
+        ----------
+        X_train: DataFrame
+            The input training data.
+        y_train: DataFrame
+            The output training data.
+        X_val: DataFrame
+            The input validation data.
+        y_val: DataFrame
+            The output validation data.
+        checkpoint_callback: Callback
+            A callback for saving the model checkpoints.
+        """
+
         model_flag = 0
         best_hps = None
 
@@ -485,6 +754,17 @@ class RollingWindowTrainer:
         return tuned_model, history, model_flag
 
     def check_overfitting(self, step, history):
+        """
+        This method checks for overfitting in the model's training history.
+
+        Parameters:
+        ----------
+        step: int
+            The current step in the rolling window approach.
+        history: History
+            The training history of the model.
+        """
+
         patience = 5
         if len(history.history["val_loss"]) > patience:
             if all(
@@ -500,6 +780,21 @@ class RollingWindowTrainer:
         self.val_metric = min(self.val_metric, history.history["val_loss"][-1])
 
     def tune_non_nn_model(self, X_train, X_val, y_train, y_val):
+        """
+        This method tunes the hyperparameters of a non-Neural Network model.
+
+        Parameters:
+        ----------
+        X_train: DataFrame
+            The input training data.
+        y_train: DataFrame
+            The output training data.
+        X_val: DataFrame
+            The input validation data.
+        y_val: DataFrame
+            The output validation data.
+        """
+
         best_model = None
         best_hps = None
         try:
@@ -514,6 +809,15 @@ class RollingWindowTrainer:
         return best_model
 
     def update_time_consumption(self, start_time):
+        """
+        This method updates the time consumption of the model.
+
+        Parameters:
+        ----------
+        start_time: float
+            The time when the model's training started.
+        """
+
         end_time = time.time()
         time_taken = end_time - start_time
         name = self.model.name.split("_")[0]  # Strip the timestamp
@@ -524,6 +828,23 @@ class RollingWindowTrainer:
             self.time_consumption[name].append(time_taken)
 
     def predict_best_models(self, X):
+        """
+        Predicts the best models based on the given input data.
+
+        Parameters:
+        -----------
+        X : pd.DataFrame or np.ndarray
+            Input data for prediction.
+
+        Returns:
+        --------
+        pd.DataFrame or pd.Series or None
+            Predicted values of the best models.
+            If input X is pd.DataFrame, returns a DataFrame with the predictions.
+            If input X is np.ndarray, returns a Series with the predictions.
+            Returns None if the input X is neither pd.DataFrame nor np.ndarray.
+        """
+
         all_predictions = {}
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
@@ -559,6 +880,23 @@ class RollingWindowTrainer:
         return all_predictions
 
     def weighted_predict_best_models(self, X):
+        """
+        Predicts the best models using weighted averaging based on the given input data (Not working as expected.).
+
+        Parameters:
+        -----------
+        X : pd.DataFrame or np.ndarray
+            Input data for prediction.
+
+        Returns:
+        --------
+        pd.DataFrame or pd.Series or None
+            Weighted predictions of the best models.
+            If input X is pd.DataFrame, returns a DataFrame with the weighted predictions.
+            If input X is np.ndarray, returns a Series with the weighted predictions.
+            Returns None if the input X is neither pd.DataFrame nor np.ndarray.
+        """
+
         all_predictions = {}
         model_weights = {}
         total_weights = 0
@@ -613,6 +951,23 @@ class RollingWindowTrainer:
         return weighted_predictions
 
     def vote_predict_best_models(self, X):
+        """
+        Predicts the best models using voting based on the given input data (Not working as expected.).
+
+        Parameters:
+        -----------
+        X : pd.DataFrame or np.ndarray
+            Input data for prediction.
+
+        Returns:
+        --------
+        pd.DataFrame or pd.Series or None
+            Predicted values of the best models using voting.
+            If input X is pd.DataFrame, returns a DataFrame with the predictions.
+            If input X is np.ndarray, returns a Series with the predictions.
+            Returns None if the input X is neither pd.DataFrame nor np.ndarray.
+        """
+
         all_predictions = {}
         for model_idx, model_info in enumerate(self.best_models):
             model = model_info["model"]
@@ -657,6 +1012,22 @@ class RollingWindowTrainer:
         return all_predictions
 
     def predict_all_models(self, X):
+        """
+        Predicts all models based on the given input data.
+
+        Parameters:
+        -----------
+        X : pd.DataFrame or np.ndarray
+            Input data for prediction.
+
+        Returns:
+        --------
+        pd.DataFrame or np.ndarray
+            Predicted values of all models.
+            If input X is pd.DataFrame, returns a DataFrame with the predictions.
+            If input X is np.ndarray, returns a 2D array with the predictions.
+        """
+
         all_predictions = {}
         for model_idx, model_info in enumerate(self.all_models):
             model = model_info["model"]
@@ -709,6 +1080,20 @@ class RollingWindowTrainer:
         return df_predictions
 
     def generate_mean_df(self, predictions_all):
+        """
+        Generates a mean DataFrame from the predictions of all models.
+
+        Parameters:
+        -----------
+        predictions_all : pd.DataFrame
+            DataFrame containing predictions of all models.
+
+        Returns:
+        --------
+        pd.DataFrame
+            Mean DataFrame with averaged predictions per model.
+        """
+
         total_columns = predictions_all.shape[1]
         columns_per_model = total_columns // self.total_windows
 
@@ -720,38 +1105,3 @@ class RollingWindowTrainer:
             mean_df[f"model_{i+1}_mean"] = model_df.mean(axis=1)
 
         return mean_df
-
-    @staticmethod
-    def evaluate_with_rolling_window(X_test, y_test, step_size, best_model):
-        try:
-            predictions = RollingWindowTrainer.predict_with_rolling_window(
-                X_test, step_size, best_model
-            )
-            y_test_flattened = y_test.values.flatten()
-
-            min_length = min(len(predictions), len(y_test_flattened))
-            predictions = predictions[:min_length]
-            y_test_flattened = y_test_flattened[:min_length]
-
-            test_metrics = []
-
-            mae = mean_absolute_error(y_test_flattened, predictions)
-            mse = mean_squared_error(y_test_flattened, predictions)
-            r2 = r2_score(y_test_flattened, predictions)
-            rmse = sqrt(mse)
-            metrics = {
-                "Model": best_model.name,
-                "Test MAE (Mean Absolute Error)": mae,
-                "Test MSE (Mean Squared Error)": mse,
-                "Test R2 Score (Coefficient of Determination)": r2,
-                "Test RMSE (Root Mean Square Deviation)": rmse,
-            }
-            test_metrics.append(metrics)
-
-            df = pd.DataFrame(test_metrics)
-            logger.info(f"Test evaluation metrics: \n{df}")
-            return df
-
-        except Exception as e:
-            logger.error(f"Error occurred during evaluation: {str(e)}")
-            return pd.DataFrame()

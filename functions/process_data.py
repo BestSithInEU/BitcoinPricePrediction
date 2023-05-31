@@ -19,6 +19,34 @@ def process_data(
     volume_col="Vol.",
     scaler="MinMaxScaler",
 ):
+    """
+    Preprocesses a given dataset by performing steps such as loading the data, handling missing values,
+    creating lagged features, scaling, etc.
+
+    Parameters:
+    -----------
+    file_path : str
+        Path to the CSV file.
+    lags : list, optional
+        List of lags to create lagged features, by default [1, 2, 3].
+    rolling_windows : list, optional
+        List of windows to create rolling window features, by default [3, 7, 14].
+    target_col : str, optional
+        Name of the target column, by default "Price".
+    datetime_col : str, optional
+        Name of the datetime column, by default "Date".
+    volume_col : str, optional
+        Name of the volume column, by default "Vol.".
+    scaler : str, optional
+        Scaler to use for scaling the features. Options are 'StandardScaler', 'RobustScaler',
+        and 'MinMaxScaler'. Defaults to 'MinMaxScaler'.
+
+    Returns:
+    --------
+    tuple
+        Tuple containing scaled features, scaled target, and the scaler used.
+    """
+
     # Load the data
     df = pd.read_csv(file_path)
 
@@ -90,6 +118,25 @@ def process_data(
 
 
 def split_data(X_scaled, y_scaled, test_ratio):
+    """
+    Splits the scaled features and target into training/validation and test sets.
+
+    Parameters:
+    -----------
+    X_scaled : DataFrame
+        Scaled features.
+    y_scaled : DataFrame
+        Scaled target.
+    test_ratio : float
+        Ratio of the test set size.
+
+    Returns:
+    --------
+    tuple
+        Tuple containing training/validation features, training/validation target,
+        test features, and test target.
+    """
+
     # Calculate the indexes for the start and end of the test set
     _len = len(X_scaled)
     test_size = int(_len * test_ratio)
@@ -110,12 +157,16 @@ def double_quotation_remover(input_file_name_v1, delimiter=","):
     """
     Removes double quotation marks from specified columns in a CSV file.
 
-    Args:
-        input_file_name_v1 (str): Path to the input CSV file.
-        delimiter (str): Delimiter used in the CSV file. Defaults to ','.
+    Parameters:
+    -----------
+    input_file_name_v1 : str
+        Path to the input CSV file.
+    delimiter : str, optional
+        Delimiter used in the CSV file, by default ",".
 
     Returns:
-        None
+    --------
+    None
     """
 
     df = pd.read_csv(input_file_name_v1, delimiter=delimiter)
@@ -133,29 +184,35 @@ def modify_date_format(
     """
     Modifies the date format of a specific column in a CSV file.
 
-    Args:
-        input_file_name_v1 (str): Path to the input CSV file.
-        date_column_name (str): Name of the column containing dates to be modified.
-        date_format (str): Format of the dates in the input file. Defaults to '%b %d, %Y'.
-        delimiter (str): Delimiter used in the CSV file. Defaults to ','.
+    Parameters:
+    -----------
+    input_file_name_v1 : str
+        Path to the input CSV file.
+    date_column_name : str
+        Name of the column containing dates to be modified.
+    date_format : str, optional
+        Format of the dates in the input file, by default "%b %d, %Y".
+    delimiter : str, optional
+        Delimiter used in the CSV file, by default ",".
 
     Returns:
-        None
+    --------
+    None
 
     Example:
-        - Format 1: "%Y-%m-%d" (e.g., "2023-05-14")
-        - Format 2: "%m-%d-%Y" (e.g., "05-14-2023")
-        - Format 3: "%d-%m-%Y" (e.g., "14-05-2023")
-        - Format 4: "%Y/%m/%d" (e.g., "2023/05/14")
-        - Format 5: "%m/%d/%Y" (e.g., "05/14/2023")
-        - Format 6: "%d/%m/%Y" (e.g., "14/05/2023")
-        - Format 7: "%Y.%m.%d" (e.g., "2023.05.14")
-        - Format 8: "%m.%d.%Y" (e.g., "05.14.2023")
-        - Format 9: "%d.%m.%Y" (e.g., "14.05.2023")
-        - Format 10: "%Y %m %d" (e.g., "2023 05 14")
-        - Format 11: "%m %d %Y" (e.g., "05 14 2023")
-        - Format 12: "%d %m %Y" (e.g., "14 05 2023")
-        - Format 13: "%b %d, %Y" (e.g., "May 14, 2023")
+    - Format 1: "%Y-%m-%d" (e.g., "2023-05-14")
+    - Format 2: "%m-%d-%Y" (e.g., "05-14-2023")
+    - Format 3: "%d-%m-%Y" (e.g., "14-05-2023")
+    - Format 4: "%Y/%m/%d" (e.g., "2023/05/14")
+    - Format 5: "%m/%d/%Y" (e.g., "05/14/2023")
+    - Format 6: "%d/%m/%Y" (e.g., "14/05/2023")
+    - Format 7: "%Y.%m.%d" (e.g., "2023.05.14")
+    - Format 8: "%m.%d.%Y" (e.g., "05.14.2023")
+    - Format 9: "%d.%m.%Y" (e.g., "14.05.2023")
+    - Format 10: "%Y %m %d" (e.g., "2023 05 14")
+    - Format 11: "%m %d %Y" (e.g., "05 14 2023")
+    - Format 12: "%d %m %Y" (e.g., "14 05 2023")
+    - Format 13: "%b %d, %Y" (e.g., "May 14, 2023")
     """
 
     df = []
@@ -185,15 +242,20 @@ def combine_data(
     input_file_name_v2="headlines_sentiment.csv",
 ):
     """
-    Combines bitcoin price data and sentiment data into a single CSV file.
+    Combines two datasets and writes the combined dataset to a CSV file.
 
-    Args:
-        output_file_name (str): Path to the output CSV file. Defaults to 'data\\combined_data.csv'.
-        input_file_name_v1 (str): Path to the bitcoin price data CSV file. Defaults to 'data\\bitcoin_price.csv'.
-        input_file_name_v2 (str): Path to the sentiment data CSV file. Defaults to 'data\\headlines_sentiment.csv'.
+    Parameters:
+    -----------
+    output_file_name : str, optional
+        Name of the output file, by default "combined_data".
+    input_file_name_v1 : str, optional
+        Name of the first input file, by default "bitcoin_price.csv".
+    input_file_name_v2 : str, optional
+        Name of the second input file, by default "headlines_sentiment.csv".
 
     Returns:
-        None
+    --------
+    None
     """
 
     output_file_name = f"{output_file_name}.csv"

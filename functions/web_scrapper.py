@@ -12,18 +12,74 @@ import time
 
 
 class StoppableThread(threading.Thread):
+    """
+    A thread that can be stopped by setting the internal stop flag
+    through stop() method.
+    """
+
     def __init__(self, *args, **kwargs):
+        """
+        Initialize the thread and set up the stop event.
+        """
+
         super().__init__(*args, **kwargs)
         self._stop_event = threading.Event()
 
     def stop(self):
+        """
+        Set the stop flag to stop the thread.
+        """
+
         self._stop_event.set()
 
     def stopped(self):
+        """
+        Check if the thread is stopped.
+
+        Returns:
+            bool: True if the thread is stopped, False otherwise.
+        """
+
         return self._stop_event.is_set()
 
 
 class WebScraper:
+    """
+    A web scraper for scraping headlines from coindesk.
+
+    The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.
+    It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.
+
+    Attributes:
+    -----------
+    url : str
+        The URL to scrape from.
+    starting_page_number : int
+        The page number to start scraping from.
+    ending_page_number : int
+        The page number to end scraping at.
+    output_file_name : str
+        The name of the file to output scraped headlines.
+    pause : bool
+        A flag indicating whether the scraping process is paused.
+    stop : bool
+        A flag indicating whether the scraping process is stopped.
+
+    Methods:
+    --------
+    start_scraping(url, starting_page_number, ending_page_number, output_file_name):
+        Starts the scraping process.
+    stop_scraping():
+        Stops the scraping process.
+    pause_scraping():
+        Pauses the scraping process.
+    resume_scraping():
+        Resumes the scraping process.
+    webScrapper(url, starting_page_number, ending_page_number, output_file_name):
+        The main method for scraping the website. Navigates through web pages, finds required elements,
+        and writes scraped data to a CSV file.
+    """
+
     def __init__(
         self,
         url="https://www.coindesk.com/search?s=bitcoin&sort=1",
@@ -31,6 +87,22 @@ class WebScraper:
         ending_page_number=3096,
         output_file_name="headlines",
     ):
+        """
+        Initialize the web scraper with the URL to scrape from, the range of pages
+        to scrape, and the file to output the scraped headlines.
+
+        Parameters:
+        -----------
+        url : str, optional
+            URL to scrape from. Defaults to "https://www.coindesk.com/search?s=bitcoin&sort=1".
+        starting_page_number : int, optional
+            Page number to start scraping from. Defaults to 1.
+        ending_page_number : int, optional
+            Page number to end scraping at. Defaults to 3096.
+        output_file_name : str, optional
+            Name of the file to output scraped headlines. Defaults to "headlines".
+        """
+
         self.url = url
         self.starting_page_number = starting_page_number
         self.ending_page_number = ending_page_number
@@ -41,6 +113,21 @@ class WebScraper:
     def start_scraping(
         self, url, starting_page_number, ending_page_number, output_file_name
     ):
+        """
+        Start the scraping process.
+
+        Parameters:
+        -----------
+        url : str
+            URL to scrape from.
+        starting_page_number : int
+            Page number to start scraping from.
+        ending_page_number : int
+            Page number to end scraping at.
+        output_file_name : str
+            Name of the file to output scraped headlines.
+        """
+
         self.thread = StoppableThread(
             target=self.webScrapper,
             args=(url, starting_page_number, ending_page_number, output_file_name),
@@ -48,17 +135,47 @@ class WebScraper:
         self.thread.start()
 
     def stop_scraping(self):
+        """
+        Stop the scraping process by stopping the thread in which it runs.
+        """
+
         self.thread.stop()
 
     def pause_scraping(self):
+        """
+        Pause the scraping process by setting the pause flag to True.
+        """
+
         self.pause = True
 
     def resume_scraping(self):
+        """
+        Resume the scraping process by setting the pause flag to False.
+        """
+
         self.pause = False
 
     def webScrapper(
         self, url, starting_page_number, ending_page_number, output_file_name
     ):
+        """
+        The main method for scraping the website. It navigates through the pages
+        of the given url, finds the required elements, and writes the data to a CSV file.
+        It also handles cases like file not found, consent button, and handles exceptions like
+        TimeoutException. The scraping process can also be paused, resumed and stopped.
+
+        Parameters:
+        -----------
+        url : str
+            The base url from where the scraping starts.
+        starting_page_number : int
+            The starting page number for scraping.
+        ending_page_number : int
+            The ending page number for scraping.
+        output_file_name : str
+            The name of the output file where the scraped data is stored.
+        """
+
         output_file_name = f"dataset/{output_file_name}.csv"
 
         options = webdriver.ChromeOptions()
