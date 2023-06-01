@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>models.lstm_regressor &mdash; Bitcoin Price Prediction 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Bitcoin Price Prediction
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Bitcoin Price Prediction</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">models.lstm_regressor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for models.lstm_regressor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">BaseModelNN</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">regularizers</span>
+<span class="kn">from</span> <span class="nn">keras_tuner</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Hyperband</span><span class="p">,</span>
+    <span class="n">HyperModel</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Dense</span><span class="p">,</span>
+    <span class="n">Dropout</span><span class="p">,</span>
+    <span class="n">LSTM</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="kn">import</span> <span class="n">Adam</span>
+
+
+<div class="viewcode-block" id="LSTMRegressor"><a class="viewcode-back" href="../../models.html#models.lstm_regressor.LSTMRegressor">[docs]</a><span class="k">class</span> <span class="nc">LSTMRegressor</span><span class="p">(</span><span class="n">HyperModel</span><span class="p">,</span> <span class="n">BaseModelNN</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    LSTMRegressor is a class that implements a Long Short-Term Memory (LSTM) model for regression tasks.</span>
+<span class="sd">    It utilizes hyperparameter tuning with the Keras Tuner library to optimize the model&#39;s performance.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">        n_features (int): The number of input features.</span>
+<span class="sd">        max_epochs (int): The maximum number of epochs to train the model. Default is 5.</span>
+<span class="sd">        max_batch_size (int): The maximum batch size for training the model. Default is 5.</span>
+<span class="sd">        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.</span>
+<span class="sd">        patience (int): The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.</span>
+<span class="sd">        tuner_epochs (int): The number of epochs to train the tuner. Default is 5.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">    ----------</span>
+<span class="sd">        n_features (int): The number of input features.</span>
+<span class="sd">        max_epochs (int): The maximum number of epochs to train the model.</span>
+<span class="sd">        max_batch_size (int): The maximum batch size for training the model.</span>
+<span class="sd">        hyperband_iterations (int): The number of Hyperband iterations.</span>
+<span class="sd">        patience (int): The number of epochs to wait for improvement in validation loss before early stopping.</span>
+<span class="sd">        tuner_epochs (int): The number of epochs to train the tuner.</span>
+<span class="sd">        name (str): The name of the LSTMRegressor model.</span>
+<span class="sd">        model (keras.models.Sequential): The LSTMRegressor model.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">    -------</span>
+<span class="sd">        build_model(): Build the LSTM regression model.</span>
+<span class="sd">        tune_model_with_window_lstm(): Tune the hyperparameters of the LSTMRegressor model using the Hyperband tuner.</span>
+<span class="sd">        get_params(): Get the current hyperparameters of the LSTMRegressor.</span>
+<span class="sd">        set_params(): Set the value of the specified hyperparameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">n_features</span><span class="p">,</span>
+        <span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">max_batch_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">hyperband_iterations</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">tuner_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="n">n_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_epochs</span> <span class="o">=</span> <span class="n">max_epochs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_batch_size</span> <span class="o">=</span> <span class="n">max_batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hyperband_iterations</span> <span class="o">=</span> <span class="n">hyperband_iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">patience</span> <span class="o">=</span> <span class="n">patience</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tuner_epochs</span> <span class="o">=</span> <span class="n">tuner_epochs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;LstmRegressorModel&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">()</span>
+
+<div class="viewcode-block" id="LSTMRegressor.build_model"><a class="viewcode-back" href="../../models.html#models.lstm_regressor.LSTMRegressor.build_model">[docs]</a>    <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the LSTM regression model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            keras.models.Sequential: The constructed LSTM regression model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;LSTMRegressorModel&quot;</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">LSTM</span><span class="p">(</span>
+                <span class="mi">100</span><span class="p">,</span>
+                <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+                <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">),</span>
+                <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lstm_1&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">LSTM</span><span class="p">(</span>
+                <span class="mi">50</span><span class="p">,</span>
+                <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+                <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lstm_2&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">LSTM</span><span class="p">(</span>
+                <span class="mi">50</span><span class="p">,</span>
+                <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+                <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l2</span><span class="p">(</span><span class="mf">0.01</span><span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lstm_3&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dropout&quot;</span><span class="p">))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;dense&quot;</span><span class="p">))</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;mean_squared_error&quot;</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">Adam</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="LSTMRegressor.tune_model_with_window_lstm"><a class="viewcode-back" href="../../models.html#models.lstm_regressor.LSTMRegressor.tune_model_with_window_lstm">[docs]</a>    <span class="k">def</span> <span class="nf">tune_model_with_window_lstm</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X_train</span><span class="p">,</span>
+        <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">X_val</span><span class="p">,</span>
+        <span class="n">y_val</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tunes the hyperparameters of the LSTMRegressor using Hyperband tuner.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">            X_train (array-like): The training input samples.</span>
+<span class="sd">            y_train (array-like): The target values for the training samples.</span>
+<span class="sd">            X_val (array-like): The validation input samples.</span>
+<span class="sd">            y_val (array-like): The target values for the validation samples.</span>
+<span class="sd">            callbacks (list): List of Keras callbacks. Default is None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">            tuple: A tuple containing the best model, training history, and best hyperparameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">hp</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;LSTMRegressorModel&quot;</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">LSTM</span><span class="p">(</span>
+                    <span class="n">units</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span>
+                    <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+                    <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">LSTM</span><span class="p">(</span>
+                    <span class="n">units</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="s2">&quot;units&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">32</span><span class="p">),</span>
+                    <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;tanh&quot;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">Dropout</span><span class="p">(</span>
+                    <span class="n">hp</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="s2">&quot;dropout_rate&quot;</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">))</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+                <span class="n">optimizer</span><span class="o">=</span><span class="n">Adam</span><span class="p">(</span>
+                    <span class="n">learning_rate</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">])</span>
+                <span class="p">),</span>
+                <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;mean_squared_error&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">model</span>
+
+        <span class="n">tuner</span> <span class="o">=</span> <span class="n">Hyperband</span><span class="p">(</span>
+            <span class="n">build_model</span><span class="p">,</span>
+            <span class="n">objective</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
+            <span class="n">max_epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_epochs</span><span class="p">,</span>
+            <span class="n">hyperband_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hyperband_iterations</span><span class="p">,</span>
+            <span class="n">directory</span><span class="o">=</span><span class="s2">&quot;models/keras_tuning/lstm&quot;</span><span class="p">,</span>
+            <span class="n">project_name</span><span class="o">=</span><span class="s2">&quot;lstm_tuning_&quot;</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="n">tuner</span><span class="o">.</span><span class="n">search_space_summary</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">X_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tuner</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tuner_epochs</span><span class="p">,</span>
+                <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span>
+                <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tuner</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+                <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tuner_epochs</span><span class="p">,</span>
+                <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">best_model</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">get_best_models</span><span class="p">(</span><span class="n">num_models</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">best_hps</span> <span class="o">=</span> <span class="n">tuner</span><span class="o">.</span><span class="n">get_best_hyperparameters</span><span class="p">(</span><span class="n">num_trials</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">history</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_epochs</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_batch_size</span><span class="p">,</span>
+            <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">best_model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_hps</span></div>
+
+<div class="viewcode-block" id="LSTMRegressor.get_params"><a class="viewcode-back" href="../../models.html#models.lstm_regressor.LSTMRegressor.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the current hyperparameters of the LSTMRegressor.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        ------</span>
+<span class="sd">            dict: A dictionary of hyperparameter names and their values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;n_features&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span>
+            <span class="s2">&quot;max_epochs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_epochs</span><span class="p">,</span>
+            <span class="s2">&quot;hyperband_iterations&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyperband_iterations</span><span class="p">,</span>
+            <span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">patience</span><span class="p">,</span>
+            <span class="s2">&quot;tuner_epochs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tuner_epochs</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="LSTMRegressor.set_params"><a class="viewcode-back" href="../../models.html#models.lstm_regressor.LSTMRegressor.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the value of the specified hyperparameters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        ------</span>
+<span class="sd">            self</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Batuhan Edgüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

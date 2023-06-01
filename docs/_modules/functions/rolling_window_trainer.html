@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>functions.rolling_window_trainer &mdash; Bitcoin Price Prediction 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Bitcoin Price Prediction
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Bitcoin Price Prediction</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">functions.rolling_window_trainer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for functions.rolling_window_trainer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">clone</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">models</span> <span class="kn">import</span> <span class="n">BaseModelNN</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">keras.callbacks</span> <span class="kn">import</span> <span class="n">ModelCheckpoint</span><span class="p">,</span> <span class="n">EarlyStopping</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">mean_absolute_percentage_error</span><span class="p">,</span> <span class="n">root_mean_squared_log_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">mean_absolute_error</span><span class="p">,</span>
+    <span class="n">mean_squared_error</span><span class="p">,</span>
+    <span class="n">r2_score</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="c1"># Create a console handler with INFO level</span>
+<span class="n">c_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">c_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">c_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">c_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">c_format</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">c_handler</span><span class="p">)</span>
+
+<span class="c1"># Create a file handler with ERROR level</span>
+<span class="n">log_file</span> <span class="o">=</span> <span class="s2">&quot;rolling_window_training.log&quot;</span>
+<span class="n">f_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span>
+    <span class="n">log_file</span><span class="p">,</span> <span class="n">maxBytes</span><span class="o">=</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>  <span class="c1"># 5 MB per file, 5 backup files</span>
+<span class="n">f_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="n">f_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">f_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">f_format</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">f_handler</span><span class="p">)</span>
+
+
+<span class="c1"># Define a new logger for model metrics</span>
+<span class="n">metrics_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;metrics_logger&quot;</span><span class="p">)</span>
+<span class="n">metrics_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># Create a file handler for it</span>
+<span class="n">metrics_log_file</span> <span class="o">=</span> <span class="s2">&quot;model_metrics.log&quot;</span>
+<span class="n">metrics_f_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">metrics_log_file</span><span class="p">)</span>
+<span class="n">metrics_f_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># You can use a simple formatter since this is mostly structured data</span>
+<span class="n">metrics_f_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">metrics_f_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">metrics_f_format</span><span class="p">)</span>
+
+<span class="c1"># Add the handler to the logger</span>
+<span class="n">metrics_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">metrics_f_handler</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RollingWindowTrainer"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer">[docs]</a><span class="k">class</span> <span class="nc">RollingWindowTrainer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class provides methods for training and evaluating machine learning models using a rolling window approach.</span>
+<span class="sd">    The rolling window approach is a time series forecasting technique where the model is retrained at each time step,</span>
+<span class="sd">    using only the most recent data as training data.</span>
+
+<span class="sd">    ...</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model_list : list</span>
+<span class="sd">        a list of models to be trained.</span>
+<span class="sd">    X_train_val : DataFrame</span>
+<span class="sd">        the feature dataset for training and validation.</span>
+<span class="sd">    y_train_val : DataFrame</span>
+<span class="sd">        the target dataset for training and validation.</span>
+<span class="sd">    train_window : int, optional</span>
+<span class="sd">        the size of the training window, by default 100.</span>
+<span class="sd">    val_window : int, optional</span>
+<span class="sd">        the size of the validation window, by default 20.</span>
+<span class="sd">    step_size : int, optional</span>
+<span class="sd">        the step size to move the window for each iteration, by default 5.</span>
+<span class="sd">    early_stopping_values : dict, optional</span>
+<span class="sd">        a dictionary with keys as the model names and values as a dictionary containing early stopping parameters.</span>
+<span class="sd">    checkpoint_path : str, optional</span>
+<span class="sd">        path to save the model checkpoints, by default &quot;models/save/checkpoints/&quot;.</span>
+<span class="sd">    scaler : class</span>
+<span class="sd">        the scaler class to scale the predictions.</span>
+
+<span class="sd">    Methods</span>
+<span class="sd">    -------</span>
+<span class="sd">    start_training():</span>
+<span class="sd">        Start the training process.</span>
+<span class="sd">    get_all_val_metrics():</span>
+<span class="sd">        Return all validation metrics collected during training.</span>
+<span class="sd">    get_window_indices(step):</span>
+<span class="sd">        Return the indices for training and validation windows based on the current step.</span>
+<span class="sd">    get_train_window(start, end):</span>
+<span class="sd">        Return the training feature and target data based on the provided indices.</span>
+<span class="sd">    get_val_window(start, end):</span>
+<span class="sd">        Return the validation feature and target data based on the provided indices.</span>
+<span class="sd">    get_checkpoint_dir():</span>
+<span class="sd">        Return the directory path for storing model checkpoints.</span>
+<span class="sd">    get_checkpoint_callback(checkpoint_dir):</span>
+<span class="sd">        Return the model checkpoint callback function.</span>
+<span class="sd">    get_best_model_at_window(window):</span>
+<span class="sd">        Return the best model at a specific window.</span>
+<span class="sd">    get_best_models():</span>
+<span class="sd">        Return a list of the best models.</span>
+<span class="sd">    set_best_models(loaded_models):</span>
+<span class="sd">        Set the best models list using loaded models.</span>
+<span class="sd">    get_all_models():</span>
+<span class="sd">        Return a list of all models.</span>
+<span class="sd">    set_all_models(loaded_models):</span>
+<span class="sd">        Set the all models list using loaded models.</span>
+<span class="sd">    print_model_info():</span>
+<span class="sd">        Print the information of the best models.</span>
+<span class="sd">    get_histories():</span>
+<span class="sd">        Return the history of all models.</span>
+<span class="sd">    save_histories(file_name_nn=&quot;nn_history&quot;, file_name_cnn=&quot;cnn_history&quot;, file_name_lstm=&quot;lstm_history&quot;):</span>
+<span class="sd">        Save the training history of all models into pickle files.</span>
+<span class="sd">    load_and_set_histories(file_name_nn=&quot;nn_history&quot;, file_name_cnn=&quot;cnn_history&quot;, file_name_lstm=&quot;lstm_history&quot;):</span>
+<span class="sd">        Load the training history of all models from pickle files and set the histories attribute.</span>
+<span class="sd">    train_nn_model_with_window(X_train, y_train, X_val, y_val, window, checkpoint_callback):</span>
+<span class="sd">        Train a neural network model with a specific window.</span>
+<span class="sd">    check_overfitting(step, history):</span>
+<span class="sd">        Check if the model is overfitting.</span>
+<span class="sd">    tune_non_nn_model(X_train, X_val, y_train, y_val):</span>
+<span class="sd">        Tune a non-neural network model.</span>
+<span class="sd">    update_time_consumption(start_time):</span>
+<span class="sd">        Update the time consumption attribute.</span>
+<span class="sd">    predict_best_models(X):</span>
+<span class="sd">        Predict using the best models.</span>
+<span class="sd">    weighted_predict_best_models(X):</span>
+<span class="sd">        Predict using the best models with weights.</span>
+<span class="sd">    vote_predict_best_models(X):</span>
+<span class="sd">        Predict using the best models with voting.</span>
+<span class="sd">    predict_all_models(X):</span>
+<span class="sd">        Predict using all models.</span>
+<span class="sd">    generate_mean_df(predictions_all):</span>
+<span class="sd">        Generate a dataframe with the mean of all predictions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">scaler</span><span class="p">,</span>
+        <span class="n">X_train_val</span><span class="p">,</span>
+        <span class="n">y_train_val</span><span class="p">,</span>
+        <span class="n">train_window</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">val_window</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+        <span class="n">step_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">checkpoint_path</span><span class="o">=</span><span class="s2">&quot;models/save/checkpoints/&quot;</span><span class="p">,</span>
+        <span class="n">early_stopping_values</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;lstm&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;min_delta&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;nn&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;min_delta&quot;</span><span class="p">:</span> <span class="mf">0.0002</span><span class="p">,</span> <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;cnn&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;patience&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;min_delta&quot;</span><span class="p">:</span> <span class="mf">0.0003</span><span class="p">,</span> <span class="s2">&quot;monitor&quot;</span><span class="p">:</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">},</span>
+        <span class="p">},</span>
+        <span class="n">model_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_list</span> <span class="o">=</span> <span class="n">model_list</span> <span class="k">if</span> <span class="n">model_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span> <span class="o">=</span> <span class="n">X_train_val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_train_val</span> <span class="o">=</span> <span class="n">y_train_val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">=</span> <span class="n">train_window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_window</span> <span class="o">=</span> <span class="n">val_window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">step_size</span> <span class="o">=</span> <span class="n">step_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping_values</span> <span class="o">=</span> <span class="n">early_stopping_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pause_training</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+            <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_window</span><span class="p">)</span>
+            <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_size</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span> <span class="o">=</span> <span class="n">scaler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_models</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_model_info</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_metric</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_consumption</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_path</span> <span class="o">=</span> <span class="n">checkpoint_path</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RollingWindowTrainer.start_training"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.start_training">[docs]</a>    <span class="k">def</span> <span class="nf">start_training</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_training</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Training is already stopped.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training started.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_training</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training stopped at step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">best_model_info_in_window</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">best_val_metric_in_window</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="p">(</span>
+                <span class="n">model_class</span><span class="p">,</span>
+                <span class="n">model_params</span><span class="p">,</span>
+            <span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_list</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">(</span><span class="o">**</span><span class="n">model_params</span><span class="p">)</span>
+                <span class="n">model_class_name</span> <span class="o">=</span> <span class="n">model_class</span><span class="o">.</span><span class="vm">__name__</span>
+
+                <span class="k">if</span> <span class="n">model_class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span><span class="p">[</span><span class="n">model_class_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">pause_training</span><span class="p">:</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="n">train_start</span><span class="p">,</span> <span class="n">train_end</span><span class="p">,</span> <span class="n">val_start</span><span class="p">,</span> <span class="n">val_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_window_indices</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+                <span class="n">X_train_window</span><span class="p">,</span> <span class="n">y_train_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_train_window</span><span class="p">(</span>
+                    <span class="n">train_start</span><span class="p">,</span> <span class="n">train_end</span>
+                <span class="p">)</span>
+                <span class="n">X_val_window</span><span class="p">,</span> <span class="n">y_val_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_val_window</span><span class="p">(</span><span class="n">val_start</span><span class="p">,</span> <span class="n">val_end</span><span class="p">)</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Start training </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">BaseModelNN</span><span class="p">):</span>
+                        <span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_checkpoint_dir</span><span class="p">()</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                        <span class="n">checkpoint_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_checkpoint_callback</span><span class="p">(</span>
+                            <span class="n">checkpoint_dir</span>
+                        <span class="p">)</span>
+
+                        <span class="p">(</span>
+                            <span class="n">tuned_model</span><span class="p">,</span>
+                            <span class="n">history</span><span class="p">,</span>
+                            <span class="n">flag</span><span class="p">,</span>
+                        <span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_nn_model_with_window</span><span class="p">(</span>
+                            <span class="n">X_train_window</span><span class="p">,</span>
+                            <span class="n">y_train_window</span><span class="p">,</span>
+                            <span class="n">X_val_window</span><span class="p">,</span>
+                            <span class="n">y_val_window</span><span class="p">,</span>
+                            <span class="n">checkpoint_callback</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">check_overfitting</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">history</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tune_model_with_window_lstm&quot;</span><span class="p">):</span>
+                            <span class="n">X_val_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                                <span class="n">X_val_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
+                                <span class="p">(</span><span class="n">X_val_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_val_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                            <span class="p">)</span>
+                            <span class="n">y_val_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                                <span class="n">y_val_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span>
+                                <span class="p">(</span><span class="n">y_val_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
+                            <span class="p">)</span>
+
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">tuned_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val_window</span><span class="p">)</span>
+
+                            <span class="k">if</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                                <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                                    <span class="n">val_predictions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                                <span class="p">)</span>
+                            <span class="k">if</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                                <span class="n">y_val_window</span> <span class="o">=</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                                    <span class="n">y_val_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                                <span class="p">)</span>
+
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                                <span class="n">val_predictions</span>
+                            <span class="p">)</span>
+
+                            <span class="n">y_val_window</span> <span class="o">=</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">y_val_window_inverse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                                <span class="n">y_val_window</span>
+                            <span class="p">)</span>
+
+                            <span class="n">val_metric</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span>
+                                <span class="n">y_val_window_inverse</span><span class="p">,</span> <span class="n">val_predictions</span>
+                            <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span><span class="p">[</span><span class="n">model_class_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_metric</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">tuned_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val_window</span><span class="p">)</span>
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">val_predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                                <span class="n">val_predictions</span>
+                            <span class="p">)</span>
+
+                            <span class="n">y_val_window</span> <span class="o">=</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">y_val_window_inverse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                                <span class="n">y_val_window</span>
+                            <span class="p">)</span>
+
+                            <span class="n">val_metric</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span>
+                                <span class="n">y_val_window_inverse</span><span class="p">,</span> <span class="n">val_predictions</span>
+                            <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span><span class="p">[</span><span class="n">model_class_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_metric</span><span class="p">)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">model_requires_squeeze</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="s2">&quot;BaggingRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;GradientBoostingRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;RandomForestRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;SupportVectorRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;BayesianRidgeRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;NuSVRRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;TweedieRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;PassiveAggressiveRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;AdaBoostRegressorModel&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;ExtraTreesRegressorModel&quot;</span><span class="p">,</span>
+                        <span class="p">]</span>
+
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of y_train: </span><span class="si">{</span><span class="n">y_train_window</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of y_val: </span><span class="si">{</span><span class="n">y_val_window</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">model_requires_squeeze</span><span class="p">:</span>
+                            <span class="n">y_train_window</span><span class="p">,</span> <span class="n">y_val_window</span> <span class="o">=</span> <span class="p">(</span>
+                                <span class="n">y_train_window</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                                <span class="n">y_val_window</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                            <span class="p">)</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Applied squeeze() on the target variable.&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                                <span class="s2">&quot;Not applying squeeze() on the target variable.&quot;</span>
+                            <span class="p">)</span>
+
+                        <span class="n">best_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune_non_nn_model</span><span class="p">(</span>
+                            <span class="n">X_train_window</span><span class="p">,</span>
+                            <span class="n">X_val_window</span><span class="p">,</span>
+                            <span class="n">y_train_window</span><span class="p">,</span>
+                            <span class="n">y_val_window</span><span class="p">,</span>
+                        <span class="p">)</span>
+                        <span class="n">best_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_window</span><span class="p">,</span> <span class="n">y_train_window</span><span class="p">)</span>
+
+                        <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_val_window</span><span class="p">)</span>
+                        <span class="n">val_predictions</span> <span class="o">=</span> <span class="n">val_predictions</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="n">val_predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">val_predictions</span><span class="p">)</span>
+
+                        <span class="n">y_val_window</span> <span class="o">=</span> <span class="n">y_val_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="n">y_val_window_inverse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+                            <span class="n">y_val_window</span>
+                        <span class="p">)</span>
+
+                        <span class="n">val_metric</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span>
+                            <span class="n">y_val_window_inverse</span><span class="p">,</span> <span class="n">val_predictions</span>
+                        <span class="p">)</span>
+                        <span class="n">val_metric</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_val_window</span><span class="p">,</span> <span class="n">val_predictions</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span><span class="p">[</span><span class="n">model_class_name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_metric</span><span class="p">)</span>
+
+                    <span class="n">model_info</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+                        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">tuned_model</span>
+                        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">BaseModelNN</span><span class="p">)</span>
+                        <span class="k">else</span> <span class="n">best_model</span><span class="p">,</span>
+                        <span class="s2">&quot;val_metric&quot;</span><span class="p">:</span> <span class="n">val_metric</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">all_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_info</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">val_metric</span> <span class="o">&lt;</span> <span class="n">best_val_metric_in_window</span><span class="p">:</span>
+                        <span class="n">best_val_metric_in_window</span> <span class="o">=</span> <span class="n">val_metric</span>
+                        <span class="n">best_model_info_in_window</span> <span class="o">=</span> <span class="n">model_info</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">update_time_consumption</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+
+                    <span class="c1"># Log model metrics</span>
+                    <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">metrics_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Model: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, Step: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">, Val Metric: </span><span class="si">{</span><span class="n">val_metric</span><span class="si">}</span><span class="s2">, Time Consumption: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time_consumption</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred during training: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">current_step</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Completed training window: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># After each window, add the best model to the list</span>
+            <span class="k">if</span> <span class="n">best_model_info_in_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_model_info_in_window</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_training</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training complete.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_all_val_metrics"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_val_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns all validation metrics.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        list:</span>
+<span class="sd">            List of all validation metrics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_val_metrics</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_window_indices"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices">[docs]</a>    <span class="k">def</span> <span class="nf">get_window_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the start and end indices for the given window step.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        step : int</span>
+<span class="sd">            The window step.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        tuple:</span>
+<span class="sd">            Tuple containing the start and end indices for the window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">train_start</span> <span class="o">=</span> <span class="n">step</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">step_size</span>
+        <span class="n">train_end</span> <span class="o">=</span> <span class="n">train_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span>
+        <span class="n">val_start</span> <span class="o">=</span> <span class="n">train_end</span>
+        <span class="n">val_end</span> <span class="o">=</span> <span class="n">val_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_window</span>
+        <span class="k">return</span> <span class="n">train_start</span><span class="p">,</span> <span class="n">train_end</span><span class="p">,</span> <span class="n">val_start</span><span class="p">,</span> <span class="n">val_end</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_train_window"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_train_window">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the training window data.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        start : int</span>
+<span class="sd">            Start index of the training window.</span>
+<span class="sd">        end : int</span>
+<span class="sd">            End index of the training window.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame, pd.Series:</span>
+<span class="sd">            X_train_window: Input data for the training window.</span>
+<span class="sd">            y_train_window: Target data for the training window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X_train_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="n">y_train_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">X_train_window</span><span class="p">,</span> <span class="n">y_train_window</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_val_window"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_val_window">[docs]</a>    <span class="k">def</span> <span class="nf">get_val_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the validation window data.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        start : int</span>
+<span class="sd">            Start index of the validation window.</span>
+<span class="sd">        end : int</span>
+<span class="sd">            End index of the validation window.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame, pd.Series:</span>
+<span class="sd">            X_val_window: Input data for the validation window.</span>
+<span class="sd">            y_val_window: Target data for the validation window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">X_val_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="n">y_val_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">X_val_window</span><span class="p">,</span> <span class="n">y_val_window</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_checkpoint_dir"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_checkpoint_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the checkpoint directory for saving the best model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        str:</span>
+<span class="sd">            Checkpoint directory for saving the best model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_checkpoint_callback"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback">[docs]</a>    <span class="k">def</span> <span class="nf">get_checkpoint_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the checkpoint callback for saving the best model.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        checkpoint_dir : str</span>
+<span class="sd">            Directory path for saving the best model checkpoint.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        ModelCheckpoint:</span>
+<span class="sd">            Checkpoint callback for saving the best model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">ModelCheckpoint</span><span class="p">(</span>
+            <span class="n">filepath</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="s2">&quot;best_model.h5&quot;</span><span class="p">),</span>
+            <span class="n">save_best_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">monitor</span><span class="o">=</span><span class="s2">&quot;val_loss&quot;</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_best_model_at_window"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_model_at_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the best model information for the specified window step.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        window : int</span>
+<span class="sd">            Window step for which to retrieve the best model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        dict or None:</span>
+<span class="sd">            Model information dictionary for the best model at the given window step.</span>
+<span class="sd">            Returns None if no best model is found for the specified window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">window</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">model_info</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_best_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_best_models">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the list of best models.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        list:</span>
+<span class="sd">            List of best models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_models</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.set_best_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.set_best_models">[docs]</a>    <span class="k">def</span> <span class="nf">set_best_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loaded_models</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the list of best models.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        loaded_models : list</span>
+<span class="sd">            List of loaded best models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_models</span> <span class="o">=</span> <span class="n">loaded_models</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_all_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_all_models">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the list of all models.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        list:</span>
+<span class="sd">            List of all models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_models</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.set_all_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.set_all_models">[docs]</a>    <span class="k">def</span> <span class="nf">set_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loaded_models</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the list of all models.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        loaded_models : list</span>
+<span class="sd">            List of loaded all models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_models</span> <span class="o">=</span> <span class="n">loaded_models</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.print_model_info"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.print_model_info">[docs]</a>    <span class="k">def</span> <span class="nf">print_model_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prints information about the models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">model_info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.get_histories"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.get_histories">[docs]</a>    <span class="k">def</span> <span class="nf">get_histories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the histories of neural network, CNN, and LSTM models.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        tuple:</span>
+<span class="sd">            Tuple containing the histories of neural network, CNN, and LSTM models.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.save_histories"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.save_histories">[docs]</a>    <span class="k">def</span> <span class="nf">save_histories</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_name_nn</span><span class="o">=</span><span class="s2">&quot;nn_history&quot;</span><span class="p">,</span>
+        <span class="n">file_name_cnn</span><span class="o">=</span><span class="s2">&quot;cnn_history&quot;</span><span class="p">,</span>
+        <span class="n">file_name_lstm</span><span class="o">=</span><span class="s2">&quot;lstm_history&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the histories of neural network, CNN, and LSTM models as pickle files.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        file_name_nn : str, optional</span>
+<span class="sd">            Name of the file to save the neural network history, by default &quot;nn_history&quot;.</span>
+<span class="sd">        file_name_cnn : str, optional</span>
+<span class="sd">            Name of the file to save the CNN history, by default &quot;cnn_history&quot;.</span>
+<span class="sd">        file_name_lstm : str, optional</span>
+<span class="sd">            Name of the file to save the LSTM history, by default &quot;lstm_history&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">base_dir</span> <span class="o">=</span> <span class="s2">&quot;models/save/histories&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">file_name_nn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_nn</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">file_name_cnn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_cnn</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">file_name_lstm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_lstm</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.load_and_set_histories"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories">[docs]</a>    <span class="k">def</span> <span class="nf">load_and_set_histories</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">file_name_nn</span><span class="o">=</span><span class="s2">&quot;nn_history&quot;</span><span class="p">,</span>
+        <span class="n">file_name_cnn</span><span class="o">=</span><span class="s2">&quot;cnn_history&quot;</span><span class="p">,</span>
+        <span class="n">file_name_lstm</span><span class="o">=</span><span class="s2">&quot;lstm_history&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method loads and sets the training history of the models from the specified files.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        file_name_nn: str, optional</span>
+<span class="sd">            The file name for the history of the Neural Network model.</span>
+<span class="sd">        file_name_cnn: str, optional</span>
+<span class="sd">            The file name for the history of the Convolutional Neural Network model.</span>
+<span class="sd">        file_name_lstm: str, optional</span>
+<span class="sd">            The file name for the history of the LSTM model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">base_dir</span> <span class="o">=</span> <span class="s2">&quot;models/save/histories&quot;</span>
+
+        <span class="k">if</span> <span class="n">file_name_nn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_path_nn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_nn</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path_nn</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path_nn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">histories_nn</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file found at </span><span class="si">{</span><span class="n">file_path_nn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_name_cnn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_path_cnn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_cnn</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path_cnn</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path_cnn</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">histories_cnn</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file found at </span><span class="si">{</span><span class="n">file_path_cnn</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">file_name_lstm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_path_lstm</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_name_lstm</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path_lstm</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path_lstm</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">histories_lstm</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No file found at </span><span class="si">{</span><span class="n">file_path_lstm</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.train_nn_model_with_window"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window">[docs]</a>    <span class="k">def</span> <span class="nf">train_nn_model_with_window</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">X_train</span><span class="p">,</span>
+        <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">X_val</span><span class="p">,</span>
+        <span class="n">y_val</span><span class="p">,</span>
+        <span class="n">checkpoint_callback</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method trains a Neural Network model with a rolling window approach.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train: DataFrame</span>
+<span class="sd">            The input training data.</span>
+<span class="sd">        y_train: DataFrame</span>
+<span class="sd">            The output training data.</span>
+<span class="sd">        X_val: DataFrame</span>
+<span class="sd">            The input validation data.</span>
+<span class="sd">        y_val: DataFrame</span>
+<span class="sd">            The output validation data.</span>
+<span class="sd">        checkpoint_callback: Callback</span>
+<span class="sd">            A callback for saving the model checkpoints.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">model_flag</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">best_hps</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tune_model_with_window_lstm&quot;</span><span class="p">):</span>
+            <span class="n">X_train_lstm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                <span class="n">X_train</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="n">y_train_lstm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">X_val_lstm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                <span class="n">X_val</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="p">)</span>
+            <span class="n">y_val_lstm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">y_val</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">y_val</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">early_stopping_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lstm&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+                <span class="n">monitor</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;monitor&quot;</span><span class="p">,</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">),</span>
+                <span class="n">patience</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;patience&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                <span class="n">min_delta</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_delta&quot;</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">tuned_model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_hps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tune_model_with_window_lstm</span><span class="p">(</span>
+                <span class="n">X_train_lstm</span><span class="p">,</span>
+                <span class="n">y_train_lstm</span><span class="p">,</span>
+                <span class="n">X_val_lstm</span><span class="p">,</span>
+                <span class="n">y_val_lstm</span><span class="p">,</span>
+                <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stopping</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">model_flag</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tune_model_with_window_nn&quot;</span><span class="p">):</span>
+            <span class="n">early_stopping_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nn&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+                <span class="n">monitor</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;monitor&quot;</span><span class="p">,</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">),</span>
+                <span class="n">patience</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;patience&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                <span class="n">min_delta</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_delta&quot;</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">tuned_model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_hps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tune_model_with_window_nn</span><span class="p">(</span>
+                <span class="n">X_train</span><span class="p">,</span>
+                <span class="n">y_train</span><span class="p">,</span>
+                <span class="n">X_val</span><span class="p">,</span>
+                <span class="n">y_val</span><span class="p">,</span>
+                <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stopping</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">model_flag</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;tune_model_with_window_cnn&quot;</span><span class="p">):</span>
+            <span class="n">early_stopping_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">early_stopping_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;cnn&quot;</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="n">early_stopping</span> <span class="o">=</span> <span class="n">EarlyStopping</span><span class="p">(</span>
+                <span class="n">monitor</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;monitor&quot;</span><span class="p">,</span> <span class="s2">&quot;val_loss&quot;</span><span class="p">),</span>
+                <span class="n">patience</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;patience&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+                <span class="n">min_delta</span><span class="o">=</span><span class="n">early_stopping_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_delta&quot;</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">),</span>
+            <span class="p">)</span>
+
+            <span class="n">tuned_model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">best_hps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tune_model_with_window_cnn</span><span class="p">(</span>
+                <span class="n">X_train</span><span class="p">,</span>
+                <span class="n">y_train</span><span class="p">,</span>
+                <span class="n">X_val</span><span class="p">,</span>
+                <span class="n">y_val</span><span class="p">,</span>
+                <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">early_stopping</span><span class="p">,</span> <span class="n">checkpoint_callback</span><span class="p">],</span>
+            <span class="p">)</span>
+            <span class="n">model_flag</span> <span class="o">=</span> <span class="mi">3</span>
+
+        <span class="n">metrics_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Best hyperparameters for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">best_hps</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">tuned_model</span><span class="p">,</span> <span class="n">history</span><span class="p">,</span> <span class="n">model_flag</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.check_overfitting"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting">[docs]</a>    <span class="k">def</span> <span class="nf">check_overfitting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">history</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method checks for overfitting in the model&#39;s training history.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        step: int</span>
+<span class="sd">            The current step in the rolling window approach.</span>
+<span class="sd">        history: History</span>
+<span class="sd">            The training history of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">patience</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">patience</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="n">i</span> <span class="o">&gt;</span> <span class="n">j</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">][</span><span class="o">-</span><span class="n">patience</span><span class="p">:],</span>
+                    <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">][</span><span class="o">-</span><span class="n">patience</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> is overfitting on the validation data at step </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_metric</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">val_metric</span><span class="p">,</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.tune_non_nn_model"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model">[docs]</a>    <span class="k">def</span> <span class="nf">tune_non_nn_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method tunes the hyperparameters of a non-Neural Network model.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X_train: DataFrame</span>
+<span class="sd">            The input training data.</span>
+<span class="sd">        y_train: DataFrame</span>
+<span class="sd">            The output training data.</span>
+<span class="sd">        X_val: DataFrame</span>
+<span class="sd">            The input validation data.</span>
+<span class="sd">        y_val: DataFrame</span>
+<span class="sd">            The output validation data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">best_model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_hps</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">best_model</span><span class="p">,</span> <span class="n">best_hps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">tune_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+            <span class="n">metrics_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Best hyperparameters for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">best_hps</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error occurred during model tuning: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">best_model</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">best_model</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.update_time_consumption"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption">[docs]</a>    <span class="k">def</span> <span class="nf">update_time_consumption</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method updates the time consumption of the model.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start_time: float</span>
+<span class="sd">            The time when the model&#39;s training started.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Strip the timestamp</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_consumption</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_consumption</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_taken</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time_consumption</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time_taken</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.predict_best_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models">[docs]</a>    <span class="k">def</span> <span class="nf">predict_best_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicts the best models based on the given input data.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : pd.DataFrame or np.ndarray</span>
+<span class="sd">            Input data for prediction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame or pd.Series or None</span>
+<span class="sd">            Predicted values of the best models.</span>
+<span class="sd">            If input X is pd.DataFrame, returns a DataFrame with the predictions.</span>
+<span class="sd">            If input X is np.ndarray, returns a Series with the predictions.</span>
+<span class="sd">            Returns None if the input X is neither pd.DataFrame nor np.ndarray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+
+            <span class="n">window_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">X_window</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lstmregressormodel&quot;</span><span class="p">):</span>
+                <span class="n">X_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                    <span class="n">X_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+
+            <span class="n">model_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">model_predictions</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">all_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_predictions</span><span class="p">)</span>
+            <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">all_predictions</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;Predictions&quot;</span><span class="p">})</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">all_predictions</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.weighted_predict_best_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models">[docs]</a>    <span class="k">def</span> <span class="nf">weighted_predict_best_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicts the best models using weighted averaging based on the given input data (Not working as expected.).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : pd.DataFrame or np.ndarray</span>
+<span class="sd">            Input data for prediction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame or pd.Series or None</span>
+<span class="sd">            Weighted predictions of the best models.</span>
+<span class="sd">            If input X is pd.DataFrame, returns a DataFrame with the weighted predictions.</span>
+<span class="sd">            If input X is np.ndarray, returns a Series with the weighted predictions.</span>
+<span class="sd">            Returns None if the input X is neither pd.DataFrame nor np.ndarray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">model_weights</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">total_weights</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+            <span class="n">window_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">X_window</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lstmregressormodel&quot;</span><span class="p">):</span>
+                <span class="n">X_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                    <span class="n">X_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+
+            <span class="n">model_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">model_predictions</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="p">)</span>
+
+            <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;val_metric&quot;</span><span class="p">]</span>
+            <span class="n">total_weights</span> <span class="o">+=</span> <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">model_weights</span><span class="p">:</span>
+            <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">/=</span> <span class="n">total_weights</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">weighted_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="p">:</span>
+                <span class="n">weighted_model_prediction</span> <span class="o">=</span> <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">*</span> <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                <span class="n">weighted_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">weighted_predictions</span><span class="p">,</span> <span class="n">weighted_model_prediction</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+                <span class="p">)</span>
+
+            <span class="n">weighted_predictions</span><span class="p">[</span><span class="s2">&quot;Predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_predictions</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">weighted_predictions</span> <span class="o">=</span> <span class="n">weighted_predictions</span><span class="p">[[</span><span class="s2">&quot;Predictions&quot;</span><span class="p">]]</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">weighted_predictions</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">weighted_predictions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">weighted_predictions</span> <span class="o">=</span> <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">*</span> <span class="n">prediction</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">weighted_predictions</span> <span class="o">+=</span> <span class="n">model_weights</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">*</span> <span class="n">prediction</span>
+
+        <span class="k">return</span> <span class="n">weighted_predictions</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.vote_predict_best_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models">[docs]</a>    <span class="k">def</span> <span class="nf">vote_predict_best_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicts the best models using voting based on the given input data (Not working as expected.).</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : pd.DataFrame or np.ndarray</span>
+<span class="sd">            Input data for prediction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame or pd.Series or None</span>
+<span class="sd">            Predicted values of the best models using voting.</span>
+<span class="sd">            If input X is pd.DataFrame, returns a DataFrame with the predictions.</span>
+<span class="sd">            If input X is np.ndarray, returns a Series with the predictions.</span>
+<span class="sd">            Returns None if the input X is neither pd.DataFrame nor np.ndarray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+            <span class="n">window_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">X_window</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lstmregressormodel&quot;</span><span class="p">):</span>
+                <span class="n">X_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                    <span class="n">X_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+
+            <span class="n">model_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">model_predictions</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="p">)</span>
+
+        <span class="n">vote_predictions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">model_votes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">vote</span> <span class="o">=</span> <span class="n">prediction</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vote</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">vote</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">vote</span> <span class="o">=</span> <span class="n">vote</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+                <span class="n">model_votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
+            <span class="n">vote_predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">model_votes</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">vote_predictions_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">vote_predictions</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="p">)</span>
+            <span class="n">all_predictions</span> <span class="o">=</span> <span class="n">vote_predictions_series</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+                <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;Predictions&quot;</span><span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">all_predictions</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.predict_all_models"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models">[docs]</a>    <span class="k">def</span> <span class="nf">predict_all_models</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predicts all models based on the given input data.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : pd.DataFrame or np.ndarray</span>
+<span class="sd">            Input data for prediction.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame or np.ndarray</span>
+<span class="sd">            Predicted values of all models.</span>
+<span class="sd">            If input X is pd.DataFrame, returns a DataFrame with the predictions.</span>
+<span class="sd">            If input X is np.ndarray, returns a 2D array with the predictions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">model_idx</span><span class="p">,</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_models</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+            <span class="n">step</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+            <span class="n">window_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_window</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">X_window</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;lstmregressormodel&quot;</span><span class="p">):</span>
+                <span class="n">X_window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+                    <span class="n">X_window</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="p">(</span><span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_window</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="p">)</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_window</span><span class="p">)</span>
+
+            <span class="n">model_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+                <span class="n">model_predictions</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">window_start</span><span class="p">:]</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span>
+                    <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+                <span class="p">):</span>
+                    <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">all_predictions</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span>
+                    <span class="p">]</span>
+
+            <span class="n">all_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_predictions</span><span class="p">)</span>
+            <span class="n">df_predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">all_predictions</span><span class="p">)</span>
+
+            <span class="n">model_column_groups</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model_column_groups</span><span class="p">:</span>
+                    <span class="n">model_column_groups</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">model_column_groups</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cols</span> <span class="ow">in</span> <span class="n">model_column_groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">df_predictions</span><span class="p">[</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_predictions</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">df_predictions</span> <span class="o">=</span> <span class="n">df_predictions</span><span class="p">[</span>
+                <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_predictions</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot; mean&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="p">]</span>
+            <span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">df_predictions</span></div>
+
+<div class="viewcode-block" id="RollingWindowTrainer.generate_mean_df"><a class="viewcode-back" href="../../functions.html#functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df">[docs]</a>    <span class="k">def</span> <span class="nf">generate_mean_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions_all</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a mean DataFrame from the predictions of all models.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        predictions_all : pd.DataFrame</span>
+<span class="sd">            DataFrame containing predictions of all models.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Mean DataFrame with averaged predictions per model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">total_columns</span> <span class="o">=</span> <span class="n">predictions_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">columns_per_model</span> <span class="o">=</span> <span class="n">total_columns</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span>
+
+        <span class="n">mean_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">columns_per_model</span><span class="p">):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_windows</span>
+            <span class="n">model_df</span> <span class="o">=</span> <span class="n">predictions_all</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+            <span class="n">mean_df</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;model_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">_mean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">mean_df</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Batuhan Edgüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

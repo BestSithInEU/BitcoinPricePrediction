@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>functions package &mdash; Bitcoin Price Prediction 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Bitcoin Price Prediction
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">functions package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-functions.process_data">functions.process_data module</a><ul>
+<li><a class="reference internal" href="#functions.process_data.combine_data"><code class="docutils literal notranslate"><span class="pre">combine_data()</span></code></a></li>
+<li><a class="reference internal" href="#functions.process_data.double_quotation_remover"><code class="docutils literal notranslate"><span class="pre">double_quotation_remover()</span></code></a></li>
+<li><a class="reference internal" href="#functions.process_data.modify_date_format"><code class="docutils literal notranslate"><span class="pre">modify_date_format()</span></code></a></li>
+<li><a class="reference internal" href="#functions.process_data.process_data"><code class="docutils literal notranslate"><span class="pre">process_data()</span></code></a></li>
+<li><a class="reference internal" href="#functions.process_data.split_data"><code class="docutils literal notranslate"><span class="pre">split_data()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions.rolling_window_trainer">functions.rolling_window_trainer module</a><ul>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer</span></code></a><ul>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.model_list"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.model_list</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.X_train_val"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.X_train_val</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.y_train_val"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.y_train_val</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.train_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.train_window</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.val_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.val_window</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.step_size"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.step_size</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.early_stopping_values"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.early_stopping_values</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.checkpoint_path"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.checkpoint_path</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.scaler"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.scaler</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.check_overfitting()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.generate_mean_df()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_all_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_all_val_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_best_model_at_window()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_best_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_checkpoint_callback()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_checkpoint_dir()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_histories"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_histories()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_train_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_train_window()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_val_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_val_window()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.get_window_indices()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.load_and_set_histories()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.predict_all_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.predict_best_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.print_model_info"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.print_model_info()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.save_histories"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.save_histories()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_all_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.set_all_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_best_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.set_best_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.start_training"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.start_training()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.train_nn_model_with_window()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.tune_non_nn_model()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.update_time_consumption()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.vote_predict_best_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models"><code class="docutils literal notranslate"><span class="pre">RollingWindowTrainer.weighted_predict_best_models()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions.save_load_model">functions.save_load_model module</a><ul>
+<li><a class="reference internal" href="#functions.save_load_model.get_val_metrics_from_log"><code class="docutils literal notranslate"><span class="pre">get_val_metrics_from_log()</span></code></a></li>
+<li><a class="reference internal" href="#functions.save_load_model.load_trained_models"><code class="docutils literal notranslate"><span class="pre">load_trained_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.save_load_model.save_trained_models"><code class="docutils literal notranslate"><span class="pre">save_trained_models()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions.sentiment_analyzer">functions.sentiment_analyzer module</a><ul>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis</span></code></a><ul>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.aggregate_by_date"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.aggregate_by_date()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.compute_vader_scores"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.compute_vader_scores()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.preprocess"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.preprocess()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.process_inputs"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.process_inputs()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.save_df"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.save_df()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.tweet_to_words"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.tweet_to_words()</span></code></a></li>
+<li><a class="reference internal" href="#functions.sentiment_analyzer.SentimentAnalysis.unlist"><code class="docutils literal notranslate"><span class="pre">SentimentAnalysis.unlist()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions.utils">functions.utils module</a><ul>
+<li><a class="reference internal" href="#functions.utils.calculate_metrics"><code class="docutils literal notranslate"><span class="pre">calculate_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.create_subsets"><code class="docutils literal notranslate"><span class="pre">create_subsets()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.find_best_models"><code class="docutils literal notranslate"><span class="pre">find_best_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.format_number"><code class="docutils literal notranslate"><span class="pre">format_number()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.group_by_model"><code class="docutils literal notranslate"><span class="pre">group_by_model()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.mean_absolute_percentage_error"><code class="docutils literal notranslate"><span class="pre">mean_absolute_percentage_error()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.plot_heatmaps"><code class="docutils literal notranslate"><span class="pre">plot_heatmaps()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.plot_histories"><code class="docutils literal notranslate"><span class="pre">plot_histories()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.plot_price_prediction"><code class="docutils literal notranslate"><span class="pre">plot_price_prediction()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.read_model_metrics"><code class="docutils literal notranslate"><span class="pre">read_model_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.resize_and_remove_background"><code class="docutils literal notranslate"><span class="pre">resize_and_remove_background()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.reverse_values"><code class="docutils literal notranslate"><span class="pre">reverse_values()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.root_mean_squared_log_error"><code class="docutils literal notranslate"><span class="pre">root_mean_squared_log_error()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.save_dataframe"><code class="docutils literal notranslate"><span class="pre">save_dataframe()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.save_keras_models"><code class="docutils literal notranslate"><span class="pre">save_keras_models()</span></code></a></li>
+<li><a class="reference internal" href="#functions.utils.save_metrics"><code class="docutils literal notranslate"><span class="pre">save_metrics()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions.web_scrapper">functions.web_scrapper module</a><ul>
+<li><a class="reference internal" href="#functions.web_scrapper.StoppableThread"><code class="docutils literal notranslate"><span class="pre">StoppableThread</span></code></a><ul>
+<li><a class="reference internal" href="#functions.web_scrapper.StoppableThread.stop"><code class="docutils literal notranslate"><span class="pre">StoppableThread.stop()</span></code></a></li>
+<li><a class="reference internal" href="#functions.web_scrapper.StoppableThread.stopped"><code class="docutils literal notranslate"><span class="pre">StoppableThread.stopped()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper"><code class="docutils literal notranslate"><span class="pre">WebScraper</span></code></a><ul>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper.pause_scraping"><code class="docutils literal notranslate"><span class="pre">WebScraper.pause_scraping()</span></code></a></li>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper.resume_scraping"><code class="docutils literal notranslate"><span class="pre">WebScraper.resume_scraping()</span></code></a></li>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper.start_scraping"><code class="docutils literal notranslate"><span class="pre">WebScraper.start_scraping()</span></code></a></li>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper.stop_scraping"><code class="docutils literal notranslate"><span class="pre">WebScraper.stop_scraping()</span></code></a></li>
+<li><a class="reference internal" href="#functions.web_scrapper.WebScraper.webScrapper"><code class="docutils literal notranslate"><span class="pre">WebScraper.webScrapper()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-functions">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Bitcoin Price Prediction</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">functions package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="functions-package">
+<h1>functions package<a class="headerlink" href="#functions-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-functions.process_data">
+<span id="functions-process-data-module"></span><h2>functions.process_data module<a class="headerlink" href="#module-functions.process_data" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.combine_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">combine_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'combined_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bitcoin_price.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file_name_v2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'headlines_sentiment.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.process_data.combine_data" title="Permalink to this definition"></a></dt>
+<dd><p>Combines two datasets and writes the combined dataset to a CSV file.</p>
+<section id="parameters">
+<h3>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>output_file_name<span class="classifier">str, optional</span></dt><dd><p>Name of the output file, by default “combined_data”.</p>
+</dd>
+<dt>input_file_name_v1<span class="classifier">str, optional</span></dt><dd><p>Name of the first input file, by default “bitcoin_price.csv”.</p>
+</dd>
+<dt>input_file_name_v2<span class="classifier">str, optional</span></dt><dd><p>Name of the second input file, by default “headlines_sentiment.csv”.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.double_quotation_remover">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">double_quotation_remover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.process_data.double_quotation_remover" title="Permalink to this definition"></a></dt>
+<dd><p>Removes double quotation marks from specified columns in a CSV file.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>input_file_name_v1<span class="classifier">str</span></dt><dd><p>Path to the input CSV file.</p>
+</dd>
+<dt>delimiter<span class="classifier">str, optional</span></dt><dd><p>Delimiter used in the CSV file, by default “,”.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.modify_date_format">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">modify_date_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%b</span> <span class="pre">%d,</span> <span class="pre">%Y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.process_data.modify_date_format" title="Permalink to this definition"></a></dt>
+<dd><p>Modifies the date format of a specific column in a CSV file.</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>input_file_name_v1<span class="classifier">str</span></dt><dd><p>Path to the input CSV file.</p>
+</dd>
+<dt>date_column_name<span class="classifier">str</span></dt><dd><p>Name of the column containing dates to be modified.</p>
+</dd>
+<dt>date_format<span class="classifier">str, optional</span></dt><dd><p>Format of the dates in the input file, by default “%b %d, %Y”.</p>
+</dd>
+<dt>delimiter<span class="classifier">str, optional</span></dt><dd><p>Delimiter used in the CSV file, by default “,”.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns:<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h3>
+<p>None</p>
+<p>Example:
+- Format 1: “%Y-%m-%d” (e.g., “2023-05-14”)
+- Format 2: “%m-%d-%Y” (e.g., “05-14-2023”)
+- Format 3: “%d-%m-%Y” (e.g., “14-05-2023”)
+- Format 4: “%Y/%m/%d” (e.g., “2023/05/14”)
+- Format 5: “%m/%d/%Y” (e.g., “05/14/2023”)
+- Format 6: “%d/%m/%Y” (e.g., “14/05/2023”)
+- Format 7: “%Y.%m.%d” (e.g., “2023.05.14”)
+- Format 8: “%m.%d.%Y” (e.g., “05.14.2023”)
+- Format 9: “%d.%m.%Y” (e.g., “14.05.2023”)
+- Format 10: “%Y %m %d” (e.g., “2023 05 14”)
+- Format 11: “%m %d %Y” (e.g., “05 14 2023”)
+- Format 12: “%d %m %Y” (e.g., “14 05 2023”)
+- Format 13: “%b %d, %Y” (e.g., “May 14, 2023”)</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.process_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rolling_windows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">7,</span> <span class="pre">14]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Price'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datetime_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Date'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Vol.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MinMaxScaler'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.process_data.process_data" title="Permalink to this definition"></a></dt>
+<dd><p>Preprocesses a given dataset by performing steps such as loading the data, handling missing values,
+creating lagged features, scaling, etc.</p>
+<section id="id5">
+<h3>Parameters:<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>file_path<span class="classifier">str</span></dt><dd><p>Path to the CSV file.</p>
+</dd>
+<dt>lags<span class="classifier">list, optional</span></dt><dd><p>List of lags to create lagged features, by default [1, 2, 3].</p>
+</dd>
+<dt>rolling_windows<span class="classifier">list, optional</span></dt><dd><p>List of windows to create rolling window features, by default [3, 7, 14].</p>
+</dd>
+<dt>target_col<span class="classifier">str, optional</span></dt><dd><p>Name of the target column, by default “Price”.</p>
+</dd>
+<dt>datetime_col<span class="classifier">str, optional</span></dt><dd><p>Name of the datetime column, by default “Date”.</p>
+</dd>
+<dt>volume_col<span class="classifier">str, optional</span></dt><dd><p>Name of the volume column, by default “Vol.”.</p>
+</dd>
+<dt>scaler<span class="classifier">str, optional</span></dt><dd><p>Scaler to use for scaling the features. Options are ‘StandardScaler’, ‘RobustScaler’,
+and ‘MinMaxScaler’. Defaults to ‘MinMaxScaler’.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns:<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>Tuple containing scaled features, scaled target, and the scaler used.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.split_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_ratio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.process_data.split_data" title="Permalink to this definition"></a></dt>
+<dd><p>Splits the scaled features and target into training/validation and test sets.</p>
+<section id="id7">
+<h3>Parameters:<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X_scaled<span class="classifier">DataFrame</span></dt><dd><p>Scaled features.</p>
+</dd>
+<dt>y_scaled<span class="classifier">DataFrame</span></dt><dd><p>Scaled target.</p>
+</dd>
+<dt>test_ratio<span class="classifier">float</span></dt><dd><p>Ratio of the test set size.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns:<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>Tuple containing training/validation features, training/validation target,
+test features, and test target.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-functions.rolling_window_trainer">
+<span id="functions-rolling-window-trainer-module"></span><h2>functions.rolling_window_trainer module<a class="headerlink" href="#module-functions.rolling_window_trainer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.rolling_window_trainer.</span></span><span class="sig-name descname"><span class="pre">RollingWindowTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'models/save/checkpoints/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'cnn':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0003,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">7},</span> <span class="pre">'lstm':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0001,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">10},</span> <span class="pre">'nn':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0002,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">5}}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class provides methods for training and evaluating machine learning models using a rolling window approach.
+The rolling window approach is a time series forecasting technique where the model is retrained at each time step,
+using only the most recent data as training data.</p>
+<p>…</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.model_list">
+<span class="sig-name descname"><span class="pre">model_list</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.model_list" title="Permalink to this definition"></a></dt>
+<dd><p>a list of models to be trained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.X_train_val">
+<span class="sig-name descname"><span class="pre">X_train_val</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.X_train_val" title="Permalink to this definition"></a></dt>
+<dd><p>the feature dataset for training and validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.y_train_val">
+<span class="sig-name descname"><span class="pre">y_train_val</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.y_train_val" title="Permalink to this definition"></a></dt>
+<dd><p>the target dataset for training and validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.train_window">
+<span class="sig-name descname"><span class="pre">train_window</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.train_window" title="Permalink to this definition"></a></dt>
+<dd><p>the size of the training window, by default 100.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.val_window">
+<span class="sig-name descname"><span class="pre">val_window</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.val_window" title="Permalink to this definition"></a></dt>
+<dd><p>the size of the validation window, by default 20.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.step_size">
+<span class="sig-name descname"><span class="pre">step_size</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.step_size" title="Permalink to this definition"></a></dt>
+<dd><p>the step size to move the window for each iteration, by default 5.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.early_stopping_values">
+<span class="sig-name descname"><span class="pre">early_stopping_values</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.early_stopping_values" title="Permalink to this definition"></a></dt>
+<dd><p>a dictionary with keys as the model names and values as a dictionary containing early stopping parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.checkpoint_path">
+<span class="sig-name descname"><span class="pre">checkpoint_path</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.checkpoint_path" title="Permalink to this definition"></a></dt>
+<dd><p>path to save the model checkpoints, by default “models/save/checkpoints/”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.scaler">
+<span class="sig-name descname"><span class="pre">scaler</span></span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.scaler" title="Permalink to this definition"></a></dt>
+<dd><p>the scaler class to scale the predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">start_training():</span></span></dt>
+<dd><p>Start the training process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_all_val_metrics():</span></span></dt>
+<dd><p>Return all validation metrics collected during training.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_window_indices(step):</span></span></dt>
+<dd><p>Return the indices for training and validation windows based on the current step.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_train_window(start,</span> <span class="pre">end):</span></span></dt>
+<dd><p>Return the training feature and target data based on the provided indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_val_window(start,</span> <span class="pre">end):</span></span></dt>
+<dd><p>Return the validation feature and target data based on the provided indices.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_checkpoint_dir():</span></span></dt>
+<dd><p>Return the directory path for storing model checkpoints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_checkpoint_callback(checkpoint_dir):</span></span></dt>
+<dd><p>Return the model checkpoint callback function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_best_model_at_window(window):</span></span></dt>
+<dd><p>Return the best model at a specific window.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_best_models():</span></span></dt>
+<dd><p>Return a list of the best models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_best_models(loaded_models):</span></span></dt>
+<dd><p>Set the best models list using loaded models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_all_models():</span></span></dt>
+<dd><p>Return a list of all models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">set_all_models(loaded_models):</span></span></dt>
+<dd><p>Set the all models list using loaded models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">print_model_info():</span></span></dt>
+<dd><p>Print the information of the best models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_histories():</span></span></dt>
+<dd><p>Return the history of all models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">save_histories(file_name_nn=&quot;nn_history&quot;,</span> <span class="pre">file_name_cnn=&quot;cnn_history&quot;,</span> <span class="pre">file_name_lstm=&quot;lstm_history&quot;):</span></span></dt>
+<dd><p>Save the training history of all models into pickle files.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">load_and_set_histories(file_name_nn=&quot;nn_history&quot;,</span> <span class="pre">file_name_cnn=&quot;cnn_history&quot;,</span> <span class="pre">file_name_lstm=&quot;lstm_history&quot;):</span></span></dt>
+<dd><p>Load the training history of all models from pickle files and set the histories attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">train_nn_model_with_window(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">window,</span> <span class="pre">checkpoint_callback):</span></span></dt>
+<dd><p>Train a neural network model with a specific window.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">check_overfitting(step,</span> <span class="pre">history):</span></span></dt>
+<dd><p>Check if the model is overfitting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">tune_non_nn_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
+<dd><p>Tune a non-neural network model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">update_time_consumption(start_time):</span></span></dt>
+<dd><p>Update the time consumption attribute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">predict_best_models(X):</span></span></dt>
+<dd><p>Predict using the best models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">weighted_predict_best_models(X):</span></span></dt>
+<dd><p>Predict using the best models with weights.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">vote_predict_best_models(X):</span></span></dt>
+<dd><p>Predict using the best models with voting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">predict_all_models(X):</span></span></dt>
+<dd><p>Predict using all models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">generate_mean_df(predictions_all):</span></span></dt>
+<dd><p>Generate a dataframe with the mean of all predictions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting">
+<span class="sig-name descname"><span class="pre">check_overfitting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting" title="Permalink to this definition"></a></dt>
+<dd><p>This method checks for overfitting in the model’s training history.</p>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>step: int</dt><dd><p>The current step in the rolling window approach.</p>
+</dd>
+<dt>history: History</dt><dd><p>The training history of the model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df">
+<span class="sig-name descname"><span class="pre">generate_mean_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions_all</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df" title="Permalink to this definition"></a></dt>
+<dd><p>Generates a mean DataFrame from the predictions of all models.</p>
+<section id="id10">
+<h3>Parameters:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>predictions_all<span class="classifier">pd.DataFrame</span></dt><dd><p>DataFrame containing predictions of all models.</p>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h3>Returns:<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame</dt><dd><p>Mean DataFrame with averaged predictions per model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_all_models">
+<span class="sig-name descname"><span class="pre">get_all_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_models" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of all models.</p>
+<section id="id12">
+<h3>Returns:<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>list:</dt><dd><p>List of all models.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics">
+<span class="sig-name descname"><span class="pre">get_all_val_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Returns all validation metrics.</p>
+<section id="id13">
+<h3>Returns:<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>list:</dt><dd><p>List of all validation metrics.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window">
+<span class="sig-name descname"><span class="pre">get_best_model_at_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the best model information for the specified window step.</p>
+<section id="id14">
+<h3>Parameters:<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>window<span class="classifier">int</span></dt><dd><p>Window step for which to retrieve the best model.</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h3>Returns:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>dict or None:</dt><dd><p>Model information dictionary for the best model at the given window step.
+Returns None if no best model is found for the specified window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_best_models">
+<span class="sig-name descname"><span class="pre">get_best_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of best models.</p>
+<section id="id16">
+<h3>Returns:<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>list:</dt><dd><p>List of best models.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback">
+<span class="sig-name descname"><span class="pre">get_checkpoint_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the checkpoint callback for saving the best model.</p>
+<section id="id17">
+<h3>Parameters:<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>checkpoint_dir<span class="classifier">str</span></dt><dd><p>Directory path for saving the best model checkpoint.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h3>Returns:<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>ModelCheckpoint:</dt><dd><p>Checkpoint callback for saving the best model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir">
+<span class="sig-name descname"><span class="pre">get_checkpoint_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the checkpoint directory for saving the best model.</p>
+<section id="id19">
+<h3>Returns:<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>str:</dt><dd><p>Checkpoint directory for saving the best model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_histories">
+<span class="sig-name descname"><span class="pre">get_histories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_histories" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the histories of neural network, CNN, and LSTM models.</p>
+<section id="id20">
+<h3>Returns:<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple:</dt><dd><p>Tuple containing the histories of neural network, CNN, and LSTM models.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_train_window">
+<span class="sig-name descname"><span class="pre">get_train_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_train_window" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the training window data.</p>
+<section id="id21">
+<h3>Parameters:<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>start<span class="classifier">int</span></dt><dd><p>Start index of the training window.</p>
+</dd>
+<dt>end<span class="classifier">int</span></dt><dd><p>End index of the training window.</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h3>Returns:<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame, pd.Series:</dt><dd><p>X_train_window: Input data for the training window.
+y_train_window: Target data for the training window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_val_window">
+<span class="sig-name descname"><span class="pre">get_val_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_val_window" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the validation window data.</p>
+<section id="id23">
+<h3>Parameters:<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>start<span class="classifier">int</span></dt><dd><p>Start index of the validation window.</p>
+</dd>
+<dt>end<span class="classifier">int</span></dt><dd><p>End index of the validation window.</p>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h3>Returns:<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame, pd.Series:</dt><dd><p>X_val_window: Input data for the validation window.
+y_val_window: Target data for the validation window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices">
+<span class="sig-name descname"><span class="pre">get_window_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the start and end indices for the given window step.</p>
+<section id="id25">
+<h3>Parameters:<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>step<span class="classifier">int</span></dt><dd><p>The window step.</p>
+</dd>
+</dl>
+</section>
+<section id="id26">
+<h3>Returns:<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple:</dt><dd><p>Tuple containing the start and end indices for the window.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories">
+<span class="sig-name descname"><span class="pre">load_and_set_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name_nn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_cnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_lstm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm_history'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories" title="Permalink to this definition"></a></dt>
+<dd><p>This method loads and sets the training history of the models from the specified files.</p>
+<section id="id27">
+<h3>Parameters:<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>file_name_nn: str, optional</dt><dd><p>The file name for the history of the Neural Network model.</p>
+</dd>
+<dt>file_name_cnn: str, optional</dt><dd><p>The file name for the history of the Convolutional Neural Network model.</p>
+</dd>
+<dt>file_name_lstm: str, optional</dt><dd><p>The file name for the history of the LSTM model.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models">
+<span class="sig-name descname"><span class="pre">predict_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models" title="Permalink to this definition"></a></dt>
+<dd><p>Predicts all models based on the given input data.</p>
+<section id="id28">
+<h3>Parameters:<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">pd.DataFrame or np.ndarray</span></dt><dd><p>Input data for prediction.</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h3>Returns:<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame or np.ndarray</dt><dd><p>Predicted values of all models.
+If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a 2D array with the predictions.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models">
+<span class="sig-name descname"><span class="pre">predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Predicts the best models based on the given input data.</p>
+<section id="id30">
+<h3>Parameters:<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">pd.DataFrame or np.ndarray</span></dt><dd><p>Input data for prediction.</p>
+</dd>
+</dl>
+</section>
+<section id="id31">
+<h3>Returns:<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame or pd.Series or None</dt><dd><p>Predicted values of the best models.
+If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a Series with the predictions.
+Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.print_model_info">
+<span class="sig-name descname"><span class="pre">print_model_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.print_model_info" title="Permalink to this definition"></a></dt>
+<dd><p>Prints information about the models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.save_histories">
+<span class="sig-name descname"><span class="pre">save_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name_nn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_cnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_lstm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm_history'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.save_histories" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the histories of neural network, CNN, and LSTM models as pickle files.</p>
+<section id="id32">
+<h3>Parameters:<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>file_name_nn<span class="classifier">str, optional</span></dt><dd><p>Name of the file to save the neural network history, by default “nn_history”.</p>
+</dd>
+<dt>file_name_cnn<span class="classifier">str, optional</span></dt><dd><p>Name of the file to save the CNN history, by default “cnn_history”.</p>
+</dd>
+<dt>file_name_lstm<span class="classifier">str, optional</span></dt><dd><p>Name of the file to save the LSTM history, by default “lstm_history”.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.set_all_models">
+<span class="sig-name descname"><span class="pre">set_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_models</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_all_models" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the list of all models.</p>
+<section id="id33">
+<h3>Parameters:<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>loaded_models<span class="classifier">list</span></dt><dd><p>List of loaded all models.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.set_best_models">
+<span class="sig-name descname"><span class="pre">set_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_models</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the list of best models.</p>
+<section id="id34">
+<h3>Parameters:<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>loaded_models<span class="classifier">list</span></dt><dd><p>List of loaded best models.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.start_training">
+<span class="sig-name descname"><span class="pre">start_training</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.start_training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window">
+<span class="sig-name descname"><span class="pre">train_nn_model_with_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window" title="Permalink to this definition"></a></dt>
+<dd><p>This method trains a Neural Network model with a rolling window approach.</p>
+<section id="id35">
+<h3>Parameters:<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X_train: DataFrame</dt><dd><p>The input training data.</p>
+</dd>
+<dt>y_train: DataFrame</dt><dd><p>The output training data.</p>
+</dd>
+<dt>X_val: DataFrame</dt><dd><p>The input validation data.</p>
+</dd>
+<dt>y_val: DataFrame</dt><dd><p>The output validation data.</p>
+</dd>
+<dt>checkpoint_callback: Callback</dt><dd><p>A callback for saving the model checkpoints.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model">
+<span class="sig-name descname"><span class="pre">tune_non_nn_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model" title="Permalink to this definition"></a></dt>
+<dd><p>This method tunes the hyperparameters of a non-Neural Network model.</p>
+<section id="id36">
+<h3>Parameters:<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X_train: DataFrame</dt><dd><p>The input training data.</p>
+</dd>
+<dt>y_train: DataFrame</dt><dd><p>The output training data.</p>
+</dd>
+<dt>X_val: DataFrame</dt><dd><p>The input validation data.</p>
+</dd>
+<dt>y_val: DataFrame</dt><dd><p>The output validation data.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption">
+<span class="sig-name descname"><span class="pre">update_time_consumption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption" title="Permalink to this definition"></a></dt>
+<dd><p>This method updates the time consumption of the model.</p>
+<section id="id37">
+<h3>Parameters:<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>start_time: float</dt><dd><p>The time when the model’s training started.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models">
+<span class="sig-name descname"><span class="pre">vote_predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Predicts the best models using voting based on the given input data (Not working as expected.).</p>
+<section id="id38">
+<h3>Parameters:<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">pd.DataFrame or np.ndarray</span></dt><dd><p>Input data for prediction.</p>
+</dd>
+</dl>
+</section>
+<section id="id39">
+<h3>Returns:<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame or pd.Series or None</dt><dd><p>Predicted values of the best models using voting.
+If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a Series with the predictions.
+Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models">
+<span class="sig-name descname"><span class="pre">weighted_predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Predicts the best models using weighted averaging based on the given input data (Not working as expected.).</p>
+<section id="id40">
+<h3>Parameters:<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>X<span class="classifier">pd.DataFrame or np.ndarray</span></dt><dd><p>Input data for prediction.</p>
+</dd>
+</dl>
+</section>
+<section id="id41">
+<h3>Returns:<a class="headerlink" href="#id41" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>pd.DataFrame or pd.Series or None</dt><dd><p>Weighted predictions of the best models.
+If input X is pd.DataFrame, returns a DataFrame with the weighted predictions.
+If input X is np.ndarray, returns a Series with the weighted predictions.
+Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-functions.save_load_model">
+<span id="functions-save-load-model-module"></span><h2>functions.save_load_model module<a class="headerlink" href="#module-functions.save_load_model" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.get_val_metrics_from_log">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">get_val_metrics_from_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.save_load_model.get_val_metrics_from_log" title="Permalink to this definition"></a></dt>
+<dd><p>Extract validation metrics from a given log file.</p>
+<section id="id42">
+<h3>Parameters:<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>log_file<span class="classifier">str</span></dt><dd><p>Path to the log file.</p>
+</dd>
+</dl>
+</section>
+<section id="id43">
+<h3>Returns:<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>dict</dt><dd><p>A dictionary where the keys are tuples of (model_name, step) and the values are validation metrics.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.load_trained_models">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">load_trained_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.save_load_model.load_trained_models" title="Permalink to this definition"></a></dt>
+<dd><p>Loads trained models from a specified directory. The models are filtered based on the
+validation metrics provided in a log file.</p>
+<section id="id44">
+<h3>Parameters:<a class="headerlink" href="#id44" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>root_dir<span class="classifier">str</span></dt><dd><p>The root directory from where the models will be loaded.</p>
+</dd>
+<dt>log_file<span class="classifier">str</span></dt><dd><p>Path to the log file containing validation metrics.</p>
+</dd>
+</dl>
+</section>
+<section id="id45">
+<h3>Returns:<a class="headerlink" href="#id45" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>list</dt><dd><p>A list of dictionaries, where each dictionary contains details about a trained model
+and its validation metric.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.save_trained_models">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">save_trained_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trained_models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.save_load_model.save_trained_models" title="Permalink to this definition"></a></dt>
+<dd><p>Saves trained models to a specified directory.</p>
+<section id="id46">
+<h3>Parameters:<a class="headerlink" href="#id46" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>trained_models<span class="classifier">list of dicts</span></dt><dd><p>A list of dictionaries, where each dictionary contains details about a trained model.</p>
+</dd>
+<dt>root_dir<span class="classifier">str</span></dt><dd><p>The root directory where the models will be saved.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-functions.sentiment_analyzer">
+<span id="functions-sentiment-analyzer-module"></span><h2>functions.sentiment_analyzer module<a class="headerlink" href="#module-functions.sentiment_analyzer" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.sentiment_analyzer.</span></span><span class="sig-name descname"><span class="pre">SentimentAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for performing sentiment analysis on text data using VADER sentiment analysis and RoBERTa tokenization.</p>
+<p>The SentimentAnalysis class provides methods for data preprocessing, sentiment score computation,
+tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save
+the processed data to a CSV file.</p>
+<section id="attributes">
+<h3>Attributes:<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>df<span class="classifier">DataFrame</span></dt><dd><p>The input dataset containing text data.</p>
+</dd>
+<dt>seed<span class="classifier">int</span></dt><dd><p>Random seed used for reproducibility.</p>
+</dd>
+<dt>stopwords<span class="classifier">set</span></dt><dd><p>Set of stopwords for text cleaning.</p>
+</dd>
+<dt>sid<span class="classifier">SentimentIntensityAnalyzer</span></dt><dd><p>An instance of the SentimentIntensityAnalyzer from the NLTK library.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h3>Methods:<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>preprocess():</dt><dd><p>Preprocesses the data by cleaning text and computing VADER sentiment scores.</p>
+</dd>
+<dt>tweet_to_words(tweet):</dt><dd><p>Cleans a tweet by removing non-alphanumeric characters and stopwords, and applies stemming.</p>
+</dd>
+<dt>unlist(list):</dt><dd><p>Joins a list of words into a string.</p>
+</dd>
+<dt>compute_vader_scores(df, label):</dt><dd><p>Computes VADER sentiment scores for each tweet in the dataset.</p>
+</dd>
+<dt>process_inputs(max_len):</dt><dd><p>Tokenizes inputs using RoBERTa for training, validation, and testing.</p>
+</dd>
+<dt>aggregate_by_date():</dt><dd><p>Aggregates VADER sentiment scores by date.</p>
+</dd>
+<dt>save_df(filename):</dt><dd><p>Aggregates the dataframe by date and saves it to a CSV file.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.aggregate_by_date">
+<span class="sig-name descname"><span class="pre">aggregate_by_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.aggregate_by_date" title="Permalink to this definition"></a></dt>
+<dd><p>Aggregates VADER sentiment scores by date.</p>
+<section id="id47">
+<h4>Returns:<a class="headerlink" href="#id47" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>DataFrame</dt><dd><p>The aggregated dataframe.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.compute_vader_scores">
+<span class="sig-name descname"><span class="pre">compute_vader_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.compute_vader_scores" title="Permalink to this definition"></a></dt>
+<dd><p>Computes VADER sentiment scores (negative, neutral, positive, compound) for each tweet.</p>
+<section id="id48">
+<h4>Parameters:<a class="headerlink" href="#id48" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>df<span class="classifier">DataFrame</span></dt><dd><p>The dataframe.</p>
+</dd>
+<dt>label<span class="classifier">str</span></dt><dd><p>The column in the dataframe containing the text to analyze.</p>
+</dd>
+</dl>
+</section>
+<section id="id49">
+<h4>Returns:<a class="headerlink" href="#id49" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>DataFrame</dt><dd><p>The dataframe with the added VADER sentiment scores.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.preprocess" title="Permalink to this definition"></a></dt>
+<dd><p>Preprocesses the data by cleaning text and computing VADER sentiment scores.</p>
+<section id="id50">
+<h4>Returns:<a class="headerlink" href="#id50" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>DataFrame</dt><dd><p>The processed dataframe.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.process_inputs">
+<span class="sig-name descname"><span class="pre">process_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.process_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Tokenizes inputs using RoBERTa for training, validation, and testing.</p>
+<section id="id51">
+<h4>Parameters:<a class="headerlink" href="#id51" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>max_len<span class="classifier">int</span></dt><dd><p>Maximum length for tokenization.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.save_df">
+<span class="sig-name descname"><span class="pre">save_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.save_df" title="Permalink to this definition"></a></dt>
+<dd><p>Aggregates the dataframe by date and saves it to a CSV file.</p>
+<section id="id52">
+<h4>Parameters:<a class="headerlink" href="#id52" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>filename<span class="classifier">str</span></dt><dd><p>The name of the output CSV file.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.tweet_to_words">
+<span class="sig-name descname"><span class="pre">tweet_to_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tweet</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.tweet_to_words" title="Permalink to this definition"></a></dt>
+<dd><p>Cleans a tweet by removing non-alphanumeric characters and stopwords,
+and applies stemming.</p>
+<section id="id53">
+<h4>Parameters:<a class="headerlink" href="#id53" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>tweet<span class="classifier">str</span></dt><dd><p>A tweet.</p>
+</dd>
+</dl>
+</section>
+<section id="id54">
+<h4>Returns:<a class="headerlink" href="#id54" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>list</dt><dd><p>A list of cleaned words from the tweet.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.unlist">
+<span class="sig-name descname"><span class="pre">unlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.unlist" title="Permalink to this definition"></a></dt>
+<dd><p>Joins a list of words into a string.</p>
+<section id="id55">
+<h4>Parameters:<a class="headerlink" href="#id55" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>list<span class="classifier">list</span></dt><dd><p>A list of words.</p>
+</dd>
+</dl>
+</section>
+<section id="id56">
+<h4>Returns:<a class="headerlink" href="#id56" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>str</dt><dd><p>A string with words separated by spaces.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-functions.utils">
+<span id="functions-utils-module"></span><h2>functions.utils module<a class="headerlink" href="#module-functions.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.calculate_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.calculate_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) for the given predictions and actual values.
+It also calculates daily MSE and RMSE and stores them in a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preds</strong> (<em>np.ndarray</em><em> or </em><em>pd.Series</em>) – The predicted values.</p></li>
+<li><p><strong>y_test</strong> (<em>np.ndarray</em><em> or </em><em>pd.Series</em>) – The actual values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mse</strong> (<em>float</em>) – The Mean Squared Error.</p></li>
+<li><p><strong>rmse</strong> (<em>float</em>) – The Root Mean Squared Error.</p></li>
+<li><p><strong>metrics_df</strong> (<em>pd.DataFrame</em>) – A dataframe containing daily MSE and RMSE.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.create_subsets">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">create_subsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_subsets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.create_subsets" title="Permalink to this definition"></a></dt>
+<dd><p>Divides the features (X) into a specified number of subsets and concatenates each subset with the target (y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>pd.DataFrame</em>) – The input features.</p></li>
+<li><p><strong>y</strong> (<em>pd.Series</em>) – The target values.</p></li>
+<li><p><strong>num_subsets</strong> (<em>int</em>) – The number of subsets to divide X into.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>subsets</strong> – A list of dataframes, each consisting of a subset of features and the target.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.find_best_models">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">find_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.find_best_models" title="Permalink to this definition"></a></dt>
+<dd><p>Finds the best models based on their validation metric.</p>
+<section id="id57">
+<h3>Parameters:<a class="headerlink" href="#id57" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>metric_data (list of dict): A list of dictionaries, each containing the information for one model.</p>
+</div></blockquote>
+</section>
+<section id="id58">
+<h3>Returns:<a class="headerlink" href="#id58" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>best_models (list of dict): A list of dictionaries, each containing the information for one best model.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.format_number">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">format_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.format_number" title="Permalink to this definition"></a></dt>
+<dd><p>Formats a number to a string with suffixes (B for billion, M for million, k for thousand).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em><em> or </em><em>float</em>) – The number to format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The formatted number.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.group_by_model">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">group_by_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.group_by_model" title="Permalink to this definition"></a></dt>
+<dd><p>Groups the data by model and calculates the cumulative sum of time consumption for each model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input dataframe containing model information.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df_list</strong> – A list of dataframes, each containing the information for one model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.mean_absolute_percentage_error">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">mean_absolute_percentage_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.mean_absolute_percentage_error" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the Mean Absolute Percentage Error (MAPE) between the true and predicted values.</p>
+<section id="id59">
+<h3>Parameters:<a class="headerlink" href="#id59" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>y_true (np.ndarray): The actual values.
+y_pred (np.ndarray): The predicted values.</p>
+</div></blockquote>
+</section>
+<section id="id60">
+<h3>Returns:<a class="headerlink" href="#id60" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>float: The MAPE.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_heatmaps">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_heatmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.plot_heatmaps" title="Permalink to this definition"></a></dt>
+<dd><p>Plots and saves correlation heatmaps for each subset of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subsets</strong> (<em>list</em><em> of </em><em>pd.DataFrame</em>) – A list of dataframes for which to plot the correlation heatmaps.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_histories">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histories</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.plot_histories" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the loss histories for different training epochs.</p>
+<section id="id61">
+<h3>Parameters:<a class="headerlink" href="#id61" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>histories (list of keras.callbacks.History): The list of history objects for each training epoch.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_price_prediction">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_price_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.plot_price_prediction" title="Permalink to this definition"></a></dt>
+<dd><p>Plots the predicted and actual values for the test data.</p>
+<section id="id62">
+<h3>Parameters:<a class="headerlink" href="#id62" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>X_test (pd.DataFrame): The test features.
+y_test (pd.Series): The actual values for the test data.
+predictions (pd.Series): The predicted values for the test data.
+title (str): The title of the plot.</p>
+</div></blockquote>
+</section>
+<section id="id63">
+<h3>Returns:<a class="headerlink" href="#id63" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>plotly.graph_objects._figure.Figure: The figure object of the plot.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.read_model_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">read_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.read_model_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Reads a log file and extracts model metrics into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_filename</strong> (<em>str</em>) – The path to the log file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>df_sorted</strong> – A dataframe containing the extracted model metrics, sorted by model and step.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.resize_and_remove_background">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">resize_and_remove_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(800,</span> <span class="pre">800)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.resize_and_remove_background" title="Permalink to this definition"></a></dt>
+<dd><p>Resizes an image to the specified size, removes its background, and saves it in the specified output path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>str</em>) – The path to the input image.</p></li>
+<li><p><strong>output_path</strong> (<em>str</em>) – The path to save the output image.</p></li>
+<li><p><strong>size</strong> (<em>tuple</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – The desired output size. Default is (800, 800).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.reverse_values">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">reverse_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.reverse_values" title="Permalink to this definition"></a></dt>
+<dd><p>Reverses the effect of scaling on the predictions and the scaled features and target.</p>
+<section id="id64">
+<h3>Parameters:<a class="headerlink" href="#id64" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>predictions (pd.DataFrame): The predicted values.
+X_scaled (pd.DataFrame): The scaled features.
+y_scaled (pd.Series): The scaled target.
+scaler (sklearn.preprocessing.StandardScaler): The scaler used to scale the data.</p>
+</div></blockquote>
+</section>
+<section id="id65">
+<h3>Returns:<a class="headerlink" href="#id65" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>reverse_predictions_df (pd.DataFrame): The unscaled predictions.
+reverse_x_df (pd.DataFrame): The unscaled features.
+reverse_y_df (pd.Series): The unscaled target.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.root_mean_squared_log_error">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">root_mean_squared_log_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.root_mean_squared_log_error" title="Permalink to this definition"></a></dt>
+<dd><p>Calculates the Root Mean Squared Logarithmic Error (RMSLE) between the true and predicted values.</p>
+<section id="id66">
+<h3>Parameters:<a class="headerlink" href="#id66" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>y_true (np.ndarray): The actual values.
+y_pred (np.ndarray): The predicted values.</p>
+</div></blockquote>
+</section>
+<section id="id67">
+<h3>Returns:<a class="headerlink" href="#id67" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>float: The RMSLE.</p>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_dataframe">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model_images/all_models/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.save_dataframe" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the dataframes as images in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_list</strong> (<em>list</em><em> of </em><em>pd.DataFrame</em>) – A list of dataframes to be saved as images.</p></li>
+<li><p><strong>image_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory to save the images. Default is ‘model_images/all_models/’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_keras_models">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_keras_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_models</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.save_keras_models" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the diagrams of best Keras models in PNG format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>best_models</strong> (<em>list</em><em> of </em><em>dict</em>) – A list of dictionaries, each containing a Keras model and other related information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model_images/metrics/'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.utils.save_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Saves each model’s metrics as a separate PNG image in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input dataframe containing model information.</p></li>
+<li><p><strong>image_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory to save the images. Default is ‘model_images/metrics/’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-functions.web_scrapper">
+<span id="functions-web-scrapper-module"></span><h2>functions.web_scrapper module<a class="headerlink" href="#module-functions.web_scrapper" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.web_scrapper.</span></span><span class="sig-name descname"><span class="pre">StoppableThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.StoppableThread" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Thread</span></code></p>
+<p>A thread that can be stopped by setting the internal stop flag
+through stop() method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.StoppableThread.stop" title="Permalink to this definition"></a></dt>
+<dd><p>Set the stop flag to stop the thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread.stopped">
+<span class="sig-name descname"><span class="pre">stopped</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.StoppableThread.stopped" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the thread is stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if the thread is stopped, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.web_scrapper.</span></span><span class="sig-name descname"><span class="pre">WebScraper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://www.coindesk.com/search?s=bitcoin&amp;sort=1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3096</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'headlines'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A web scraper for scraping headlines from coindesk.</p>
+<p>The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.
+It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.</p>
+<section id="id68">
+<h3>Attributes:<a class="headerlink" href="#id68" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The URL to scrape from.</p>
+</dd>
+<dt>starting_page_number<span class="classifier">int</span></dt><dd><p>The page number to start scraping from.</p>
+</dd>
+<dt>ending_page_number<span class="classifier">int</span></dt><dd><p>The page number to end scraping at.</p>
+</dd>
+<dt>output_file_name<span class="classifier">str</span></dt><dd><p>The name of the file to output scraped headlines.</p>
+</dd>
+<dt>pause<span class="classifier">bool</span></dt><dd><p>A flag indicating whether the scraping process is paused.</p>
+</dd>
+<dt>stop<span class="classifier">bool</span></dt><dd><p>A flag indicating whether the scraping process is stopped.</p>
+</dd>
+</dl>
+</section>
+<section id="id69">
+<h3>Methods:<a class="headerlink" href="#id69" title="Permalink to this heading"></a></h3>
+<dl class="simple">
+<dt>start_scraping(url, starting_page_number, ending_page_number, output_file_name):</dt><dd><p>Starts the scraping process.</p>
+</dd>
+<dt>stop_scraping():</dt><dd><p>Stops the scraping process.</p>
+</dd>
+<dt>pause_scraping():</dt><dd><p>Pauses the scraping process.</p>
+</dd>
+<dt>resume_scraping():</dt><dd><p>Resumes the scraping process.</p>
+</dd>
+<dt>webScrapper(url, starting_page_number, ending_page_number, output_file_name):</dt><dd><p>The main method for scraping the website. Navigates through web pages, finds required elements,
+and writes scraped data to a CSV file.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.pause_scraping">
+<span class="sig-name descname"><span class="pre">pause_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper.pause_scraping" title="Permalink to this definition"></a></dt>
+<dd><p>Pause the scraping process by setting the pause flag to True.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.resume_scraping">
+<span class="sig-name descname"><span class="pre">resume_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper.resume_scraping" title="Permalink to this definition"></a></dt>
+<dd><p>Resume the scraping process by setting the pause flag to False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.start_scraping">
+<span class="sig-name descname"><span class="pre">start_scraping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper.start_scraping" title="Permalink to this definition"></a></dt>
+<dd><p>Start the scraping process.</p>
+<section id="id70">
+<h4>Parameters:<a class="headerlink" href="#id70" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>URL to scrape from.</p>
+</dd>
+<dt>starting_page_number<span class="classifier">int</span></dt><dd><p>Page number to start scraping from.</p>
+</dd>
+<dt>ending_page_number<span class="classifier">int</span></dt><dd><p>Page number to end scraping at.</p>
+</dd>
+<dt>output_file_name<span class="classifier">str</span></dt><dd><p>Name of the file to output scraped headlines.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.stop_scraping">
+<span class="sig-name descname"><span class="pre">stop_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper.stop_scraping" title="Permalink to this definition"></a></dt>
+<dd><p>Stop the scraping process by stopping the thread in which it runs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.webScrapper">
+<span class="sig-name descname"><span class="pre">webScrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.web_scrapper.WebScraper.webScrapper" title="Permalink to this definition"></a></dt>
+<dd><p>The main method for scraping the website. It navigates through the pages
+of the given url, finds the required elements, and writes the data to a CSV file.
+It also handles cases like file not found, consent button, and handles exceptions like
+TimeoutException. The scraping process can also be paused, resumed and stopped.</p>
+<section id="id71">
+<h4>Parameters:<a class="headerlink" href="#id71" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>url<span class="classifier">str</span></dt><dd><p>The base url from where the scraping starts.</p>
+</dd>
+<dt>starting_page_number<span class="classifier">int</span></dt><dd><p>The starting page number for scraping.</p>
+</dd>
+<dt>ending_page_number<span class="classifier">int</span></dt><dd><p>The ending page number for scraping.</p>
+</dd>
+<dt>output_file_name<span class="classifier">str</span></dt><dd><p>The name of the output file where the scraped data is stored.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-functions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-functions" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Batuhan Edgüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
