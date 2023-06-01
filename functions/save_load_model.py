@@ -12,13 +12,13 @@ def get_val_metrics_from_log(log_file):
     """
     Extract validation metrics from a given log file.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     log_file : str
         Path to the log file.
 
-    Returns:
-    --------
+    Returns
+    -------
     dict
         A dictionary where the keys are tuples of (model_name, step) and the values are validation metrics.
     """
@@ -41,8 +41,8 @@ def save_trained_models(trained_models, root_dir):
     """
     Saves trained models to a specified directory.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     trained_models : list of dicts
         A list of dictionaries, where each dictionary contains details about a trained model.
     root_dir : str
@@ -81,15 +81,15 @@ def load_trained_models(root_dir, log_file):
     Loads trained models from a specified directory. The models are filtered based on the
     validation metrics provided in a log file.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     root_dir : str
         The root directory from where the models will be loaded.
     log_file : str
         Path to the log file containing validation metrics.
 
-    Returns:
-    --------
+    Returns
+    -------
     list
         A list of dictionaries, where each dictionary contains details about a trained model
         and its validation metric.

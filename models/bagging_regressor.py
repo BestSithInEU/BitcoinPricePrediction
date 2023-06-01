@@ -7,14 +7,14 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
     BaggingRegressorModel is a regression model that fits multiple base regressors on different subsets of the
     training data and aggregates their predictions to make the final prediction.
 
-    Parameters:
+    Parameters
     ----------
         estimator (object): The base estimator to use for fitting on the subsets of the data. If None, the base
                             estimator is a decision tree. Default is None.
         n_estimators (int): The number of base estimators to use. Default is 10.
         random_state (int): The seed used by the random number generator. Default is 95.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the BaggingRegressorModel using grid search and cross-validation.
@@ -42,14 +42,14 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
         """
         Tunes the hyperparameters of the BaggingRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (pd.DataFrame): The training features.
             X_val (pd.DataFrame): The validation features.
             y_train (pd.Series): The training target.
             y_val (pd.Series): The validation target.
 
-        Returns:
+        Returns
         -------
             dict: The best hyperparameters found during tuning.
         """
@@ -62,12 +62,12 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
         """
         Returns the current hyperparameters of the BaggingRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the BaggingRegressorModel.
         """

@@ -19,8 +19,8 @@ class SentimentAnalysis:
     tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save
     the processed data to a CSV file.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
     df : DataFrame
         The input dataset containing text data.
     seed : int
@@ -30,8 +30,8 @@ class SentimentAnalysis:
     sid : SentimentIntensityAnalyzer
         An instance of the SentimentIntensityAnalyzer from the NLTK library.
 
-    Methods:
-    --------
+    Methods
+    -------
     preprocess():
         Preprocesses the data by cleaning text and computing VADER sentiment scores.
     tweet_to_words(tweet):
@@ -59,8 +59,8 @@ class SentimentAnalysis:
         """
         Preprocesses the data by cleaning text and computing VADER sentiment scores.
 
-        Returns:
-        --------
+        Returns
+        -------
         DataFrame
             The processed dataframe.
         """
@@ -77,13 +77,13 @@ class SentimentAnalysis:
         Cleans a tweet by removing non-alphanumeric characters and stopwords,
         and applies stemming.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         tweet : str
             A tweet.
 
-        Returns:
-        --------
+        Returns
+        -------
         list
             A list of cleaned words from the tweet.
         """
@@ -99,13 +99,13 @@ class SentimentAnalysis:
         """
         Joins a list of words into a string.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         list : list
             A list of words.
 
-        Returns:
-        --------
+        Returns
+        -------
         str
             A string with words separated by spaces.
         """
@@ -117,15 +117,15 @@ class SentimentAnalysis:
         """
         Computes VADER sentiment scores (negative, neutral, positive, compound) for each tweet.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         df : DataFrame
             The dataframe.
         label : str
             The column in the dataframe containing the text to analyze.
 
-        Returns:
-        --------
+        Returns
+        -------
         DataFrame
             The dataframe with the added VADER sentiment scores.
         """
@@ -161,8 +161,8 @@ class SentimentAnalysis:
         """
         Tokenizes inputs using RoBERTa for training, validation, and testing.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         max_len : int
             Maximum length for tokenization.
         """
@@ -181,8 +181,8 @@ class SentimentAnalysis:
         """
         Aggregates VADER sentiment scores by date.
 
-        Returns:
-        --------
+        Returns
+        -------
         DataFrame
             The aggregated dataframe.
         """
@@ -203,8 +203,8 @@ class SentimentAnalysis:
         """
         Aggregates the dataframe by date and saves it to a CSV file.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         filename : str
             The name of the output CSV file.
         """

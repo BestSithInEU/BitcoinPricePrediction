@@ -6,7 +6,7 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
     """
     RandomForestRegressorModel is a regression model based on the Random Forest algorithm.
 
-    Parameters:
+    Parameters
     ----------
         n_estimators (int): The number of trees in the forest. Default is 100.
         max_depth (int or None): The maximum depth of the tree. None indicates unlimited depth. Default is None.
@@ -17,7 +17,7 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
                                    None uses n_features, and int specifies the number of features.
                                    Default is 'auto'.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the RandomForestRegressorModel using grid search and cross-validation.
@@ -49,14 +49,14 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
         """
         Tunes the hyperparameters of the RandomForestRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -74,12 +74,12 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
         """
         Returns the current hyperparameters of the RandomForestRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the RandomForestRegressorModel.
         """

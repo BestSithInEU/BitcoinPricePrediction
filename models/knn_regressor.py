@@ -6,13 +6,13 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
     """
     KNNRegressorModel is a regression model based on the K-Nearest Neighbors algorithm.
 
-    Parameters:
+    Parameters
     ----------
         n_neighbors (int): The number of neighbors to use. Default is 2.
         weights (str or callable): The weight function used in prediction. Default is "uniform".
         p (int): The power parameter for the Minkowski metric. Default is 1.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the KNNRegressorModel using grid search and cross-validation.
@@ -40,14 +40,14 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
         """
         Tunes the hyperparameters of the KNNRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -62,12 +62,12 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
         """
         Returns the current hyperparameters of the KNNRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the KNNRegressorModel.
         """

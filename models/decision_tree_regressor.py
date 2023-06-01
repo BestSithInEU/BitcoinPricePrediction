@@ -6,7 +6,7 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
     """
     DecisionTreeRegressorModel is a regression model based on the decision tree algorithm.
 
-    Parameters:
+    Parameters
     ----------
         max_depth (int or None): The maximum depth of the tree. Default is None.
         min_samples_split (int): The minimum number of samples required to split an internal node. Default is 2.
@@ -14,7 +14,7 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
         max_features (int, float, string or None): The number of features to consider when looking for the best split.
                                                    Default is None.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the DecisionTreeRegressorModel using grid search and cross-validation.
@@ -44,14 +44,14 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
         """
         Tunes the hyperparameters of the DecisionTreeRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -67,12 +67,12 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
         """
         Returns the current hyperparameters of the DecisionTreeRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the DecisionTreeRegressorModel.
         """

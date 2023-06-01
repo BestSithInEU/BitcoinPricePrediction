@@ -6,14 +6,14 @@ class CatBoostRegressorModel(BaseRegressor, CatBoostRegressor):
     """
     CatBoostRegressorModel is a gradient boosting regression model that uses the CatBoost algorithm.
 
-    Parameters:
+    Parameters
     ----------
         iterations (int): The number of boosting iterations. Default is 500.
         learning_rate (float): The learning rate for boosting. Default is 0.1.
         depth (int): The depth of the trees. Default is 6.
         loss_function (str): The loss function to optimize. Default is 'RMSE'.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the CatBoostRegressorModel using grid search and cross-validation.
@@ -43,14 +43,14 @@ class CatBoostRegressorModel(BaseRegressor, CatBoostRegressor):
         """
         Tunes the hyperparameters of the CatBoostRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -66,12 +66,12 @@ class CatBoostRegressorModel(BaseRegressor, CatBoostRegressor):
         """
         Returns the current hyperparameters of the CatBoostRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the CatBoostRegressorModel.
         """

@@ -6,7 +6,7 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
     """
     GaussianProcessRegressorModel is a regression model based on the Gaussian Process algorithm.
 
-    Parameters:
+    Parameters
     ----------
         kernel (kernel object): The kernel specifying the covariance function of the Gaussian process. Default is None.
         alpha (float): Value added to the diagonal of the kernel matrix during fitting. Default is 1e-10.
@@ -15,7 +15,7 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
         normalize_y (bool): Whether to normalize the target values. Default is False.
         copy_X_train (bool): Whether to make a copy of the training data. Default is True.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the GaussianProcessRegressorModel using grid search and cross-validation.
@@ -49,14 +49,14 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
         """
         Tunes the hyperparameters of the GaussianProcessRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -71,12 +71,12 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
         """
         Returns the current hyperparameters of the GaussianProcessRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the GaussianProcessRegressorModel.
         """

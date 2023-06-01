@@ -6,7 +6,7 @@ class NuSVRRegressorModel(BaseRegressor, NuSVR):
     """
     NuSVRRegressorModel is a regression model based on the Nu-Support Vector Regression algorithm.
 
-    Parameters:
+    Parameters
     ----------
         nu (float): An upper bound on the fraction of training errors and a lower bound of the fraction of support vectors.
                     Default is 0.5.
@@ -20,7 +20,7 @@ class NuSVRRegressorModel(BaseRegressor, NuSVR):
         tol (float): The tolerance for stopping criterion. Default is 0.001.
         cache_size (float): The size of the kernel cache in MB. Default is 200.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the NuSVRRegressorModel using grid search and cross-validation.
@@ -60,14 +60,14 @@ class NuSVRRegressorModel(BaseRegressor, NuSVR):
         """
         Tunes the hyperparameters of the NuSVRRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -82,12 +82,12 @@ class NuSVRRegressorModel(BaseRegressor, NuSVR):
         """
         Returns the current hyperparameters of the NuSVRRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the NuSVRRegressorModel.
         """

@@ -6,8 +6,8 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
     """
     BayesianRidgeRegressorModel is a regression model that performs Bayesian ridge regression.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         n_iter (int): The maximum number of iterations. Default is 300.
         tol (float): The tolerance for stopping criteria. Default is 0.001.
         alpha_1 (float): Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.
@@ -15,7 +15,7 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
         lambda_1 (float): Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
         lambda_2 (float): Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the BayesianRidgeRegressorModel using grid search and cross-validation.
@@ -49,14 +49,14 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
         """
         Tunes the hyperparameters of the BayesianRidgeRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -74,12 +74,12 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
         """
         Returns the current hyperparameters of the BayesianRidgeRegressorModel.
 
-        Parameters:
-        -------
+        Parameters
+        ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the BayesianRidgeRegressorModel.
         """

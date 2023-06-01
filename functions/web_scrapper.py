@@ -36,7 +36,8 @@ class StoppableThread(threading.Thread):
         """
         Check if the thread is stopped.
 
-        Returns:
+        Returns
+        -------
             bool: True if the thread is stopped, False otherwise.
         """
 
@@ -50,8 +51,8 @@ class WebScraper:
     The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.
     It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
     url : str
         The URL to scrape from.
     starting_page_number : int
@@ -65,8 +66,8 @@ class WebScraper:
     stop : bool
         A flag indicating whether the scraping process is stopped.
 
-    Methods:
-    --------
+    Methods
+    -------
     start_scraping(url, starting_page_number, ending_page_number, output_file_name):
         Starts the scraping process.
     stop_scraping():
@@ -91,8 +92,8 @@ class WebScraper:
         Initialize the web scraper with the URL to scrape from, the range of pages
         to scrape, and the file to output the scraped headlines.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         url : str, optional
             URL to scrape from. Defaults to "https://www.coindesk.com/search?s=bitcoin&sort=1".
         starting_page_number : int, optional
@@ -116,8 +117,8 @@ class WebScraper:
         """
         Start the scraping process.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         url : str
             URL to scrape from.
         starting_page_number : int
@@ -164,8 +165,8 @@ class WebScraper:
         It also handles cases like file not found, consent button, and handles exceptions like
         TimeoutException. The scraping process can also be paused, resumed and stopped.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         url : str
             The base url from where the scraping starts.
         starting_page_number : int

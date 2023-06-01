@@ -12,8 +12,8 @@ class BaseModelNN:
     """
     BaseModelNN is a base class for neural network models.
 
-    Methods:
-    ----------
+    Methods
+    -------
         save_model(filename):
             Saves the model to a file.
 
@@ -32,7 +32,7 @@ class BaseModelNN:
         """
         Saves the model to a file.
 
-        Parameters:
+        Parameters
         ----------
             filename (str): The name of the file to save the model.
         """
@@ -43,12 +43,12 @@ class BaseModelNN:
         """
         Loads the model from a file.
 
-        Parameters:
+        Parameters
         ----------
             filename (str): The name of the file to load the model from.
 
-        Returns:
-        ----------
+        Returns
+        -------
             tf.keras.Model: The loaded model.
         """
 
@@ -58,12 +58,12 @@ class BaseModelNN:
         """
         Generates predictions for the input data.
 
-        Parameters:
+        Parameters
         ----------
             X (numpy.ndarray): The input data.
 
-        Returns:
-        ----------
+        Returns
+        -------
             numpy.ndarray: The predicted values.
         """
 
@@ -75,7 +75,7 @@ class BaseModelNN:
         """
         Fits the model to the training data.
 
-        Parameters:
+        Parameters
         ----------
             X (numpy.ndarray): The training features.
             y (numpy.ndarray): The training target.
@@ -99,11 +99,11 @@ class BaseRegressor:
     """
     BaseRegressor is a base class for regression models.
 
-    Attributes:
+    Attributes
     ----------
         logger (logging.Logger): The logger object for logging messages.
 
-    Methods:
+    Methods
     -------
         save_model(file_path):
             Saves the model to a file using joblib.
@@ -131,7 +131,7 @@ class BaseRegressor:
         """
         Saves the model to a file using joblib.
 
-        Parameters:
+        Parameters
         ----------
             file_path (str): The path to save the model.
         """
@@ -142,7 +142,7 @@ class BaseRegressor:
         """
         Loads the model from a file using joblib.
 
-        Parameters:
+        Parameters
         ----------
             file_path (str): The path to load the model from.
         """
@@ -153,7 +153,7 @@ class BaseRegressor:
         """
         Tunes the hyperparameters of the model using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
@@ -162,7 +162,7 @@ class BaseRegressor:
             param_grid (dict): The dictionary of hyperparameter values to search.
             model (object): The model object to tune.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -179,14 +179,14 @@ class BaseRegressor:
         """
         Performs grid search cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             model (object): The model object to tune.
             param_grid (dict): The dictionary of hyperparameter values to search.
             X_train (numpy.ndarray): The training features.
             y_train (numpy.ndarray): The training target.
 
-        Returns:
+        Returns
         -------
             sklearn.model_selection.GridSearchCV: The grid search cross-validation object.
         """
@@ -213,7 +213,7 @@ class BaseRegressor:
         """
         Logs the validation score.
 
-        Parameters:
+        Parameters
         ----------
             X_val (numpy.ndarray): The validation features.
             y_val (numpy.ndarray): The validation target.

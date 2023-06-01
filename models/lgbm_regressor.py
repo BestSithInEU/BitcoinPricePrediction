@@ -6,7 +6,7 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
     """
     LGBMRegressorModel is a regression model based on the LightGBM algorithm.
 
-    Parameters:
+    Parameters
     ----------
         n_estimators (int): The number of boosting iterations. Default is 100.
         learning_rate (float): The learning rate of the boosting process. Default is 0.1.
@@ -14,7 +14,7 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
         num_leaves (int): The maximum number of leaves in each tree. Default is 31.
         random_state (int): The random seed for reproducible results. Default is 95.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the LGBMRegressorModel using grid search and cross-validation.
@@ -46,14 +46,14 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
         """
         Tunes the hyperparameters of the LGBMRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -71,12 +71,12 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
         """
         Returns the current hyperparameters of the LGBMRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the LGBMRegressorModel.
         """

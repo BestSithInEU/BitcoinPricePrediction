@@ -23,7 +23,7 @@ def process_data(
     Preprocesses a given dataset by performing steps such as loading the data, handling missing values,
     creating lagged features, scaling, etc.
 
-    Parameters:
+    Parameters
     -----------
     file_path : str
         Path to the CSV file.
@@ -41,7 +41,7 @@ def process_data(
         Scaler to use for scaling the features. Options are 'StandardScaler', 'RobustScaler',
         and 'MinMaxScaler'. Defaults to 'MinMaxScaler'.
 
-    Returns:
+    Returns
     --------
     tuple
         Tuple containing scaled features, scaled target, and the scaler used.
@@ -121,7 +121,7 @@ def split_data(X_scaled, y_scaled, test_ratio):
     """
     Splits the scaled features and target into training/validation and test sets.
 
-    Parameters:
+    Parameters
     -----------
     X_scaled : DataFrame
         Scaled features.
@@ -130,7 +130,7 @@ def split_data(X_scaled, y_scaled, test_ratio):
     test_ratio : float
         Ratio of the test set size.
 
-    Returns:
+    Returns
     --------
     tuple
         Tuple containing training/validation features, training/validation target,
@@ -157,14 +157,14 @@ def double_quotation_remover(input_file_name_v1, delimiter=","):
     """
     Removes double quotation marks from specified columns in a CSV file.
 
-    Parameters:
+    Parameters
     -----------
     input_file_name_v1 : str
         Path to the input CSV file.
     delimiter : str, optional
         Delimiter used in the CSV file, by default ",".
 
-    Returns:
+    Returns
     --------
     None
     """
@@ -184,7 +184,7 @@ def modify_date_format(
     """
     Modifies the date format of a specific column in a CSV file.
 
-    Parameters:
+    Parameters
     -----------
     input_file_name_v1 : str
         Path to the input CSV file.
@@ -195,7 +195,7 @@ def modify_date_format(
     delimiter : str, optional
         Delimiter used in the CSV file, by default ",".
 
-    Returns:
+    Returns
     --------
     None
 
@@ -244,7 +244,7 @@ def combine_data(
     """
     Combines two datasets and writes the combined dataset to a CSV file.
 
-    Parameters:
+    Parameters
     -----------
     output_file_name : str, optional
         Name of the output file, by default "combined_data".
@@ -253,7 +253,7 @@ def combine_data(
     input_file_name_v2 : str, optional
         Name of the second input file, by default "headlines_sentiment.csv".
 
-    Returns:
+    Returns
     --------
     None
     """

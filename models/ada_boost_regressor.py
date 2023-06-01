@@ -7,7 +7,7 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
     AdaBoostRegressorModel is a regression model that combines multiple weak regressors into a strong
     ensemble model using the AdaBoost algorithm.
 
-    Parameters:
+    Parameters
     ----------
         n_estimators (int): The maximum number of estimators at which boosting is terminated. Default is 50.
         learning_rate (float): The learning rate shrinks the contribution of each regressor by the learning_rate.
@@ -15,7 +15,7 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
         loss (str): The loss function to use for the individual regressors. Options are 'linear', 'square',
                     and 'exponential'. Default is 'linear'.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the AdaBoostRegressorModel using grid search and cross-validation.
@@ -43,14 +43,14 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
         """
         Tunes the hyperparameters of the AdaBoostRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (pd.DataFrame): The training features.
             X_val (pd.DataFrame): The validation features.
             y_train (pd.Series): The training target.
             y_val (pd.Series): The validation target.
 
-        Returns:
+        Returns
         -------
             dict: The best hyperparameters found during tuning.
         """
@@ -66,12 +66,12 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
         """
         Returns the current hyperparameters of the AdaBoostRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the AdaBoostRegressorModel.
         """

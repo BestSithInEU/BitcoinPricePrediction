@@ -453,12 +453,12 @@ def mean_absolute_percentage_error(y_true, y_pred):
     """
     Calculates the Mean Absolute Percentage Error (MAPE) between the true and predicted values.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         y_true (np.ndarray): The actual values.
         y_pred (np.ndarray): The predicted values.
 
-    Returns:
+    Returns
     -------
         float: The MAPE.
     """
@@ -471,12 +471,12 @@ def root_mean_squared_log_error(y_true, y_pred):
     """
     Calculates the Root Mean Squared Logarithmic Error (RMSLE) between the true and predicted values.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         y_true (np.ndarray): The actual values.
         y_pred (np.ndarray): The predicted values.
 
-    Returns:
+    Returns
     -------
         float: The RMSLE.
     """
@@ -488,14 +488,14 @@ def plot_price_prediction(X_test, y_test, predictions, title):
     """
     Plots the predicted and actual values for the test data.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         X_test (pd.DataFrame): The test features.
         y_test (pd.Series): The actual values for the test data.
         predictions (pd.Series): The predicted values for the test data.
         title (str): The title of the plot.
 
-    Returns:
+    Returns
     -------
         plotly.graph_objects._figure.Figure: The figure object of the plot.
     """
@@ -581,8 +581,8 @@ def plot_histories(histories):
     """
     Plots the loss histories for different training epochs.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         histories (list of keras.callbacks.History): The list of history objects for each training epoch.
     """
 
@@ -656,14 +656,14 @@ def reverse_values(predictions, X_scaled, y_scaled, scaler):
     """
     Reverses the effect of scaling on the predictions and the scaled features and target.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         predictions (pd.DataFrame): The predicted values.
         X_scaled (pd.DataFrame): The scaled features.
         y_scaled (pd.Series): The scaled target.
         scaler (sklearn.preprocessing.StandardScaler): The scaler used to scale the data.
 
-    Returns:
+    Returns
     -------
         reverse_predictions_df (pd.DataFrame): The unscaled predictions.
         reverse_x_df (pd.DataFrame): The unscaled features.
@@ -695,11 +695,11 @@ def find_best_models(metric_data):
     """
     Finds the best models based on their validation metric.
 
-    Parameters:
-    -------
+    Parameters
+    ----------
         metric_data (list of dict): A list of dictionaries, each containing the information for one model.
 
-    Returns:
+    Returns
     -------
         best_models (list of dict): A list of dictionaries, each containing the information for one best model.
     """

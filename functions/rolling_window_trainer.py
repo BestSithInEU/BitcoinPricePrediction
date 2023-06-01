@@ -388,7 +388,7 @@ class RollingWindowTrainer:
         """
         Returns all validation metrics.
 
-        Returns:
+        Returns
         --------
         list:
             List of all validation metrics.
@@ -400,12 +400,12 @@ class RollingWindowTrainer:
         """
         Returns the start and end indices for the given window step.
 
-        Parameters:
+        Parameters
         -----------
         step : int
             The window step.
 
-        Returns:
+        Returns
         --------
         tuple:
             Tuple containing the start and end indices for the window.
@@ -421,15 +421,15 @@ class RollingWindowTrainer:
         """
         Retrieves the training window data.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         start : int
             Start index of the training window.
         end : int
             End index of the training window.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame, pd.Series:
             X_train_window: Input data for the training window.
             y_train_window: Target data for the training window.
@@ -443,15 +443,15 @@ class RollingWindowTrainer:
         """
         Retrieves the validation window data.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         start : int
             Start index of the validation window.
         end : int
             End index of the validation window.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame, pd.Series:
             X_val_window: Input data for the validation window.
             y_val_window: Target data for the validation window.
@@ -465,8 +465,8 @@ class RollingWindowTrainer:
         """
         Returns the checkpoint directory for saving the best model.
 
-        Returns:
-        --------
+        Returns
+        -------
         str:
             Checkpoint directory for saving the best model.
         """
@@ -477,13 +477,13 @@ class RollingWindowTrainer:
         """
         Returns the checkpoint callback for saving the best model.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         checkpoint_dir : str
             Directory path for saving the best model checkpoint.
 
-        Returns:
-        --------
+        Returns
+        -------
         ModelCheckpoint:
             Checkpoint callback for saving the best model.
         """
@@ -499,13 +499,13 @@ class RollingWindowTrainer:
         """
         Returns the best model information for the specified window step.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         window : int
             Window step for which to retrieve the best model.
 
-        Returns:
-        --------
+        Returns
+        -------
         dict or None:
             Model information dictionary for the best model at the given window step.
             Returns None if no best model is found for the specified window.
@@ -520,8 +520,8 @@ class RollingWindowTrainer:
         """
         Returns the list of best models.
 
-        Returns:
-        --------
+        Returns
+        -------
         list:
             List of best models.
         """
@@ -532,8 +532,8 @@ class RollingWindowTrainer:
         """
         Sets the list of best models.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         loaded_models : list
             List of loaded best models.
         """
@@ -544,8 +544,8 @@ class RollingWindowTrainer:
         """
         Returns the list of all models.
 
-        Returns:
-        --------
+        Returns
+        -------
         list:
             List of all models.
         """
@@ -556,8 +556,8 @@ class RollingWindowTrainer:
         """
         Sets the list of all models.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         loaded_models : list
             List of loaded all models.
         """
@@ -578,8 +578,8 @@ class RollingWindowTrainer:
         """
         Returns the histories of neural network, CNN, and LSTM models.
 
-        Returns:
-        --------
+        Returns
+        -------
         tuple:
             Tuple containing the histories of neural network, CNN, and LSTM models.
         """
@@ -595,8 +595,8 @@ class RollingWindowTrainer:
         """
         Saves the histories of neural network, CNN, and LSTM models as pickle files.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         file_name_nn : str, optional
             Name of the file to save the neural network history, by default "nn_history".
         file_name_cnn : str, optional
@@ -627,7 +627,7 @@ class RollingWindowTrainer:
         """
         This method loads and sets the training history of the models from the specified files.
 
-        Parameters:
+        Parameters
         ----------
         file_name_nn: str, optional
             The file name for the history of the Neural Network model.
@@ -672,7 +672,7 @@ class RollingWindowTrainer:
         """
         This method trains a Neural Network model with a rolling window approach.
 
-        Parameters:
+        Parameters
         ----------
         X_train: DataFrame
             The input training data.
@@ -757,7 +757,7 @@ class RollingWindowTrainer:
         """
         This method checks for overfitting in the model's training history.
 
-        Parameters:
+        Parameters
         ----------
         step: int
             The current step in the rolling window approach.
@@ -783,7 +783,7 @@ class RollingWindowTrainer:
         """
         This method tunes the hyperparameters of a non-Neural Network model.
 
-        Parameters:
+        Parameters
         ----------
         X_train: DataFrame
             The input training data.
@@ -812,7 +812,7 @@ class RollingWindowTrainer:
         """
         This method updates the time consumption of the model.
 
-        Parameters:
+        Parameters
         ----------
         start_time: float
             The time when the model's training started.
@@ -831,13 +831,13 @@ class RollingWindowTrainer:
         """
         Predicts the best models based on the given input data.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         X : pd.DataFrame or np.ndarray
             Input data for prediction.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame or pd.Series or None
             Predicted values of the best models.
             If input X is pd.DataFrame, returns a DataFrame with the predictions.
@@ -883,13 +883,13 @@ class RollingWindowTrainer:
         """
         Predicts the best models using weighted averaging based on the given input data (Not working as expected.).
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         X : pd.DataFrame or np.ndarray
             Input data for prediction.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame or pd.Series or None
             Weighted predictions of the best models.
             If input X is pd.DataFrame, returns a DataFrame with the weighted predictions.
@@ -954,13 +954,13 @@ class RollingWindowTrainer:
         """
         Predicts the best models using voting based on the given input data (Not working as expected.).
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         X : pd.DataFrame or np.ndarray
             Input data for prediction.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame or pd.Series or None
             Predicted values of the best models using voting.
             If input X is pd.DataFrame, returns a DataFrame with the predictions.
@@ -1015,13 +1015,13 @@ class RollingWindowTrainer:
         """
         Predicts all models based on the given input data.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         X : pd.DataFrame or np.ndarray
             Input data for prediction.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame or np.ndarray
             Predicted values of all models.
             If input X is pd.DataFrame, returns a DataFrame with the predictions.
@@ -1083,13 +1083,13 @@ class RollingWindowTrainer:
         """
         Generates a mean DataFrame from the predictions of all models.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         predictions_all : pd.DataFrame
             DataFrame containing predictions of all models.
 
-        Returns:
-        --------
+        Returns
+        -------
         pd.DataFrame
             Mean DataFrame with averaged predictions per model.
         """

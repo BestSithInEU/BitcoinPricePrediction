@@ -6,7 +6,7 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
     """
     GradientBoostingRegressorModel is a regression model based on the Gradient Boosting algorithm.
 
-    Parameters:
+    Parameters
     ----------
         n_estimators (int): The number of boosting stages. Default is 100.
         learning_rate (float): The learning rate shrinks the contribution of each tree. Default is 0.1.
@@ -15,7 +15,7 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
         min_samples_leaf (int): The minimum number of samples required to be at a leaf node. Default is 1.
         max_features (int, float, string or None): The number of features to consider when looking for the best split. Default is None.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the GradientBoostingRegressorModel using grid search and cross-validation.
@@ -49,14 +49,14 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
         """
         Tunes the hyperparameters of the GradientBoostingRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -75,12 +75,12 @@ class GradientBoostingRegressorModel(BaseRegressor, GradientBoostingRegressor):
         """
         Returns the current hyperparameters of the GradientBoostingRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the GradientBoostingRegressorModel.
         """

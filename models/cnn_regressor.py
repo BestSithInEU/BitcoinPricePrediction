@@ -12,7 +12,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
     """
     CNNRegressor is a convolutional neural network regression model.
 
-    Parameters:
+    Parameters
     ----------
         n_features (int): The number of input features.
         max_epochs (int): The maximum number of epochs for training. Default is 5.
@@ -21,7 +21,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
         patience (int): The number of epochs with no improvement after which training will be stopped. Default is 5.
         tuner_epochs (int): The number of epochs to search for the best hyperparameters. Default is 5.
 
-    Methods:
+    Methods
     -------
         build_model():
             Builds the CNN model.
@@ -58,7 +58,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
         """
         Builds the CNN model.
 
-        Returns:
+        Returns
         -------
             keras.models.Sequential: The CNN model.
         """
@@ -98,7 +98,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
         """
         Tunes the hyperparameters of the CNNRegressor model using Hyperband tuning.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             y_train (numpy.ndarray): The training target.
@@ -106,7 +106,7 @@ class CNNRegressor(HyperModel, BaseModelNN):
             y_val (numpy.ndarray): The validation target.
             callbacks (list): List of Keras callbacks. Default is None.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best model, the training history, and the best hyperparameters.
         """
@@ -182,12 +182,12 @@ class CNNRegressor(HyperModel, BaseModelNN):
         """
         Returns the current hyperparameters of the CNNRegressor model.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the CNNRegressor model.
         """
@@ -203,11 +203,11 @@ class CNNRegressor(HyperModel, BaseModelNN):
         """
         Sets the parameters of the CNNRegressor model.
 
-        Parameters:
+        Parameters
         ----------
             **parameters: The parameters to set.
 
-        Returns:
+        Returns
         -------
             self
         """

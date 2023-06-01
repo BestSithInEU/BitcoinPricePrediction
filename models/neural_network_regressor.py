@@ -18,7 +18,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
     """
     NeuralNetworkRegressor is a regression model based on a neural network.
 
-    Parameters:
+    Parameters
     ----------
         n_features (int): The number of input features.
         max_epochs (int): The maximum number of epochs to train the model. Default is 5.
@@ -27,7 +27,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         patience (int): The number of epochs with no improvement after which training will be stopped if early stopping is used. Default is 5.
         tuner_epochs (int): The number of epochs to train the tuner. Default is 5.
 
-    Methods:
+    Methods
     -------
         build_model():
             Builds and compiles the neural network model.
@@ -41,7 +41,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         set_params(**parameters):
             Sets the value of the specified hyperparameters.
 
-    Attributes:
+    Attributes
     ----------
         n_features (int): The number of input features.
         max_epochs (int): The maximum number of epochs to train the model.
@@ -75,7 +75,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         """
         Builds and compiles the neural network model.
 
-        Returns:
+        Returns
         -------
             Sequential: The compiled neural network model.
         """
@@ -126,7 +126,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         """
         Tunes the hyperparameters of the NeuralNetworkRegressor using Hyperband tuner.
 
-        Parameters:
+        Parameters
         ----------
             X_train (array-like): The training input samples.
             y_train (array-like): The target values for the training samples.
@@ -134,7 +134,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
             y_val (array-like): The target values for the validation samples.
             callbacks (list): List of Keras callbacks. Default is None.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best model, training history, and best hyperparameters.
         """
@@ -214,7 +214,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         """
         Returns the current hyperparameters of the NeuralNetworkRegressor.
 
-        Returns:
+        Returns
         -------
             dict: A dictionary of the current hyperparameters.
         """
@@ -230,7 +230,7 @@ class NeuralNetworkRegressor(HyperModel, BaseModelNN):
         """
         Sets the value of the specified hyperparameters.
 
-        Returns:
+        Returns
         -------
             self
         """

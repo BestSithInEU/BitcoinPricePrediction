@@ -6,11 +6,11 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
     """
     RidgeRegressorModel is a regression model based on the Ridge regression algorithm.
 
-    Parameters:
+    Parameters
     ----------
         alpha (float): The regularization parameter. Default is 1.0.
 
-    Methods:
+    Methods
     -------
         tune_model(X_train, X_val, y_train, y_val):
             Tunes the hyperparameters of the RidgeRegressorModel using grid search and cross-validation.
@@ -34,14 +34,14 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
         """
         Tunes the hyperparameters of the RidgeRegressorModel using grid search and cross-validation.
 
-        Parameters:
+        Parameters
         ----------
             X_train (numpy.ndarray): The training features.
             X_val (numpy.ndarray): The validation features.
             y_train (numpy.ndarray): The training target.
             y_val (numpy.ndarray): The validation target.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best estimator and the best parameters found during tuning.
         """
@@ -52,12 +52,12 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
         """
         Returns the current hyperparameters of the RidgeRegressorModel.
 
-        Parameters:
+        Parameters
         ----------
             deep (bool): If True, return the parameters of all sub-objects that are estimators.
                          If False, return only the top-level parameters. Default is True.
 
-        Returns:
+        Returns
         -------
             dict: The current hyperparameters of the RidgeRegressorModel.
         """

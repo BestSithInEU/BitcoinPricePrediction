@@ -20,7 +20,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
     LSTMRegressor is a class that implements a Long Short-Term Memory (LSTM) model for regression tasks.
     It utilizes hyperparameter tuning with the Keras Tuner library to optimize the model's performance.
 
-    Parameters:
+    Parameters
     ----------
         n_features (int): The number of input features.
         max_epochs (int): The maximum number of epochs to train the model. Default is 5.
@@ -29,7 +29,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         patience (int): The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.
         tuner_epochs (int): The number of epochs to train the tuner. Default is 5.
 
-    Attributes:
+    Attributes
     ----------
         n_features (int): The number of input features.
         max_epochs (int): The maximum number of epochs to train the model.
@@ -40,7 +40,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         name (str): The name of the LSTMRegressor model.
         model (keras.models.Sequential): The LSTMRegressor model.
 
-    Methods:
+    Methods
     -------
         build_model(): Build the LSTM regression model.
         tune_model_with_window_lstm(): Tune the hyperparameters of the LSTMRegressor model using the Hyperband tuner.
@@ -70,7 +70,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         """
         Builds the LSTM regression model.
 
-        Returns:
+        Returns
         -------
             keras.models.Sequential: The constructed LSTM regression model.
         """
@@ -121,7 +121,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         """
         Tunes the hyperparameters of the LSTMRegressor using Hyperband tuner.
 
-        Parameters:
+        Parameters
         ----------
             X_train (array-like): The training input samples.
             y_train (array-like): The target values for the training samples.
@@ -129,7 +129,7 @@ class LSTMRegressor(HyperModel, BaseModelNN):
             y_val (array-like): The target values for the validation samples.
             callbacks (list): List of Keras callbacks. Default is None.
 
-        Returns:
+        Returns
         -------
             tuple: A tuple containing the best model, training history, and best hyperparameters.
         """
@@ -208,8 +208,8 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         """
         Gets the current hyperparameters of the LSTMRegressor.
 
-        Returns:
-        ------
+        Returns
+        -------
             dict: A dictionary of hyperparameter names and their values.
         """
         return {
@@ -224,8 +224,8 @@ class LSTMRegressor(HyperModel, BaseModelNN):
         """
         Sets the value of the specified hyperparameters.
 
-        Returns:
-        ------
+        Returns
+        -------
             self
         """
         for parameter, value in parameters.items():
