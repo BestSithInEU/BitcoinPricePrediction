@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/functions/rolling_window_trainer';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -320,81 +319,26 @@ document.write(`
 <span class="sd">    The rolling window approach is a time series forecasting technique where the model is retrained at each time step,</span>
 <span class="sd">    using only the most recent data as training data.</span>
 
-<span class="sd">    ...</span>
-
-<span class="sd">    Attributes</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    model_list : list</span>
-<span class="sd">        a list of models to be trained.</span>
-<span class="sd">    X_train_val : DataFrame</span>
-<span class="sd">        the feature dataset for training and validation.</span>
-<span class="sd">    y_train_val : DataFrame</span>
-<span class="sd">        the target dataset for training and validation.</span>
-<span class="sd">    train_window : int, optional</span>
-<span class="sd">        the size of the training window, by default 100.</span>
-<span class="sd">    val_window : int, optional</span>
-<span class="sd">        the size of the validation window, by default 20.</span>
-<span class="sd">    step_size : int, optional</span>
-<span class="sd">        the step size to move the window for each iteration, by default 5.</span>
-<span class="sd">    early_stopping_values : dict, optional</span>
-<span class="sd">        a dictionary with keys as the model names and values as a dictionary containing early stopping parameters.</span>
-<span class="sd">    checkpoint_path : str, optional</span>
-<span class="sd">        path to save the model checkpoints, by default &quot;models/save/checkpoints/&quot;.</span>
 <span class="sd">    scaler : class</span>
-<span class="sd">        the scaler class to scale the predictions.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    start_training():</span>
-<span class="sd">        Start the training process.</span>
-<span class="sd">    get_all_val_metrics():</span>
-<span class="sd">        Return all validation metrics collected during training.</span>
-<span class="sd">    get_window_indices(step):</span>
-<span class="sd">        Return the indices for training and validation windows based on the current step.</span>
-<span class="sd">    get_train_window(start, end):</span>
-<span class="sd">        Return the training feature and target data based on the provided indices.</span>
-<span class="sd">    get_val_window(start, end):</span>
-<span class="sd">        Return the validation feature and target data based on the provided indices.</span>
-<span class="sd">    get_checkpoint_dir():</span>
-<span class="sd">        Return the directory path for storing model checkpoints.</span>
-<span class="sd">    get_checkpoint_callback(checkpoint_dir):</span>
-<span class="sd">        Return the model checkpoint callback function.</span>
-<span class="sd">    get_best_model_at_window(window):</span>
-<span class="sd">        Return the best model at a specific window.</span>
-<span class="sd">    get_best_models():</span>
-<span class="sd">        Return a list of the best models.</span>
-<span class="sd">    set_best_models(loaded_models):</span>
-<span class="sd">        Set the best models list using loaded models.</span>
-<span class="sd">    get_all_models():</span>
-<span class="sd">        Return a list of all models.</span>
-<span class="sd">    set_all_models(loaded_models):</span>
-<span class="sd">        Set the all models list using loaded models.</span>
-<span class="sd">    print_model_info():</span>
-<span class="sd">        Print the information of the best models.</span>
-<span class="sd">    get_histories():</span>
-<span class="sd">        Return the history of all models.</span>
-<span class="sd">    save_histories(file_name_nn=&quot;nn_history&quot;, file_name_cnn=&quot;cnn_history&quot;, file_name_lstm=&quot;lstm_history&quot;):</span>
-<span class="sd">        Save the training history of all models into pickle files.</span>
-<span class="sd">    load_and_set_histories(file_name_nn=&quot;nn_history&quot;, file_name_cnn=&quot;cnn_history&quot;, file_name_lstm=&quot;lstm_history&quot;):</span>
-<span class="sd">        Load the training history of all models from pickle files and set the histories attribute.</span>
-<span class="sd">    train_nn_model_with_window(X_train, y_train, X_val, y_val, window, checkpoint_callback):</span>
-<span class="sd">        Train a neural network model with a specific window.</span>
-<span class="sd">    check_overfitting(step, history):</span>
-<span class="sd">        Check if the model is overfitting.</span>
-<span class="sd">    tune_non_nn_model(X_train, X_val, y_train, y_val):</span>
-<span class="sd">        Tune a non-neural network model.</span>
-<span class="sd">    update_time_consumption(start_time):</span>
-<span class="sd">        Update the time consumption attribute.</span>
-<span class="sd">    predict_best_models(X):</span>
-<span class="sd">        Predict using the best models.</span>
-<span class="sd">    weighted_predict_best_models(X):</span>
-<span class="sd">        Predict using the best models with weights.</span>
-<span class="sd">    vote_predict_best_models(X):</span>
-<span class="sd">        Predict using the best models with voting.</span>
-<span class="sd">    predict_all_models(X):</span>
-<span class="sd">        Predict using all models.</span>
-<span class="sd">    generate_mean_df(predictions_all):</span>
-<span class="sd">        Generate a dataframe with the mean of all predictions.</span>
+<span class="sd">        The scaler class to scale the predictions.</span>
+<span class="sd">    X_train_val : DataFrame</span>
+<span class="sd">        The feature dataset for training and validation.</span>
+<span class="sd">    y_train_val : DataFrame</span>
+<span class="sd">        The target dataset for training and validation.</span>
+<span class="sd">    train_window : int, optional</span>
+<span class="sd">        The size of the training window, by default 100.</span>
+<span class="sd">    val_window : int, optional</span>
+<span class="sd">        The size of the validation window, by default 20.</span>
+<span class="sd">    step_size : int, optional</span>
+<span class="sd">        The step size to move the window for each iteration, by default 5.</span>
+<span class="sd">    early_stopping_values : dict, optional</span>
+<span class="sd">        A dictionary with keys as the model names and values as a dictionary containing early stopping parameters.</span>
+<span class="sd">    checkpoint_path : str, optional</span>
+<span class="sd">        Path to save the model checkpoints, by default &quot;models/save/checkpoints/&quot;.</span>
+<span class="sd">    model_list : list, optional</span>
+<span class="sd">        A list of models to be trained.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -647,7 +591,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        --------</span>
-<span class="sd">        list:</span>
+<span class="sd">        list</span>
 <span class="sd">            List of all validation metrics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -664,7 +608,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        --------</span>
-<span class="sd">        tuple:</span>
+<span class="sd">        tuple</span>
 <span class="sd">            Tuple containing the start and end indices for the window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -687,9 +631,10 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pd.DataFrame, pd.Series:</span>
-<span class="sd">            X_train_window: Input data for the training window.</span>
-<span class="sd">            y_train_window: Target data for the training window.</span>
+<span class="sd">        X_train_window : pd.DataFrame, pd.Series</span>
+<span class="sd">            Input data for the training window.</span>
+<span class="sd">        y_train_window : pd.DataFrame, pd.Series</span>
+<span class="sd">            Target data for the training window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">X_train_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
@@ -709,9 +654,10 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        pd.DataFrame, pd.Series:</span>
-<span class="sd">            X_val_window: Input data for the validation window.</span>
-<span class="sd">            y_val_window: Target data for the validation window.</span>
+<span class="sd">        X_val_window : pd.DataFrame, pd.Series</span>
+<span class="sd">            Input data for the validation window.</span>
+<span class="sd">        y_val_window : pd.DataFrame, pd.Series</span>
+<span class="sd">            Target data for the validation window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">X_val_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_train_val</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
@@ -724,7 +670,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        str:</span>
+<span class="sd">        str</span>
 <span class="sd">            Checkpoint directory for saving the best model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -741,7 +687,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        ModelCheckpoint:</span>
+<span class="sd">        ModelCheckpoint</span>
 <span class="sd">            Checkpoint callback for saving the best model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -763,7 +709,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dict or None:</span>
+<span class="sd">        model_info : dict or None</span>
 <span class="sd">            Model information dictionary for the best model at the given window step.</span>
 <span class="sd">            Returns None if no best model is found for the specified window.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -779,7 +725,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        list:</span>
+<span class="sd">        list</span>
 <span class="sd">            List of best models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -803,7 +749,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        list:</span>
+<span class="sd">        list</span>
 <span class="sd">            List of all models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -837,7 +783,7 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        tuple:</span>
+<span class="sd">        tuple</span>
 <span class="sd">            Tuple containing the histories of neural network, CNN, and LSTM models.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
@@ -1096,10 +1042,8 @@ document.write(`
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        pd.DataFrame or pd.Series or None</span>
-<span class="sd">            Predicted values of the best models.</span>
-<span class="sd">            If input X is pd.DataFrame, returns a DataFrame with the predictions.</span>
-<span class="sd">            If input X is np.ndarray, returns a Series with the predictions.</span>
-<span class="sd">            Returns None if the input X is neither pd.DataFrame nor np.ndarray.</span>
+<span class="sd">            Predicted values of the best models. If input X is pd.DataFrame, returns a DataFrame with the predictions.</span>
+<span class="sd">            If input X is np.ndarray, returns a Series with the predictions. Returns None if the input X is neither pd.DataFrame nor np.ndarray.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">all_predictions</span> <span class="o">=</span> <span class="p">{}</span>

@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/functions/utils';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -754,7 +753,8 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        plotly.graph_objects._figure.Figure: The figure object of the plot.</span>
+<span class="sd">        plotly.graph_objects._figure.Figure</span>
+<span class="sd">            The figure object of the plot.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Ensure dates are sorted in ascending order</span>
@@ -840,7 +840,8 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        histories (list of keras.callbacks.History): The list of history objects for each training epoch.</span>
+<span class="sd">        histories : list of keras.callbacks.History</span>
+<span class="sd">            The list of history objects for each training epoch.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">subplot_titles</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;History at Window </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">histories</span><span class="p">))]</span>
@@ -915,16 +916,23 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        predictions (pd.DataFrame): The predicted values.</span>
-<span class="sd">        X_scaled (pd.DataFrame): The scaled features.</span>
-<span class="sd">        y_scaled (pd.Series): The scaled target.</span>
-<span class="sd">        scaler (sklearn.preprocessing.StandardScaler): The scaler used to scale the data.</span>
+<span class="sd">        predictions : pd.DataFrame</span>
+<span class="sd">            The predicted values.</span>
+<span class="sd">        X_scaled : pd.DataFrame</span>
+<span class="sd">            The scaled features.</span>
+<span class="sd">        y_scaled : pd.Series</span>
+<span class="sd">            The scaled target.</span>
+<span class="sd">        scaler : sklearn.preprocessing</span>
+<span class="sd">            andardScaler): The scaler used to scale the data.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        reverse_predictions_df (pd.DataFrame): The unscaled predictions.</span>
-<span class="sd">        reverse_x_df (pd.DataFrame): The unscaled features.</span>
-<span class="sd">        reverse_y_df (pd.Series): The unscaled target.</span>
+<span class="sd">        reverse_predictions_df : pd.DataFrame</span>
+<span class="sd">            The unscaled predictions.</span>
+<span class="sd">        reverse_x_df : pd.DataFrame</span>
+<span class="sd">            The unscaled features.</span>
+<span class="sd">        reverse_y_df : pd.Series</span>
+<span class="sd">            The unscaled target.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">reverse_predictions_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -954,11 +962,13 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        metric_data (list of dict): A list of dictionaries, each containing the information for one model.</span>
+<span class="sd">        metric_data : list of dict</span>
+<span class="sd">            A list of dictionaries, each containing the information for one model.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        best_models (list of dict): A list of dictionaries, each containing the information for one best model.</span>
+<span class="sd">        best_models : list of dict</span>
+<span class="sd">            A list of dictionaries, each containing the information for one best model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">best_models</span> <span class="o">=</span> <span class="p">[]</span>

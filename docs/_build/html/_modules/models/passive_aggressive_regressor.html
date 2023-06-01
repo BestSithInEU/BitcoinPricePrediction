@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/models/passive_aggressive_regressor';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -265,29 +264,34 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    C (float): The regularization parameter. Default is 1.0.</span>
-<span class="sd">    fit_intercept (bool): Whether to calculate the intercept for this model. Default is True.</span>
-<span class="sd">    max_iter (int): The maximum number of passes over the training data. Default is 1000.</span>
-<span class="sd">    tol (float): The stopping criterion. Default is 1e-3.</span>
-<span class="sd">    early_stopping (bool): Whether to use early stopping to terminate training when validation score does not improve. Default is False.</span>
-<span class="sd">    validation_fraction (float): The proportion of the training data to use as validation set when early stopping is enabled. Default is 0.1.</span>
-<span class="sd">    n_iter_no_change (int): The maximum number of iterations with no improvement before early stopping. Default is 5.</span>
-<span class="sd">    shuffle (bool): Whether to shuffle the training data before each epoch. Default is True.</span>
-<span class="sd">    verbose (int): The verbosity level. Default is 0.</span>
-<span class="sd">    loss (str): The loss function to use. Can be &quot;epsilon_insensitive&quot; or &quot;squared_epsilon_insensitive&quot;.</span>
-<span class="sd">    Default is &quot;epsilon_insensitive&quot;.</span>
-<span class="sd">    epsilon (float): The epsilon parameter for the epsilon-insensitive loss function. Default is 0.1.</span>
-<span class="sd">    random_state (int, RandomState instance or None): The seed of the pseudo-random number generator. Default is None.</span>
-<span class="sd">    warm_start (bool): Whether to reuse the solution of the previous call to fit as initialization. Default is False.</span>
-<span class="sd">    average (bool): Whether to compute the averaged model. Default is False.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">        tune_model(X_train, X_val, y_train, y_val):</span>
-<span class="sd">            Tunes the hyperparameters of the PassiveAggressiveRegressorModel using grid search and cross-validation.</span>
-
-<span class="sd">        get_params(deep=True):</span>
-<span class="sd">            Returns the current hyperparameters of the PassiveAggressiveRegressorModel.</span>
+<span class="sd">    C : float</span>
+<span class="sd">        The regularization parameter. Default is 1.0.</span>
+<span class="sd">    fit_intercept : bool</span>
+<span class="sd">        Whether to calculate the intercept for this model. Default is True.</span>
+<span class="sd">    max_iter : int</span>
+<span class="sd">        The maximum number of passes over the training data. Default is 1000.</span>
+<span class="sd">    tol : float</span>
+<span class="sd">        The stopping criterion. Default is 1e-3.</span>
+<span class="sd">    early_stopping : bool</span>
+<span class="sd">        Whether to use early stopping to terminate training when validation score does not improve. Default is False.</span>
+<span class="sd">    validation_fraction : float</span>
+<span class="sd">        The proportion of the training data to use as validation set when early stopping is enabled. Default is 0.1.</span>
+<span class="sd">    n_iter_no_change : int</span>
+<span class="sd">        The maximum number of iterations with no improvement before early stopping. Default is 5.</span>
+<span class="sd">    shuffle : bool</span>
+<span class="sd">        Whether to shuffle the training data before each epoch. Default is True.</span>
+<span class="sd">    verbose : int</span>
+<span class="sd">        The verbosity level. Default is 0.</span>
+<span class="sd">    loss : str</span>
+<span class="sd">        The loss function to use. Can be &quot;epsilon_insensitive&quot; or &quot;squared_epsilon_insensitive&quot;. Default is &quot;epsilon_insensitive&quot;.</span>
+<span class="sd">    epsilon : float</span>
+<span class="sd">        The epsilon parameter for the epsilon-insensitive loss function. Default is 0.1.</span>
+<span class="sd">    random_state : int, RandomState instance or None</span>
+<span class="sd">        The seed of the pseudo-random number generator. Default is None.</span>
+<span class="sd">    warm_start : bool</span>
+<span class="sd">        Whether to reuse the solution of the previous call to fit as initialization. Default is False.</span>
+<span class="sd">    average : bool</span>
+<span class="sd">        Whether to compute the averaged model. Default is False.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -333,14 +337,19 @@ document.write(`
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">            X_train (numpy.ndarray): The training features.</span>
-<span class="sd">            X_val (numpy.ndarray): The validation features.</span>
-<span class="sd">            y_train (numpy.ndarray): The training target.</span>
-<span class="sd">            y_val (numpy.ndarray): The validation target.</span>
+<span class="sd">            X_train : numpy.ndarray</span>
+<span class="sd">                The training features.</span>
+<span class="sd">            X_val : numpy.ndarray</span>
+<span class="sd">                The validation features.</span>
+<span class="sd">            y_train : numpy.ndarray</span>
+<span class="sd">                The training target.</span>
+<span class="sd">            y_val : numpy.ndarray</span>
+<span class="sd">                The validation target.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            tuple: A tuple containing the best estimator and the best parameters found during tuning.</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best estimator and the best parameters found during tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span>
@@ -355,12 +364,13 @@ document.write(`
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">            deep (bool): If True, return the parameters of all sub-objects that are estimators.</span>
-<span class="sd">                         If False, return only the top-level parameters. Default is True.</span>
+<span class="sd">            deep : bool</span>
+<span class="sd">                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            dict: The current hyperparameters of the PassiveAggressiveRegressorModel.</span>
+<span class="sd">            dict</span>
+<span class="sd">                The current hyperparameters of the PassiveAggressiveRegressorModel.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span>

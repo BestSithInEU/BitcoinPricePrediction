@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/functions/web_scrapper';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -295,7 +294,8 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            bool: True if the thread is stopped, False otherwise.</span>
+<span class="sd">            bool</span>
+<span class="sd">                True if the thread is stopped, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span></div></div>
@@ -307,35 +307,6 @@ document.write(`
 
 <span class="sd">    The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.</span>
 <span class="sd">    It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    url : str</span>
-<span class="sd">        The URL to scrape from.</span>
-<span class="sd">    starting_page_number : int</span>
-<span class="sd">        The page number to start scraping from.</span>
-<span class="sd">    ending_page_number : int</span>
-<span class="sd">        The page number to end scraping at.</span>
-<span class="sd">    output_file_name : str</span>
-<span class="sd">        The name of the file to output scraped headlines.</span>
-<span class="sd">    pause : bool</span>
-<span class="sd">        A flag indicating whether the scraping process is paused.</span>
-<span class="sd">    stop : bool</span>
-<span class="sd">        A flag indicating whether the scraping process is stopped.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    start_scraping(url, starting_page_number, ending_page_number, output_file_name):</span>
-<span class="sd">        Starts the scraping process.</span>
-<span class="sd">    stop_scraping():</span>
-<span class="sd">        Stops the scraping process.</span>
-<span class="sd">    pause_scraping():</span>
-<span class="sd">        Pauses the scraping process.</span>
-<span class="sd">    resume_scraping():</span>
-<span class="sd">        Resumes the scraping process.</span>
-<span class="sd">    webScrapper(url, starting_page_number, ending_page_number, output_file_name):</span>
-<span class="sd">        The main method for scraping the website. Navigates through web pages, finds required elements,</span>
-<span class="sd">        and writes scraped data to a CSV file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>

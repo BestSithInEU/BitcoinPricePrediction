@@ -1,4 +1,4 @@
-functions package
+Functions
 =================
 
 Submodules

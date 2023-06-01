@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/functions/sentiment_analyzer';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -276,7 +275,7 @@ document.write(`
 <span class="sd">    tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save</span>
 <span class="sd">    the processed data to a CSV file.</span>
 
-<span class="sd">    Attributes</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    df : DataFrame</span>
 <span class="sd">        The input dataset containing text data.</span>
@@ -286,23 +285,6 @@ document.write(`
 <span class="sd">        Set of stopwords for text cleaning.</span>
 <span class="sd">    sid : SentimentIntensityAnalyzer</span>
 <span class="sd">        An instance of the SentimentIntensityAnalyzer from the NLTK library.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    preprocess():</span>
-<span class="sd">        Preprocesses the data by cleaning text and computing VADER sentiment scores.</span>
-<span class="sd">    tweet_to_words(tweet):</span>
-<span class="sd">        Cleans a tweet by removing non-alphanumeric characters and stopwords, and applies stemming.</span>
-<span class="sd">    unlist(list):</span>
-<span class="sd">        Joins a list of words into a string.</span>
-<span class="sd">    compute_vader_scores(df, label):</span>
-<span class="sd">        Computes VADER sentiment scores for each tweet in the dataset.</span>
-<span class="sd">    process_inputs(max_len):</span>
-<span class="sd">        Tokenizes inputs using RoBERTa for training, validation, and testing.</span>
-<span class="sd">    aggregate_by_date():</span>
-<span class="sd">        Aggregates VADER sentiment scores by date.</span>
-<span class="sd">    save_df(filename):</span>
-<span class="sd">        Aggregates the dataframe by date and saves it to a CSV file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>

@@ -49,7 +49,6 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/models/neural_network_regressor';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -132,8 +131,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../functions.html">functions package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../models.html">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
@@ -182,7 +181,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -277,37 +276,18 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">        n_features (int): The number of input features.</span>
-<span class="sd">        max_epochs (int): The maximum number of epochs to train the model. Default is 5.</span>
-<span class="sd">        max_batch_size (int): The maximum batch size for training. Default is 5.</span>
-<span class="sd">        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.</span>
-<span class="sd">        patience (int): The number of epochs with no improvement after which training will be stopped if early stopping is used. Default is 5.</span>
-<span class="sd">        tuner_epochs (int): The number of epochs to train the tuner. Default is 5.</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">        build_model():</span>
-<span class="sd">            Builds and compiles the neural network model.</span>
-
-<span class="sd">        tune_model_with_window_nn(X_train, y_train, X_val, y_val, callbacks=None):</span>
-<span class="sd">            Tunes the hyperparameters of the NeuralNetworkRegressor using Hyperband tuner.</span>
-
-<span class="sd">        get_params(deep=True):</span>
-<span class="sd">            Returns the current hyperparameters of the NeuralNetworkRegressor.</span>
-
-<span class="sd">        set_params(**parameters):</span>
-<span class="sd">            Sets the value of the specified hyperparameters.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">        n_features (int): The number of input features.</span>
-<span class="sd">        max_epochs (int): The maximum number of epochs to train the model.</span>
-<span class="sd">        max_batch_size (int): The maximum batch size for training.</span>
-<span class="sd">        hyperband_iterations (int): The number of Hyperband iterations.</span>
-<span class="sd">        patience (int): The number of epochs with no improvement after which training will be stopped if early stopping is used.</span>
-<span class="sd">        tuner_epochs (int): The number of epochs to train the tuner.</span>
-<span class="sd">        name (str): The name of the NeuralNetworkRegressor model.</span>
-<span class="sd">        model (Sequential): The compiled neural network model.</span>
+<span class="sd">        n_features : int</span>
+<span class="sd">            The number of input features.</span>
+<span class="sd">        max_epochs : int</span>
+<span class="sd">            The maximum number of epochs to train the model. Default is 5.</span>
+<span class="sd">        max_batch_size : int</span>
+<span class="sd">            The maximum batch size for training. Default is 5.</span>
+<span class="sd">        hyperband_iterations : int</span>
+<span class="sd">            The number of Hyperband iterations. Default is 1.</span>
+<span class="sd">        patience : int</span>
+<span class="sd">            The number of epochs with no improvement after which training will be stopped if early stopping is used. Default is 5.</span>
+<span class="sd">        tuner_epochs : int</span>
+<span class="sd">            The number of epochs to train the tuner. Default is 5.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -334,7 +314,8 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            Sequential: The compiled neural network model.</span>
+<span class="sd">            Sequential</span>
+<span class="sd">                The compiled neural network model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;NeuralNetworkRegressor&quot;</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
@@ -385,15 +366,21 @@ document.write(`
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">            X_train (array-like): The training input samples.</span>
-<span class="sd">            y_train (array-like): The target values for the training samples.</span>
-<span class="sd">            X_val (array-like): The validation input samples.</span>
-<span class="sd">            y_val (array-like): The target values for the validation samples.</span>
-<span class="sd">            callbacks (list): List of Keras callbacks. Default is None.</span>
+<span class="sd">            X_train : array-like</span>
+<span class="sd">                The training input samples.</span>
+<span class="sd">            y_train : array-like</span>
+<span class="sd">                The target values for the training samples.</span>
+<span class="sd">            X_val : array-like</span>
+<span class="sd">                The validation input samples.</span>
+<span class="sd">            y_val : array-like</span>
+<span class="sd">                The target values for the validation samples.</span>
+<span class="sd">            callbacks : list</span>
+<span class="sd">                List of Keras callbacks. Default is None.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            tuple: A tuple containing the best model, training history, and best hyperparameters.</span>
+<span class="sd">            tuple</span>
+<span class="sd">                A tuple containing the best model, training history, and best hyperparameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="n">hp</span><span class="p">):</span>
@@ -473,7 +460,8 @@ document.write(`
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">            dict: A dictionary of the current hyperparameters.</span>
+<span class="sd">            dict</span>
+<span class="sd">                A dictionary of the current hyperparameters.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;n_features&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">,</span>

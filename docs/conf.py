@@ -70,14 +70,14 @@ html_theme = "sphinx_book_theme"
 
 html_theme_options = {
     "path_to_docs": "docs",
-    "repository_url": "https://github.com/hwchase17/langchain",
+    "repository_url": "https://github.com/BestSithInEU/BitcoinPricePrediction",
     "use_repository_button": True,
 }
 
 html_context = {
     "display_github": True,  # Integrate GitHub
-    "github_user": "hwchase17",  # Username
-    "github_repo": "langchain",  # Repo name
+    "github_user": "BestSithInEU",  # Username
+    "github_repo": "BitcoinPricePrediction",  # Repo name
     "github_version": "master",  # Version
     "conf_py_path": "/docs/",  # Path in the checkout to the docs root
 }
@@ -91,10 +91,6 @@ html_static_path = ["_static"]
 # or fully qualified paths (eg. https://...)
 html_css_files = [
     "css/custom.css",
-]
-
-html_js_files = [
-    "js/mendablesearch.js",
 ]
 
 nb_execution_mode = "off"

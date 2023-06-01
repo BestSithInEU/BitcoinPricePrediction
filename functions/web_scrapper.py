@@ -38,7 +38,8 @@ class StoppableThread(threading.Thread):
 
         Returns
         -------
-            bool: True if the thread is stopped, False otherwise.
+            bool
+                True if the thread is stopped, False otherwise.
         """
 
         return self._stop_event.is_set()
@@ -50,35 +51,6 @@ class WebScraper:
 
     The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.
     It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.
-
-    Attributes
-    ----------
-    url : str
-        The URL to scrape from.
-    starting_page_number : int
-        The page number to start scraping from.
-    ending_page_number : int
-        The page number to end scraping at.
-    output_file_name : str
-        The name of the file to output scraped headlines.
-    pause : bool
-        A flag indicating whether the scraping process is paused.
-    stop : bool
-        A flag indicating whether the scraping process is stopped.
-
-    Methods
-    -------
-    start_scraping(url, starting_page_number, ending_page_number, output_file_name):
-        Starts the scraping process.
-    stop_scraping():
-        Stops the scraping process.
-    pause_scraping():
-        Pauses the scraping process.
-    resume_scraping():
-        Resumes the scraping process.
-    webScrapper(url, starting_page_number, ending_page_number, output_file_name):
-        The main method for scraping the website. Navigates through web pages, finds required elements,
-        and writes scraped data to a CSV file.
     """
 
     def __init__(

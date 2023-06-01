@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>models package &#8212; Bitcoin Price Prediction 0.0.1 documentation</title>
+    <title>Models &#8212; Bitcoin Price Prediction 0.0.1 documentation</title>
   
   
   
@@ -50,12 +50,11 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="_static/js/mendablesearch.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'models';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" />
-    <link rel="prev" title="functions package" href="functions.html" />
+    <link rel="prev" title="Functions" href="functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -135,8 +134,8 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">BitcoinPricePrediction</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="functions.html">functions package</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Models</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -185,7 +184,7 @@
 <div class="article-header-buttons">
 
 
-<a href="https://github.com/hwchase17/langchain" target="_blank"
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
    class="btn btn-sm btn-source-repository-button"
    title="Source repository"
    data-bs-placement="bottom" data-bs-toggle="tooltip"
@@ -293,7 +292,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>models package</h1>
+    <h1>Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -339,8 +338,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="models-package">
-<h1>models package<a class="headerlink" href="#models-package" title="Permalink to this headline">#</a></h1>
+  <section id="models">
+<h1>Models<a class="headerlink" href="#models" title="Permalink to this headline">#</a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
 </section>
@@ -355,37 +354,25 @@ ensemble model using the AdaBoost algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>n_estimators</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>learning_rate</em>) – Default is 1.0.</p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>loss</em>) – and ‘exponential’. Default is ‘linear’.</p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The maximum number of estimators at which boosting is terminated. Default is 50.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate shrinks the contribution of each regressor by the learning_rate. Default is 1.0.</p></li>
+<li><p><strong>loss</strong> (<em>str</em>) – The loss function to use for the individual regressors. Options are ‘linear’, ‘square’ and ‘exponential’. Default is ‘linear’.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the AdaBoostRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the AdaBoostRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.ada_boost_regressor.AdaBoostRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/ada_boost_regressor.html#AdaBoostRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.ada_boost_regressor.AdaBoostRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the AdaBoostRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the AdaBoostRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the AdaBoostRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -397,17 +384,17 @@ ensemble model using the AdaBoost algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>pd.DataFrame</strong><strong>)</strong> (<em>X_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>pd.DataFrame</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>pd.DataFrame</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>pd.DataFrame</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>pd.Series</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>pd.Series</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The best hyperparameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The best hyperparameters found during tuning.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -426,37 +413,25 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>object</strong><strong>)</strong> (<em>estimator</em>) – estimator is a decision tree. Default is None.</p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>random_state</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>estimator</strong> (<em>object</em>) – The base estimator to use for fitting on the subsets of the data. If None, the base estimator is a decision tree. Default is None.</p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of base estimators to use. Default is 10.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – The seed used by the random number generator. Default is 95.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the BaggingRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the BaggingRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.bagging_regressor.BaggingRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/bagging_regressor.html#BaggingRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.bagging_regressor.BaggingRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the BaggingRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the BaggingRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the BaggingRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,17 +443,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>pd.DataFrame</strong><strong>)</strong> (<em>X_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>pd.DataFrame</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>pd.DataFrame</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>pd.DataFrame</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>pd.Series</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>pd.Series</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The best hyperparameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The best hyperparameters found during tuning.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -494,42 +469,18 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>BaseModelNN is a base class for neural network models.</p>
 <dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">save_model(filename):</span></span></dt>
-<dd><p>Saves the model to a file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">load_model(filename):</span></span></dt>
-<dd><p>Loads the model from a file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">predict(X):</span></span></dt>
-<dd><p>Generates predictions for the input data.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">fit_model(X,</span> <span class="pre">y,</span> <span class="pre">epochs=10,</span> <span class="pre">batch_size=32,</span> <span class="pre">verbose=1,</span> <span class="pre">validation_split=0.2):</span></span></dt>
-<dd><p>Fits the model to the training data.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="models.base.BaseModelNN.fit_model">
 <span class="sig-name descname"><span class="pre">fit_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/base.html#BaseModelNN.fit_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.base.BaseModelNN.fit_model" title="Permalink to this definition">#</a></dt>
 <dd><p>Fits the model to the training data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>verbose</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>validation_split</em>) – </p></li>
+<li><p><strong>X</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – The number of epochs to train the model. Default is 10.</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – The batch size for training. Default is 32.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – Verbosity mode. 0 - silent, 1 - progress bar, 2 - one line per epoch. Default is 1.</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – The fraction of the training data to use for validation. Default is 0.2.</p></li>
 </ul>
 </dd>
 </dl>
@@ -541,13 +492,13 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Loads the model from a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>filename</em>) – </p>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file to load the model from.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tf.keras.Model</strong></p>
+<dd class="field-even"><p>The loaded model.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The loaded model.</p>
+<dd class="field-odd"><p>tf.keras.Model</p>
 </dd>
 </dl>
 </dd></dl>
@@ -558,13 +509,13 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Generates predictions for the input data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>X</em>) – </p>
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy.ndarray</em>) – The input data.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>numpy.ndarray</strong></p>
+<dd class="field-even"><p>The predicted values.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The predicted values.</p>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -575,7 +526,7 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Saves the model to a file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>filename</em>) – </p>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file to save the model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -589,48 +540,13 @@ training data and aggregates their predictions to make the final prediction.</p>
 <p>BaseRegressor is a base class for regression models.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="models.base.BaseRegressor.logger">
-<span class="sig-name descname"><span class="pre">logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logging.Logger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.base.BaseRegressor.logger" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
+<span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#models.base.BaseRegressor.logger" title="Permalink to this definition">#</a></dt>
+<dd><p>The logger object for logging messages.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The logger object for logging messages.</p>
+<dd class="field-odd"><p>logging.Logger</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">save_model(file_path):</span></span></dt>
-<dd><p>Saves the model to a file using joblib.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">load_model(file_path):</span></span></dt>
-<dd><p>Loads the model from a file using joblib.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val,</span> <span class="pre">param_grid,</span> <span class="pre">model):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the model using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">grid_search_cv(model,</span> <span class="pre">param_grid,</span> <span class="pre">X_train,</span> <span class="pre">y_train):</span></span></dt>
-<dd><p>Performs grid search cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">log_cv_score():</span></span></dt>
-<dd><p>Logs the best cross-validation score.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">log_validation_score(X_val,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Logs the validation score.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -640,17 +556,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>object</strong><strong>)</strong> (<em>model</em>) – </p></li>
-<li><p><strong>(</strong><strong>dict</strong><strong>)</strong> (<em>param_grid</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_train</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>model</strong> (<em>object</em>) – The model object to tune.</p></li>
+<li><p><strong>param_grid</strong> (<em>dict</em>) – The dictionary of hyperparameter values to search.</p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>sklearn.model_selection.GridSearchCV</strong></p>
+<dd class="field-even"><p>The grid search cross-validation object.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The grid search cross-validation object.</p>
+<dd class="field-odd"><p>sklearn.model_selection.GridSearchCV</p>
 </dd>
 </dl>
 </dd></dl>
@@ -661,7 +577,7 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Loads the model from a file using joblib.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_path</em>) – </p>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to load the model from.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -679,8 +595,8 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 </dl>
@@ -692,7 +608,7 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Saves the model to a file using joblib.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>file_path</em>) – </p>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – The path to save the model.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -704,19 +620,19 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>dict</strong><strong>)</strong> (<em>param_grid</em>) – </p></li>
-<li><p><strong>(</strong><strong>object</strong><strong>)</strong> (<em>model</em>) – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
+<li><p><strong>param_grid</strong> (<em>dict</em>) – The dictionary of hyperparameter values to search.</p></li>
+<li><p><strong>model</strong> (<em>object</em>) – The model object to tune.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -734,40 +650,28 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>n_iter</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>lambda_2</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_iter</strong> (<em>int</em>) – The maximum number of iterations. Default is 300.</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – The tolerance for stopping criteria. Default is 0.001.</p></li>
+<li><p><strong>alpha_1</strong> (<em>float</em>) – Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.</p></li>
+<li><p><strong>alpha_2</strong> (<em>float</em>) – Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.</p></li>
+<li><p><strong>lambda_1</strong> (<em>float</em>) – Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.</p></li>
+<li><p><strong>lambda_2</strong> (<em>float</em>) – Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the BayesianRidgeRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the BayesianRidgeRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.bayesian_ridge_regressor.BayesianRidgeRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/bayesian_ridge_regressor.html#BayesianRidgeRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.bayesian_ridge_regressor.BayesianRidgeRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the BayesianRidgeRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the BayesianRidgeRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the BayesianRidgeRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -779,10 +683,10 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -807,38 +711,26 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>depth</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>learning_rate</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>loss_function</em>) – </p></li>
+<li><p><strong>iterations</strong> (<em>int</em>) – The number of boosting iterations. Default is 500.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate for boosting. Default is 0.1.</p></li>
+<li><p><strong>depth</strong> (<em>int</em>) – The depth of the trees. Default is 6.</p></li>
+<li><p><strong>loss_function</strong> (<em>str</em>) – The loss function to optimize. Default is ‘RMSE’.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the CatBoostRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the CatBoostRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.cat_boost_regressor.CatBoostRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/cat_boost_regressor.html#CatBoostRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.cat_boost_regressor.CatBoostRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the CatBoostRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the CatBoostRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the CatBoostRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -850,17 +742,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -878,49 +770,25 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>tuner_epochs</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – The number of input features.</p></li>
+<li><p><strong>max_epochs</strong> (<em>int</em>) – The maximum number of epochs for training. Default is 5.</p></li>
+<li><p><strong>max_batch_size</strong> (<em>int</em>) – The maximum batch size for training. Default is 5.</p></li>
+<li><p><strong>hyperband_iterations</strong> (<em>int</em>) – The number of Hyperband iterations. Default is 1.</p></li>
+<li><p><strong>patience</strong> (<em>int</em>) – The number of epochs with no improvement after which training will be stopped. Default is 5.</p></li>
+<li><p><strong>tuner_epochs</strong> (<em>int</em>) – The number of epochs to search for the best hyperparameters. Default is 5.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">build_model():</span></span></dt>
-<dd><p>Builds the CNN model.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model_with_window_cnn(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">callbacks=None):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the CNNRegressor model using Hyperband tuning.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the CNNRegressor model.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">set_params(**parameters):</span></span></dt>
-<dd><p>Sets the parameters of the CNNRegressor model.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.cnn_regressor.CNNRegressor.build_model">
 <span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/cnn_regressor.html#CNNRegressor.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.cnn_regressor.CNNRegressor.build_model" title="Permalink to this definition">#</a></dt>
 <dd><p>Builds the CNN model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>keras.models.Sequential</strong></p>
+<dd class="field-odd"><p>The CNN model.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>The CNN model.</p>
+<dd class="field-even"><p>keras.models.Sequential</p>
 </dd>
 </dl>
 </dd></dl>
@@ -931,13 +799,13 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Returns the current hyperparameters of the CNNRegressor model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the CNNRegressor model.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the CNNRegressor model.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -948,7 +816,7 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dd><p>Sets the parameters of the CNNRegressor model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>**parameters</strong> (<em>The parameters to set.</em>) – </p>
+<dd class="field-odd"><p><strong>**parameters</strong> (<em>dict</em><em>, </em><em>optional</em>) – The parameters to set.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>self</p>
@@ -963,18 +831,18 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>list</strong><strong>)</strong> (<em>callbacks</em>) – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of Keras callbacks. Default is None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best model, the training history, and the best hyperparameters.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best model, the training history, and the best hyperparameters.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -992,40 +860,26 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>None</strong><strong>)</strong> (<em>string or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_samples_leaf</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>max_features</em>) – Default is None.</p></li>
-<li><p><strong>float</strong> (<em>The number of features to consider when looking for the best split.</em>) – Default is None.</p></li>
-<li><p><strong>None</strong><strong>)</strong> – Default is None.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em><em> or </em><em>None</em>) – The maximum depth of the tree. Default is None.</p></li>
+<li><p><strong>min_samples_split</strong> (<em>int</em>) – The minimum number of samples required to split an internal node. Default is 2.</p></li>
+<li><p><strong>min_samples_leaf</strong> (<em>int</em>) – The minimum number of samples required to be at a leaf node. Default is 1.</p></li>
+<li><p><strong>max_features</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>string</em><em> or </em><em>None</em>) – The number of features to consider when looking for the best split. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the DecisionTreeRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the DecisionTreeRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.decision_tree_regressor.DecisionTreeRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/decision_tree_regressor.html#DecisionTreeRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.decision_tree_regressor.DecisionTreeRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the DecisionTreeRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the DecisionTreeRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the DecisionTreeRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1037,17 +891,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1065,30 +919,18 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>l1_ratio</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Constant that multiplies the penalty terms. Default is 1.0.</p></li>
+<li><p><strong>l1_ratio</strong> (<em>float</em>) – The mixing parameter, with 0 &lt;= l1_ratio &lt;= 1. Default is 0.5.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the ElasticNetRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the ElasticNetRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.elastic_net_regressor.ElasticNetRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/elastic_net_regressor.html#ElasticNetRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.elastic_net_regressor.ElasticNetRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the ElasticNetRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><strong>dict</strong></p>
@@ -1106,17 +948,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1134,37 +976,25 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_samples_split</em>) – </p></li>
-<li><p><strong>None</strong><strong>)</strong> (<em>max_depth</em><em> (</em><em>int or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of trees in the forest. Default is 100.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em><em> or </em><em>None</em>) – The maximum depth of the tree. Default is None.</p></li>
+<li><p><strong>min_samples_split</strong> (<em>int</em>) – The minimum number of samples required to split an internal node. Default is 2.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the ExtraTreesRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the ExtraTreesRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.extra_trees_regressor.ExtraTreesRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/extra_trees_regressor.html#ExtraTreesRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.extra_trees_regressor.ExtraTreesRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the ExtraTreesRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the ExtraTreesRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the ExtraTreesRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1176,17 +1006,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1204,40 +1034,28 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>object</strong><strong>)</strong> (<em>kernel</em><em> (</em><em>kernel</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>alpha</em>) – </p></li>
-<li><p><strong>callable</strong><strong>)</strong> (<em>optimizer</em><em> (</em><em>string or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>n_restarts_optimizer</em>) – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>copy_X_train</em>) – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> – </p></li>
+<li><p><strong>kernel</strong> (<em>kernel object</em>) – The kernel specifying the covariance function of the Gaussian process. Default is None.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Value added to the diagonal of the kernel matrix during fitting. Default is 1e-10.</p></li>
+<li><p><strong>optimizer</strong> (<em>string</em><em> or </em><em>callable</em>) – The optimizer to use for optimizing the kernel’s parameters. Default is “fmin_l_bfgs_b”.</p></li>
+<li><p><strong>n_restarts_optimizer</strong> (<em>int</em>) – The number of restarts of the optimizer for optimizing the kernel’s parameters. Default is 0.</p></li>
+<li><p><strong>normalize_y</strong> (<em>bool</em>) – Whether to normalize the target values. Default is False.</p></li>
+<li><p><strong>copy_X_train</strong> (<em>bool</em>) – Whether to make a copy of the training data. Default is True.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the GaussianProcessRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the GaussianProcessRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.gaussian_regressor.GaussianProcessRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/gaussian_regressor.html#GaussianProcessRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.gaussian_regressor.GaussianProcessRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the GaussianProcessRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the GaussianProcessRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the GaussianProcessRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1249,17 +1067,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1277,42 +1095,28 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_samples_leaf</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>learning_rate</em>) – </p></li>
-<li><p><strong>None</strong><strong>)</strong> (<em>string or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>max_features</em>) – </p></li>
-<li><p><strong>float</strong> (<em>The number of features to consider when looking for the best split. Default is None.</em>) – </p></li>
-<li><p><strong>None</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of boosting stages. Default is 100.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate shrinks the contribution of each tree. Default is 0.1.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em><em> or </em><em>None</em>) – The maximum depth of the tree. Default is 3.</p></li>
+<li><p><strong>min_samples_split</strong> (<em>int</em>) – The minimum number of samples required to split an internal node. Default is 2.</p></li>
+<li><p><strong>min_samples_leaf</strong> (<em>int</em>) – The minimum number of samples required to be at a leaf node. Default is 1.</p></li>
+<li><p><strong>max_features</strong> (<em>int</em><em>, </em><em>float</em><em>, </em><em>string</em><em> or </em><em>None</em>) – The number of features to consider when looking for the best split. Default is None.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the GradientBoostingRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the GradientBoostingRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.gradient_boosting_regressor.GradientBoostingRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/gradient_boosting_regressor.html#GradientBoostingRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.gradient_boosting_regressor.GradientBoostingRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the GradientBoostingRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the GradientBoostingRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the GradientBoostingRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1324,17 +1128,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1352,37 +1156,25 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>p</em>) – </p></li>
-<li><p><strong>callable</strong><strong>)</strong> (<em>weights</em><em> (</em><em>str or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_neighbors</strong> (<em>int</em>) – The number of neighbors to use. Default is 2.</p></li>
+<li><p><strong>weights</strong> (<em>str</em><em> or </em><em>callable</em>) – The weight function used in prediction. Default is “uniform”.</p></li>
+<li><p><strong>p</strong> (<em>int</em>) – The power parameter for the Minkowski metric. Default is 1.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the KNNRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the KNNRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.knn_regressor.KNNRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/knn_regressor.html#KNNRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.knn_regressor.KNNRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the KNNRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the KNNRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the KNNRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1394,10 +1186,10 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1421,34 +1213,22 @@ training data and aggregates their predictions to make the final prediction.</p>
 <p>LassoRegressorModel is a regression model based on the Lasso (L1 regularization) algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>alpha</em>) – </p>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>float</em>) – The regularization strength. Default is 1.0.</p>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the LassoRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the LassoRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.lasso_regressor.LassoRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/lasso_regressor.html#LassoRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.lasso_regressor.LassoRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the LassoRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the LassoRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the LassoRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1460,10 +1240,10 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1488,39 +1268,27 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>random_state</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>learning_rate</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of boosting iterations. Default is 100.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the boosting process. Default is 0.1.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em>) – The maximum depth of each tree. Default is -1 (unlimited).</p></li>
+<li><p><strong>num_leaves</strong> (<em>int</em>) – The maximum number of leaves in each tree. Default is 31.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em>) – The random seed for reproducible results. Default is 95.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the LGBMRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the LGBMRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.lgbm_regressor.LGBMRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/lgbm_regressor.html#LGBMRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.lgbm_regressor.LGBMRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the LGBMRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the LGBMRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the LGBMRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1532,17 +1300,17 @@ training data and aggregates their predictions to make the final prediction.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1561,125 +1329,25 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>tuner_epochs</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – The number of input features.</p></li>
+<li><p><strong>max_epochs</strong> (<em>int</em>) – The maximum number of epochs to train the model. Default is 5.</p></li>
+<li><p><strong>max_batch_size</strong> (<em>int</em>) – The maximum batch size for training the model. Default is 5.</p></li>
+<li><p><strong>hyperband_iterations</strong> (<em>int</em>) – The number of Hyperband iterations. Default is 1.</p></li>
+<li><p><strong>patience</strong> (<em>int</em>) – The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.</p></li>
+<li><p><strong>tuner_epochs</strong> (<em>int</em>) – The number of epochs to train the tuner. Default is 5.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.n_features">
-<span class="sig-name descname"><span class="pre">n_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.n_features" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of input features.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.max_epochs">
-<span class="sig-name descname"><span class="pre">max_epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.max_epochs" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The maximum number of epochs to train the model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.max_batch_size">
-<span class="sig-name descname"><span class="pre">max_batch_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.max_batch_size" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The maximum batch size for training the model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.hyperband_iterations">
-<span class="sig-name descname"><span class="pre">hyperband_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.hyperband_iterations" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of Hyperband iterations.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.patience">
-<span class="sig-name descname"><span class="pre">patience</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.patience" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of epochs to wait for improvement in validation loss before early stopping.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.tuner_epochs">
-<span class="sig-name descname"><span class="pre">tuner_epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.tuner_epochs" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of epochs to train the tuner.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.name">
-<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.name" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The name of the LSTMRegressor model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.model">
-<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keras.models.Sequential</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.model" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The LSTMRegressor model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">build_model():</span> <span class="pre">Build</span> <span class="pre">the</span> <span class="pre">LSTM</span> <span class="pre">regression</span> <span class="pre">model.</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model_with_window_lstm():</span> <span class="pre">Tune</span> <span class="pre">the</span> <span class="pre">hyperparameters</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">LSTMRegressor</span> <span class="pre">model</span> <span class="pre">using</span> <span class="pre">the</span> <span class="pre">Hyperband</span> <span class="pre">tuner.</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params():</span> <span class="pre">Get</span> <span class="pre">the</span> <span class="pre">current</span> <span class="pre">hyperparameters</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">LSTMRegressor.</span></span></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">set_params():</span> <span class="pre">Set</span> <span class="pre">the</span> <span class="pre">value</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">specified</span> <span class="pre">hyperparameters.</span></span></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.lstm_regressor.LSTMRegressor.build_model">
 <span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/lstm_regressor.html#LSTMRegressor.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.lstm_regressor.LSTMRegressor.build_model" title="Permalink to this definition">#</a></dt>
 <dd><p>Builds the LSTM regression model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>keras.models.Sequential</strong></p>
+<dd class="field-odd"><p>The constructed LSTM regression model.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>The constructed LSTM regression model.</p>
+<dd class="field-even"><p>keras.models.Sequential</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1690,10 +1358,10 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dd><p>Gets the current hyperparameters of the LSTMRegressor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>dict</strong></p>
+<dd class="field-odd"><p>A dictionary of hyperparameter names and their values.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>A dictionary of hyperparameter names and their values.</p>
+<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1716,18 +1384,18 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>list</strong><strong>)</strong> (<em>callbacks</em>) – </p></li>
+<li><p><strong>X_train</strong> (<em>array-like</em>) – The training input samples.</p></li>
+<li><p><strong>y_train</strong> (<em>array-like</em>) – The target values for the training samples.</p></li>
+<li><p><strong>X_val</strong> (<em>array-like</em>) – The validation input samples.</p></li>
+<li><p><strong>y_val</strong> (<em>array-like</em>) – The target values for the validation samples.</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of Keras callbacks. Default is None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best model, training history, and best hyperparameters.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best model, training history, and best hyperparameters.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1745,129 +1413,25 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>tuner_epochs</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_features</strong> (<em>int</em>) – The number of input features.</p></li>
+<li><p><strong>max_epochs</strong> (<em>int</em>) – The maximum number of epochs to train the model. Default is 5.</p></li>
+<li><p><strong>max_batch_size</strong> (<em>int</em>) – The maximum batch size for training. Default is 5.</p></li>
+<li><p><strong>hyperband_iterations</strong> (<em>int</em>) – The number of Hyperband iterations. Default is 1.</p></li>
+<li><p><strong>patience</strong> (<em>int</em>) – The number of epochs with no improvement after which training will be stopped if early stopping is used. Default is 5.</p></li>
+<li><p><strong>tuner_epochs</strong> (<em>int</em>) – The number of epochs to train the tuner. Default is 5.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">build_model():</span></span></dt>
-<dd><p>Builds and compiles the neural network model.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model_with_window_nn(X_train,</span> <span class="pre">y_train,</span> <span class="pre">X_val,</span> <span class="pre">y_val,</span> <span class="pre">callbacks=None):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the NeuralNetworkRegressor using Hyperband tuner.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the NeuralNetworkRegressor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">set_params(**parameters):</span></span></dt>
-<dd><p>Sets the value of the specified hyperparameters.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.n_features">
-<span class="sig-name descname"><span class="pre">n_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.n_features" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of input features.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.max_epochs">
-<span class="sig-name descname"><span class="pre">max_epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.max_epochs" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The maximum number of epochs to train the model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.max_batch_size">
-<span class="sig-name descname"><span class="pre">max_batch_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.max_batch_size" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The maximum batch size for training.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.hyperband_iterations">
-<span class="sig-name descname"><span class="pre">hyperband_iterations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.hyperband_iterations" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of Hyperband iterations.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.patience">
-<span class="sig-name descname"><span class="pre">patience</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.patience" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of epochs with no improvement after which training will be stopped if early stopping is used.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.tuner_epochs">
-<span class="sig-name descname"><span class="pre">tuner_epochs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.tuner_epochs" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The number of epochs to train the tuner.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.name">
-<span class="sig-name descname"><span class="pre">name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.name" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The name of the NeuralNetworkRegressor model.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.model">
-<span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Sequential</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.model" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>The compiled neural network model.</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.neural_network_regressor.NeuralNetworkRegressor.build_model">
 <span class="sig-name descname"><span class="pre">build_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/neural_network_regressor.html#NeuralNetworkRegressor.build_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.neural_network_regressor.NeuralNetworkRegressor.build_model" title="Permalink to this definition">#</a></dt>
 <dd><p>Builds and compiles the neural network model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>Sequential</strong></p>
+<dd class="field-odd"><p>The compiled neural network model.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>The compiled neural network model.</p>
+<dd class="field-even"><p>Sequential</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1878,10 +1442,10 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dd><p>Returns the current hyperparameters of the NeuralNetworkRegressor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>dict</strong></p>
+<dd class="field-odd"><p>A dictionary of the current hyperparameters.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>A dictionary of the current hyperparameters.</p>
+<dd class="field-even"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1904,18 +1468,18 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>array-like</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>list</strong><strong>)</strong> (<em>callbacks</em>) – </p></li>
+<li><p><strong>X_train</strong> (<em>array-like</em>) – The training input samples.</p></li>
+<li><p><strong>y_train</strong> (<em>array-like</em>) – The target values for the training samples.</p></li>
+<li><p><strong>X_val</strong> (<em>array-like</em>) – The validation input samples.</p></li>
+<li><p><strong>y_val</strong> (<em>array-like</em>) – The target values for the validation samples.</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of Keras callbacks. Default is None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best model, training history, and best hyperparameters.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best model, training history, and best hyperparameters.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1933,43 +1497,31 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>cache_size</em>) – Default is 0.5.</p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>kernel</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>degree</em>) – </p></li>
-<li><p><strong>float</strong><strong>)</strong> (<em>gamma</em><em> (</em><em>str or</em>) – Default is “scale”.</p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>shrinking</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>nu</strong> (<em>float</em>) – An upper bound on the fraction of training errors and a lower bound of the fraction of support vectors. Default is 0.5.</p></li>
+<li><p><strong>C</strong> (<em>float</em>) – The regularization parameter. Default is 1.0.</p></li>
+<li><p><strong>kernel</strong> (<em>str</em>) – The kernel function to use. Can be “linear”, “poly”, “rbf”, or “sigmoid”. Default is “rbf”.</p></li>
+<li><p><strong>degree</strong> (<em>int</em>) – The degree of the polynomial kernel function. Default is 3.</p></li>
+<li><p><strong>gamma</strong> (<em>str</em><em> or </em><em>float</em>) – The kernel coefficient for “rbf”, “poly”, and “sigmoid”. Can be “scale”, “auto”, or a float value. Default is “scale”.</p></li>
+<li><p><strong>coef0</strong> (<em>float</em>) – The independent term in the kernel function. Default is 0.0.</p></li>
+<li><p><strong>shrinking</strong> (<em>bool</em>) – Whether to use the shrinking heuristic. Default is True.</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – The tolerance for stopping criterion. Default is 0.001.</p></li>
+<li><p><strong>cache_size</strong> (<em>float</em>) – The size of the kernel cache in MB. Default is 200.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the NuSVRRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the NuSVRRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.nu_svr_regressor.NuSVRRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/nu_svr_regressor.html#NuSVRRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.nu_svr_regressor.NuSVRRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the NuSVRRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the NuSVRRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the NuSVRRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1981,17 +1533,17 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2009,50 +1561,36 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>epsilon</em>) – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>average</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>verbose</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>loss</em>) – </p></li>
-<li><p><strong>&quot;epsilon_insensitive&quot;.</strong> (<em>Default is</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong> (<em>random_state</em>) – </p></li>
-<li><p><strong>None</strong><strong>)</strong> (<em>RandomState instance or</em>) – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>bool</strong><strong>)</strong> – </p></li>
+<li><p><strong>C</strong> (<em>float</em>) – The regularization parameter. Default is 1.0.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em>) – Whether to calculate the intercept for this model. Default is True.</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em>) – The maximum number of passes over the training data. Default is 1000.</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – The stopping criterion. Default is 1e-3.</p></li>
+<li><p><strong>early_stopping</strong> (<em>bool</em>) – Whether to use early stopping to terminate training when validation score does not improve. Default is False.</p></li>
+<li><p><strong>validation_fraction</strong> (<em>float</em>) – The proportion of the training data to use as validation set when early stopping is enabled. Default is 0.1.</p></li>
+<li><p><strong>n_iter_no_change</strong> (<em>int</em>) – The maximum number of iterations with no improvement before early stopping. Default is 5.</p></li>
+<li><p><strong>shuffle</strong> (<em>bool</em>) – Whether to shuffle the training data before each epoch. Default is True.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em>) – The verbosity level. Default is 0.</p></li>
+<li><p><strong>loss</strong> (<em>str</em>) – The loss function to use. Can be “epsilon_insensitive” or “squared_epsilon_insensitive”. Default is “epsilon_insensitive”.</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – The epsilon parameter for the epsilon-insensitive loss function. Default is 0.1.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – The seed of the pseudo-random number generator. Default is None.</p></li>
+<li><p><strong>warm_start</strong> (<em>bool</em>) – Whether to reuse the solution of the previous call to fit as initialization. Default is False.</p></li>
+<li><p><strong>average</strong> (<em>bool</em>) – Whether to compute the averaged model. Default is False.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the PassiveAggressiveRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the PassiveAggressiveRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.passive_aggressive_regressor.PassiveAggressiveRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/passive_aggressive_regressor.html#PassiveAggressiveRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.passive_aggressive_regressor.PassiveAggressiveRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the PassiveAggressiveRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the PassiveAggressiveRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the PassiveAggressiveRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2064,17 +1602,17 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2092,41 +1630,27 @@ It utilizes hyperparameter tuning with the Keras Tuner library to optimize the m
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_samples_leaf</em>) – </p></li>
-<li><p><strong>None</strong><strong>)</strong> (<em>max_depth</em><em> (</em><em>int or</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>int</strong><strong>)</strong> (<em>max_features</em><em> (</em><em>str or</em>) – ‘auto’ uses sqrt(n_features), ‘sqrt’ uses sqrt(n_features), ‘log2’ uses log2(n_features),
-None uses n_features, and int specifies the number of features.
-Default is ‘auto’.</p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of trees in the forest. Default is 100.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em><em> or </em><em>None</em>) – The maximum depth of the tree. None indicates unlimited depth. Default is None.</p></li>
+<li><p><strong>min_samples_split</strong> (<em>int</em>) – The minimum number of samples required to split an internal node. Default is 2.</p></li>
+<li><p><strong>min_samples_leaf</strong> (<em>int</em>) – The minimum number of samples required to be at a leaf node. Default is 1.</p></li>
+<li><p><strong>max_features</strong> (<em>str</em><em> or </em><em>int</em>) – The number of features to consider when looking for the best split. ‘auto’ uses sqrt(n_features), ‘sqrt’ uses sqrt(n_features), ‘log2’ uses log2(n_features), None uses n_features, and int specifies the number of features. Default is ‘auto’.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the RandomForestRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the RandomForestRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.random_forest_regressor.RandomForestRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/random_forest_regressor.html#RandomForestRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.random_forest_regressor.RandomForestRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the RandomForestRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the RandomForestRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the RandomForestRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2138,17 +1662,17 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2165,34 +1689,22 @@ Default is ‘auto’.</p></li>
 <p>RidgeRegressorModel is a regression model based on the Ridge regression algorithm.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>alpha</em>) – </p>
+<dd class="field-odd"><p><strong>alpha</strong> (<em>float</em>) – The regularization parameter. Default is 1.0.</p>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the RidgeRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the RidgeRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.ridge_regressor.RidgeRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/ridge_regressor.html#RidgeRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.ridge_regressor.RidgeRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the RidgeRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the RidgeRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the RidgeRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2204,17 +1716,17 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2232,38 +1744,26 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>kernel</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>degree</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>epsilon</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>kernel</strong> (<em>str</em>) – The kernel function to use. Default is “rbf”.</p></li>
+<li><p><strong>degree</strong> (<em>int</em>) – The degree of the polynomial kernel function. Default is 3.</p></li>
+<li><p><strong>C</strong> (<em>float</em>) – The regularization parameter. Default is 1.0.</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em>) – The epsilon-tube parameter in the epsilon-insensitive loss function. Default is 0.1.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the SupportVectorRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the SupportVectorRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.support_vector_regressor.SupportVectorRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/support_vector_regressor.html#SupportVectorRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.support_vector_regressor.SupportVectorRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the SupportVectorRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the SupportVectorRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the SupportVectorRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2275,17 +1775,17 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2303,39 +1803,27 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>tol</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>link</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>max_iter</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>power</strong> (<em>float</em>) – The power parameter in the Tweedie variance function. Default is 0.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – The regularization parameter. Default is 0.5.</p></li>
+<li><p><strong>link</strong> (<em>str</em>) – The link function to use. Default is “auto”.</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em>) – The maximum number of iterations. Default is 100.</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – The tolerance for the optimization algorithm. Default is 0.0001.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the TweedieRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the TweedieRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.tweedie_regressor.TweedieRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/tweedie_regressor.html#TweedieRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.tweedie_regressor.TweedieRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the TweedieRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the TweedieRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the TweedieRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2347,17 +1835,17 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2375,41 +1863,30 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> (<em>min_child_weight</em>) – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> (<em>colsample_bytree</em>) – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>int</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>float</strong><strong>)</strong> – </p></li>
+<li><p><strong>n_estimators</strong> (<em>int</em>) – The number of boosting iterations. Default is 100.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – The learning rate of the boosting process. Default is 0.1.</p></li>
+<li><p><strong>max_depth</strong> (<em>int</em>) – The maximum depth of each tree. Default is 3.</p></li>
+<li><p><strong>min_child_weight</strong> (<em>int</em>) – The minimum sum of instance weight needed in a child. Default is 1.</p></li>
+<li><p><strong>gamma</strong> (<em>float</em>) – The minimum loss reduction required to make a further partition on a leaf node. Default is 0.</p></li>
+<li><p><strong>subsample</strong> (<em>float</em>) – The subsample ratio of the training instances. Default is 1.</p></li>
+<li><p><strong>colsample_bytree</strong> (<em>float</em>) – The subsample ratio of columns when constructing each tree. Default is 1.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">tune_model(X_train,</span> <span class="pre">X_val,</span> <span class="pre">y_train,</span> <span class="pre">y_val):</span></span></dt>
-<dd><p>Tunes the hyperparameters of the XGBRegressorModel using grid search and cross-validation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">get_params(deep=True):</span></span></dt>
-<dd><p>Returns the current hyperparameters of the XGBRegressorModel.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="models.xgb_regressor.XGBRegressorModel.get_params">
 <span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/xgb_regressor.html#XGBRegressorModel.get_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.xgb_regressor.XGBRegressorModel.get_params" title="Permalink to this definition">#</a></dt>
 <dd><p>Returns the current hyperparameters of the XGBRegressorModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>(</strong><strong>bool</strong><strong>)</strong> (<em>deep</em>) – If False, return only the top-level parameters. Default is True.</p>
+<dd class="field-odd"><p><strong>deep</strong> (<em>bool</em>) – If True, return the parameters of all sub-objects that are estimators.
+If False, return only the top-level parameters. Default is True.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>dict</strong></p>
+<dd class="field-even"><p>The current hyperparameters of the XGBRegressorModel.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>The current hyperparameters of the XGBRegressorModel.</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2421,17 +1898,17 @@ Default is ‘auto’.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> (<em>y_val</em>) – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
-<li><p><strong>(</strong><strong>numpy.ndarray</strong><strong>)</strong> – </p></li>
+<li><p><strong>X_train</strong> (<em>numpy.ndarray</em>) – The training features.</p></li>
+<li><p><strong>X_val</strong> (<em>numpy.ndarray</em>) – The validation features.</p></li>
+<li><p><strong>y_train</strong> (<em>numpy.ndarray</em>) – The training target.</p></li>
+<li><p><strong>y_val</strong> (<em>numpy.ndarray</em>) – The validation target.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>tuple</strong></p>
+<dd class="field-even"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>A tuple containing the best estimator and the best parameters found during tuning.</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2462,7 +1939,7 @@ Default is ‘auto’.</p></li>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">functions package</p>
+        <p class="prev-next-title">Functions</p>
       </div>
     </a>
     <a class="right-next"
