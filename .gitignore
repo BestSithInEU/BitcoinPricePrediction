@@ -34,6 +34,3 @@ models/keras_tuning/
 
 # Jupyter Notebook
 *.ipynb
-
-# Docs
-docs/
