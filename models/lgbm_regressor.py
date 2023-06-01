@@ -8,19 +8,16 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
 
     Parameters
     ----------
-        n_estimators (int): The number of boosting iterations. Default is 100.
-        learning_rate (float): The learning rate of the boosting process. Default is 0.1.
-        max_depth (int): The maximum depth of each tree. Default is -1 (unlimited).
-        num_leaves (int): The maximum number of leaves in each tree. Default is 31.
-        random_state (int): The random seed for reproducible results. Default is 95.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the LGBMRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the LGBMRegressorModel.
+        n_estimators : int
+            The number of boosting iterations. Default is 100.
+        learning_rate : float
+            The learning rate of the boosting process. Default is 0.1.
+        max_depth : int
+            The maximum depth of each tree. Default is -1 (unlimited).
+        num_leaves : int
+            The maximum number of leaves in each tree. Default is 31.
+        random_state : int
+            The random seed for reproducible results. Default is 95.
     """
 
     def __init__(
@@ -48,14 +45,19 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {
             "n_estimators": [50, 100, 200],
@@ -73,12 +75,13 @@ class LGBMRegressorModel(BaseRegressor, LGBMRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the LGBMRegressorModel.
+            dict
+                The current hyperparameters of the LGBMRegressorModel.
         """
         return {
             "n_estimators": self.n_estimators,

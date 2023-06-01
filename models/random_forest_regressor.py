@@ -8,22 +8,16 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
 
     Parameters
     ----------
-        n_estimators (int): The number of trees in the forest. Default is 100.
-        max_depth (int or None): The maximum depth of the tree. None indicates unlimited depth. Default is None.
-        min_samples_split (int): The minimum number of samples required to split an internal node. Default is 2.
-        min_samples_leaf (int): The minimum number of samples required to be at a leaf node. Default is 1.
-        max_features (str or int): The number of features to consider when looking for the best split.
-                                   'auto' uses sqrt(n_features), 'sqrt' uses sqrt(n_features), 'log2' uses log2(n_features),
-                                   None uses n_features, and int specifies the number of features.
-                                   Default is 'auto'.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the RandomForestRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the RandomForestRegressorModel.
+        n_estimators : int
+            The number of trees in the forest. Default is 100.
+        max_depth : int or None
+            The maximum depth of the tree. None indicates unlimited depth. Default is None.
+        min_samples_split : int
+            The minimum number of samples required to split an internal node. Default is 2.
+        min_samples_leaf : int
+            The minimum number of samples required to be at a leaf node. Default is 1.
+        max_features : str or int
+            The number of features to consider when looking for the best split. 'auto' uses sqrt(n_features), 'sqrt' uses sqrt(n_features), 'log2' uses log2(n_features), None uses n_features, and int specifies the number of features. Default is 'auto'.
     """
 
     def __init__(
@@ -51,14 +45,19 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {
             "n_estimators": [50, 100, 200],
@@ -76,12 +75,13 @@ class RandomForestRegressorModel(BaseRegressor, RandomForestRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the RandomForestRegressorModel.
+            dict
+                The current hyperparameters of the RandomForestRegressorModel.
         """
         return {
             "n_estimators": self.n_estimators,

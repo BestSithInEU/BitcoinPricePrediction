@@ -9,18 +9,12 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
 
     Parameters
     ----------
-        estimator (object): The base estimator to use for fitting on the subsets of the data. If None, the base
-                            estimator is a decision tree. Default is None.
-        n_estimators (int): The number of base estimators to use. Default is 10.
-        random_state (int): The seed used by the random number generator. Default is 95.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the BaggingRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the BaggingRegressorModel.
+        estimator : object
+            The base estimator to use for fitting on the subsets of the data. If None, the base estimator is a decision tree. Default is None.
+        n_estimators : int
+            The number of base estimators to use. Default is 10.
+        random_state : int
+            The seed used by the random number generator. Default is 95.
     """
 
     def __init__(
@@ -44,14 +38,19 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
 
         Parameters
         ----------
-            X_train (pd.DataFrame): The training features.
-            X_val (pd.DataFrame): The validation features.
-            y_train (pd.Series): The training target.
-            y_val (pd.Series): The validation target.
+            X_train : pd.DataFrame
+                The training features.
+            X_val : pd.DataFrame
+                The validation features.
+            y_train : pd.Series
+                The training target.
+            y_val : pd.Series
+                The validation target.
 
         Returns
         -------
-            dict: The best hyperparameters found during tuning.
+            dict
+                The best hyperparameters found during tuning.
         """
         param_grid = {
             "n_estimators": [50, 100, 200],
@@ -64,12 +63,13 @@ class BaggingRegressorModel(BaseRegressor, BaggingRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the BaggingRegressorModel.
+            dict
+                The current hyperparameters of the BaggingRegressorModel.
         """
         return {
             "estimator": self.base_estimator,

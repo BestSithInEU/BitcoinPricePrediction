@@ -8,15 +8,8 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
 
     Parameters
     ----------
-        alpha (float): The regularization parameter. Default is 1.0.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the RidgeRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the RidgeRegressorModel.
+        alpha : float
+            The regularization parameter. Default is 1.0.
     """
 
     def __init__(
@@ -36,14 +29,19 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {"alpha": [0.1, 0.5, 1.0, 2.0, 5.0]}
         return super().tune_model(X_train, X_val, y_train, y_val, param_grid, self)
@@ -54,12 +52,13 @@ class RidgeRegressorModel(BaseRegressor, Ridge):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the RidgeRegressorModel.
+            dict
+                The current hyperparameters of the RidgeRegressorModel.
         """
         return {
             "alpha": self.alpha,

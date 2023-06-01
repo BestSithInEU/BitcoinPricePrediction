@@ -8,20 +8,18 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
 
     Parameters
     ----------
-        kernel (kernel object): The kernel specifying the covariance function of the Gaussian process. Default is None.
-        alpha (float): Value added to the diagonal of the kernel matrix during fitting. Default is 1e-10.
-        optimizer (string or callable): The optimizer to use for optimizing the kernel's parameters. Default is "fmin_l_bfgs_b".
-        n_restarts_optimizer (int): The number of restarts of the optimizer for optimizing the kernel's parameters. Default is 0.
-        normalize_y (bool): Whether to normalize the target values. Default is False.
-        copy_X_train (bool): Whether to make a copy of the training data. Default is True.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the GaussianProcessRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the GaussianProcessRegressorModel.
+        kernel : kernel object
+            The kernel specifying the covariance function of the Gaussian process. Default is None.
+        alpha : float
+            Value added to the diagonal of the kernel matrix during fitting. Default is 1e-10.
+        optimizer : string or callable
+            The optimizer to use for optimizing the kernel's parameters. Default is "fmin_l_bfgs_b".
+        n_restarts_optimizer : int
+            The number of restarts of the optimizer for optimizing the kernel's parameters. Default is 0.
+        normalize_y : bool
+            Whether to normalize the target values. Default is False.
+        copy_X_train : bool
+            Whether to make a copy of the training data. Default is True.
     """
 
     def __init__(
@@ -51,14 +49,19 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
 
         param_grid = {
@@ -73,12 +76,13 @@ class GaussianProcessRegressorModel(BaseRegressor, GaussianProcessRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the GaussianProcessRegressorModel.
+            dict
+                The current hyperparameters of the GaussianProcessRegressorModel.
         """
 
         return {

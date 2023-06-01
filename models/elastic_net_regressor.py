@@ -8,16 +8,10 @@ class ElasticNetRegressorModel(BaseRegressor, ElasticNet):
 
     Parameters
     ----------
-        alpha (float): Constant that multiplies the penalty terms. Default is 1.0.
-        l1_ratio (float): The mixing parameter, with 0 <= l1_ratio <= 1. Default is 0.5.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the ElasticNetRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the ElasticNetRegressorModel.
+        alpha : float
+            Constant that multiplies the penalty terms. Default is 1.0.
+        l1_ratio : float
+            The mixing parameter, with 0 <= l1_ratio <= 1. Default is 0.5.
     """
 
     def __init__(
@@ -39,14 +33,19 @@ class ElasticNetRegressorModel(BaseRegressor, ElasticNet):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {
             "alpha": [0.1, 0.5, 1.0, 2.0, 5.0],
@@ -61,8 +60,8 @@ class ElasticNetRegressorModel(BaseRegressor, ElasticNet):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------

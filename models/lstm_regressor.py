@@ -22,30 +22,18 @@ class LSTMRegressor(HyperModel, BaseModelNN):
 
     Parameters
     ----------
-        n_features (int): The number of input features.
-        max_epochs (int): The maximum number of epochs to train the model. Default is 5.
-        max_batch_size (int): The maximum batch size for training the model. Default is 5.
-        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.
-        patience (int): The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.
-        tuner_epochs (int): The number of epochs to train the tuner. Default is 5.
-
-    Attributes
-    ----------
-        n_features (int): The number of input features.
-        max_epochs (int): The maximum number of epochs to train the model.
-        max_batch_size (int): The maximum batch size for training the model.
-        hyperband_iterations (int): The number of Hyperband iterations.
-        patience (int): The number of epochs to wait for improvement in validation loss before early stopping.
-        tuner_epochs (int): The number of epochs to train the tuner.
-        name (str): The name of the LSTMRegressor model.
-        model (keras.models.Sequential): The LSTMRegressor model.
-
-    Methods
-    -------
-        build_model(): Build the LSTM regression model.
-        tune_model_with_window_lstm(): Tune the hyperparameters of the LSTMRegressor model using the Hyperband tuner.
-        get_params(): Get the current hyperparameters of the LSTMRegressor.
-        set_params(): Set the value of the specified hyperparameters.
+        n_features : int
+            The number of input features.
+        max_epochs : int
+            The maximum number of epochs to train the model. Default is 5.
+        max_batch_size : int
+            The maximum batch size for training the model. Default is 5.
+        hyperband_iterations : int
+            The number of Hyperband iterations. Default is 1.
+        patience : int
+            The number of epochs to wait for improvement in validation loss before early stopping. Default is 5.
+        tuner_epochs : int
+            The number of epochs to train the tuner. Default is 5.
     """
 
     def __init__(
@@ -72,7 +60,8 @@ class LSTMRegressor(HyperModel, BaseModelNN):
 
         Returns
         -------
-            keras.models.Sequential: The constructed LSTM regression model.
+            keras.models.Sequential
+                The constructed LSTM regression model.
         """
         model = Sequential(name="LSTMRegressorModel")
         model.add(
@@ -123,15 +112,21 @@ class LSTMRegressor(HyperModel, BaseModelNN):
 
         Parameters
         ----------
-            X_train (array-like): The training input samples.
-            y_train (array-like): The target values for the training samples.
-            X_val (array-like): The validation input samples.
-            y_val (array-like): The target values for the validation samples.
-            callbacks (list): List of Keras callbacks. Default is None.
+            X_train : array-like
+                The training input samples.
+            y_train : array-like
+                The target values for the training samples.
+            X_val : array-like
+                The validation input samples.
+            y_val : array-like
+                The target values for the validation samples.
+            callbacks : list
+                List of Keras callbacks. Default is None.
 
         Returns
         -------
-            tuple: A tuple containing the best model, training history, and best hyperparameters.
+            tuple
+                A tuple containing the best model, training history, and best hyperparameters.
         """
 
         def build_model(hp):
@@ -210,7 +205,8 @@ class LSTMRegressor(HyperModel, BaseModelNN):
 
         Returns
         -------
-            dict: A dictionary of hyperparameter names and their values.
+            dict
+                A dictionary of hyperparameter names and their values.
         """
         return {
             "n_features": self.n_features,

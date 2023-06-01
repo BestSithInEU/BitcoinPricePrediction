@@ -8,15 +8,8 @@ class LassoRegressorModel(BaseRegressor, Lasso):
 
     Parameters
     ----------
-        alpha (float): The regularization strength. Default is 1.0.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the LassoRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the LassoRegressorModel.
+        alpha : float
+            The regularization strength. Default is 1.0.
     """
 
     def __init__(
@@ -36,10 +29,14 @@ class LassoRegressorModel(BaseRegressor, Lasso):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
@@ -54,12 +51,13 @@ class LassoRegressorModel(BaseRegressor, Lasso):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the LassoRegressorModel.
+            dict
+                The current hyperparameters of the LassoRegressorModel.
         """
         return {
             "alpha": self.alpha,

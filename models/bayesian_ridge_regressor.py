@@ -8,20 +8,18 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
 
     Parameters
     ----------
-        n_iter (int): The maximum number of iterations. Default is 300.
-        tol (float): The tolerance for stopping criteria. Default is 0.001.
-        alpha_1 (float): Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.
-        alpha_2 (float): Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.
-        lambda_1 (float): Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
-        lambda_2 (float): Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the BayesianRidgeRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the BayesianRidgeRegressorModel.
+        n_iter : int
+            The maximum number of iterations. Default is 300.
+        tol : float
+            The tolerance for stopping criteria. Default is 0.001.
+        alpha_1 : float
+            Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.
+        alpha_2 : float
+            Hyperparameter for the Gamma distribution prior over the alpha parameter. Default is 1e-06.
+        lambda_1 : float
+            Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
+        lambda_2 : float
+            Hyperparameter for the Gamma distribution prior over the lambda parameter. Default is 1e-06.
     """
 
     def __init__(
@@ -51,10 +49,14 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
@@ -76,12 +78,13 @@ class BayesianRidgeRegressorModel(BaseRegressor, BayesianRidge):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the BayesianRidgeRegressorModel.
+            dict
+                The current hyperparameters of the BayesianRidgeRegressorModel.
         """
 
         return {

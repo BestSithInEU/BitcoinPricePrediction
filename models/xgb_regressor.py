@@ -8,21 +8,20 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
 
     Parameters
     ----------
-        n_estimators (int): The number of boosting iterations. Default is 100.
-        learning_rate (float): The learning rate of the boosting process. Default is 0.1.
-        max_depth (int): The maximum depth of each tree. Default is 3.
-        min_child_weight (int): The minimum sum of instance weight needed in a child. Default is 1.
-        gamma (float): The minimum loss reduction required to make a further partition on a leaf node. Default is 0.
-        subsample (float): The subsample ratio of the training instances. Default is 1.
-        colsample_bytree (float): The subsample ratio of columns when constructing each tree. Default is 1.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the XGBRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the XGBRegressorModel.
+        n_estimators : int
+            The number of boosting iterations. Default is 100.
+        learning_rate : float
+            The learning rate of the boosting process. Default is 0.1.
+        max_depth : int
+            The maximum depth of each tree. Default is 3.
+        min_child_weight : int
+            The minimum sum of instance weight needed in a child. Default is 1.
+        gamma : float
+            The minimum loss reduction required to make a further partition on a leaf node. Default is 0.
+        subsample : float
+            The subsample ratio of the training instances. Default is 1.
+        colsample_bytree : float
+            The subsample ratio of columns when constructing each tree. Default is 1.
     """
 
     def __init__(
@@ -54,14 +53,19 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {
             "n_estimators": [50, 100, 200],
@@ -81,12 +85,14 @@ class XGBRegressorModel(BaseRegressor, XGBRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators.
+                If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the XGBRegressorModel.
+            dict
+                The current hyperparameters of the XGBRegressorModel.
         """
         return {
             "n_estimators": self.n_estimators,

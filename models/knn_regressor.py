@@ -8,17 +8,12 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
 
     Parameters
     ----------
-        n_neighbors (int): The number of neighbors to use. Default is 2.
-        weights (str or callable): The weight function used in prediction. Default is "uniform".
-        p (int): The power parameter for the Minkowski metric. Default is 1.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the KNNRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the KNNRegressorModel.
+        n_neighbors : int
+            The number of neighbors to use. Default is 2.
+        weights : str or callable
+            The weight function used in prediction. Default is "uniform".
+        p : int
+            The power parameter for the Minkowski metric. Default is 1.
     """
 
     def __init__(
@@ -42,10 +37,14 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
@@ -64,12 +63,13 @@ class KNNRegressorModel(BaseRegressor, KNeighborsRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the KNNRegressorModel.
+            dict
+                The current hyperparameters of the KNNRegressorModel.
         """
         return {
             "n_neighbors": self.n_neighbors,

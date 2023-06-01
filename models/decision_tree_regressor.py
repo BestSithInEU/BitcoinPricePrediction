@@ -8,19 +8,14 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
 
     Parameters
     ----------
-        max_depth (int or None): The maximum depth of the tree. Default is None.
-        min_samples_split (int): The minimum number of samples required to split an internal node. Default is 2.
-        min_samples_leaf (int): The minimum number of samples required to be at a leaf node. Default is 1.
-        max_features (int, float, string or None): The number of features to consider when looking for the best split.
-                                                   Default is None.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the DecisionTreeRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the DecisionTreeRegressorModel.
+        max_depth : int or None
+            The maximum depth of the tree. Default is None.
+        min_samples_split : int
+            The minimum number of samples required to split an internal node. Default is 2.
+        min_samples_leaf : int
+            The minimum number of samples required to be at a leaf node. Default is 1.
+        max_features : int, float, string or None
+            The number of features to consider when looking for the best split. Default is None.
     """
 
     def __init__(
@@ -46,14 +41,19 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            X_val (numpy.ndarray): The validation features.
-            y_train (numpy.ndarray): The training target.
-            y_val (numpy.ndarray): The validation target.
+            X_train : numpy.ndarray
+                The training features.
+            X_val : numpy.ndarray
+                The validation features.
+            y_train : numpy.ndarray
+                The training target.
+            y_val : numpy.ndarray
+                The validation target.
 
         Returns
         -------
-            tuple: A tuple containing the best estimator and the best parameters found during tuning.
+            tuple
+                A tuple containing the best estimator and the best parameters found during tuning.
         """
         param_grid = {
             "max_depth": [5, 10, 15, 20, 25, None],
@@ -69,12 +69,13 @@ class DecisionTreeRegressorModel(BaseRegressor, DecisionTreeRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the DecisionTreeRegressorModel.
+            dict
+                The current hyperparameters of the DecisionTreeRegressorModel.
         """
         return {
             "max_depth": self.max_depth,

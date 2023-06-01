@@ -14,26 +14,18 @@ class CNNRegressor(HyperModel, BaseModelNN):
 
     Parameters
     ----------
-        n_features (int): The number of input features.
-        max_epochs (int): The maximum number of epochs for training. Default is 5.
-        max_batch_size (int): The maximum batch size for training. Default is 5.
-        hyperband_iterations (int): The number of Hyperband iterations. Default is 1.
-        patience (int): The number of epochs with no improvement after which training will be stopped. Default is 5.
-        tuner_epochs (int): The number of epochs to search for the best hyperparameters. Default is 5.
-
-    Methods
-    -------
-        build_model():
-            Builds the CNN model.
-
-        tune_model_with_window_cnn(X_train, y_train, X_val, y_val, callbacks=None):
-            Tunes the hyperparameters of the CNNRegressor model using Hyperband tuning.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the CNNRegressor model.
-
-        set_params(**parameters):
-            Sets the parameters of the CNNRegressor model.
+        n_features : int
+            The number of input features.
+        max_epochs : int
+            The maximum number of epochs for training. Default is 5.
+        max_batch_size : int
+            The maximum batch size for training. Default is 5.
+        hyperband_iterations : int
+            The number of Hyperband iterations. Default is 1.
+        patience : int
+            The number of epochs with no improvement after which training will be stopped. Default is 5.
+        tuner_epochs : int
+            The number of epochs to search for the best hyperparameters. Default is 5.
     """
 
     def __init__(
@@ -60,7 +52,8 @@ class CNNRegressor(HyperModel, BaseModelNN):
 
         Returns
         -------
-            keras.models.Sequential: The CNN model.
+            keras.models.Sequential
+                The CNN model.
         """
         model = Sequential(name="CnnRegressorModel")
         model.add(
@@ -100,15 +93,21 @@ class CNNRegressor(HyperModel, BaseModelNN):
 
         Parameters
         ----------
-            X_train (numpy.ndarray): The training features.
-            y_train (numpy.ndarray): The training target.
-            X_val (numpy.ndarray): The validation features.
-            y_val (numpy.ndarray): The validation target.
-            callbacks (list): List of Keras callbacks. Default is None.
+            X_train : numpy.ndarray
+                The training features.
+            y_train : numpy.ndarray
+                The training target.
+            X_val : numpy.ndarray
+                The validation features.
+            y_val : numpy.ndarray
+                The validation target.
+            callbacks : list
+                List of Keras callbacks. Default is None.
 
         Returns
         -------
-            tuple: A tuple containing the best model, the training history, and the best hyperparameters.
+            tuple
+                A tuple containing the best model, the training history, and the best hyperparameters.
         """
 
         def build_model(hp):
@@ -184,12 +183,13 @@ class CNNRegressor(HyperModel, BaseModelNN):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the CNNRegressor model.
+            dict
+                The current hyperparameters of the CNNRegressor model.
         """
         return {
             "n_features": self.n_features,
@@ -205,7 +205,8 @@ class CNNRegressor(HyperModel, BaseModelNN):
 
         Parameters
         ----------
-            **parameters: The parameters to set.
+            **parameters : dict, optional
+                The parameters to set.
 
         Returns
         -------

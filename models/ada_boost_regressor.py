@@ -9,19 +9,12 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
 
     Parameters
     ----------
-        n_estimators (int): The maximum number of estimators at which boosting is terminated. Default is 50.
-        learning_rate (float): The learning rate shrinks the contribution of each regressor by the learning_rate.
-                              Default is 1.0.
-        loss (str): The loss function to use for the individual regressors. Options are 'linear', 'square',
-                    and 'exponential'. Default is 'linear'.
-
-    Methods
-    -------
-        tune_model(X_train, X_val, y_train, y_val):
-            Tunes the hyperparameters of the AdaBoostRegressorModel using grid search and cross-validation.
-
-        get_params(deep=True):
-            Returns the current hyperparameters of the AdaBoostRegressorModel.
+        n_estimators : int
+            The maximum number of estimators at which boosting is terminated. Default is 50.
+        learning_rate : float
+            The learning rate shrinks the contribution of each regressor by the learning_rate. Default is 1.0.
+        loss : str
+            The loss function to use for the individual regressors. Options are 'linear', 'square' and 'exponential'. Default is 'linear'.
     """
 
     def __init__(
@@ -45,14 +38,19 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
 
         Parameters
         ----------
-            X_train (pd.DataFrame): The training features.
-            X_val (pd.DataFrame): The validation features.
-            y_train (pd.Series): The training target.
-            y_val (pd.Series): The validation target.
+            X_train : pd.DataFrame
+                The training features.
+            X_val : pd.DataFrame
+                The validation features.
+            y_train : pd.Series
+                The training target.
+            y_val : pd.Series
+                The validation target.
 
         Returns
         -------
-            dict: The best hyperparameters found during tuning.
+            dict
+                The best hyperparameters found during tuning.
         """
 
         param_grid = {
@@ -68,12 +66,13 @@ class AdaBoostRegressorModel(BaseRegressor, AdaBoostRegressor):
 
         Parameters
         ----------
-            deep (bool): If True, return the parameters of all sub-objects that are estimators.
-                         If False, return only the top-level parameters. Default is True.
+            deep : bool
+                If True, return the parameters of all sub-objects that are estimators. If False, return only the top-level parameters. Default is True.
 
         Returns
         -------
-            dict: The current hyperparameters of the AdaBoostRegressorModel.
+            dict
+                The current hyperparameters of the AdaBoostRegressorModel.
         """
 
         return {
