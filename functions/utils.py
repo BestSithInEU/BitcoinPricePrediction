@@ -497,7 +497,8 @@ def plot_price_prediction(X_test, y_test, predictions, title):
 
     Returns
     -------
-        plotly.graph_objects._figure.Figure: The figure object of the plot.
+        plotly.graph_objects._figure.Figure
+            The figure object of the plot.
     """
 
     # Ensure dates are sorted in ascending order
@@ -583,7 +584,8 @@ def plot_histories(histories):
 
     Parameters
     ----------
-        histories (list of keras.callbacks.History): The list of history objects for each training epoch.
+        histories : list of keras.callbacks.History
+            The list of history objects for each training epoch.
     """
 
     subplot_titles = [f"History at Window {i+1}" for i in range(len(histories))]
@@ -658,16 +660,23 @@ def reverse_values(predictions, X_scaled, y_scaled, scaler):
 
     Parameters
     ----------
-        predictions (pd.DataFrame): The predicted values.
-        X_scaled (pd.DataFrame): The scaled features.
-        y_scaled (pd.Series): The scaled target.
-        scaler (sklearn.preprocessing.StandardScaler): The scaler used to scale the data.
+        predictions : pd.DataFrame
+            The predicted values.
+        X_scaled : pd.DataFrame
+            The scaled features.
+        y_scaled : pd.Series
+            The scaled target.
+        scaler : sklearn.preprocessing
+            andardScaler): The scaler used to scale the data.
 
     Returns
     -------
-        reverse_predictions_df (pd.DataFrame): The unscaled predictions.
-        reverse_x_df (pd.DataFrame): The unscaled features.
-        reverse_y_df (pd.Series): The unscaled target.
+        reverse_predictions_df : pd.DataFrame
+            The unscaled predictions.
+        reverse_x_df : pd.DataFrame
+            The unscaled features.
+        reverse_y_df : pd.Series
+            The unscaled target.
     """
 
     reverse_predictions_df = pd.DataFrame(index=predictions.index)
@@ -697,11 +706,13 @@ def find_best_models(metric_data):
 
     Parameters
     ----------
-        metric_data (list of dict): A list of dictionaries, each containing the information for one model.
+        metric_data : list of dict
+            A list of dictionaries, each containing the information for one model.
 
     Returns
     -------
-        best_models (list of dict): A list of dictionaries, each containing the information for one best model.
+        best_models : list of dict
+            A list of dictionaries, each containing the information for one best model.
     """
 
     best_models = []

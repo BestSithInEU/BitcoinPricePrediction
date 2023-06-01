@@ -199,7 +199,8 @@ def modify_date_format(
     --------
     None
 
-    Example:
+    Examples
+    --------
     - Format 1: "%Y-%m-%d" (e.g., "2023-05-14")
     - Format 2: "%m-%d-%Y" (e.g., "05-14-2023")
     - Format 3: "%d-%m-%Y" (e.g., "14-05-2023")

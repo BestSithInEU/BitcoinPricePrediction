@@ -19,7 +19,7 @@ class SentimentAnalysis:
     tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save
     the processed data to a CSV file.
 
-    Attributes
+    Parameters
     ----------
     df : DataFrame
         The input dataset containing text data.
@@ -29,23 +29,6 @@ class SentimentAnalysis:
         Set of stopwords for text cleaning.
     sid : SentimentIntensityAnalyzer
         An instance of the SentimentIntensityAnalyzer from the NLTK library.
-
-    Methods
-    -------
-    preprocess():
-        Preprocesses the data by cleaning text and computing VADER sentiment scores.
-    tweet_to_words(tweet):
-        Cleans a tweet by removing non-alphanumeric characters and stopwords, and applies stemming.
-    unlist(list):
-        Joins a list of words into a string.
-    compute_vader_scores(df, label):
-        Computes VADER sentiment scores for each tweet in the dataset.
-    process_inputs(max_len):
-        Tokenizes inputs using RoBERTa for training, validation, and testing.
-    aggregate_by_date():
-        Aggregates VADER sentiment scores by date.
-    save_df(filename):
-        Aggregates the dataframe by date and saves it to a CSV file.
     """
 
     def __init__(self, path, delimiter, seed=42):

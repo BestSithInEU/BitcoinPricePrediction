@@ -63,81 +63,26 @@ class RollingWindowTrainer:
     The rolling window approach is a time series forecasting technique where the model is retrained at each time step,
     using only the most recent data as training data.
 
-    ...
-
-    Attributes
+    Parameters
     ----------
-    model_list : list
-        a list of models to be trained.
-    X_train_val : DataFrame
-        the feature dataset for training and validation.
-    y_train_val : DataFrame
-        the target dataset for training and validation.
-    train_window : int, optional
-        the size of the training window, by default 100.
-    val_window : int, optional
-        the size of the validation window, by default 20.
-    step_size : int, optional
-        the step size to move the window for each iteration, by default 5.
-    early_stopping_values : dict, optional
-        a dictionary with keys as the model names and values as a dictionary containing early stopping parameters.
-    checkpoint_path : str, optional
-        path to save the model checkpoints, by default "models/save/checkpoints/".
     scaler : class
-        the scaler class to scale the predictions.
-
-    Methods
-    -------
-    start_training():
-        Start the training process.
-    get_all_val_metrics():
-        Return all validation metrics collected during training.
-    get_window_indices(step):
-        Return the indices for training and validation windows based on the current step.
-    get_train_window(start, end):
-        Return the training feature and target data based on the provided indices.
-    get_val_window(start, end):
-        Return the validation feature and target data based on the provided indices.
-    get_checkpoint_dir():
-        Return the directory path for storing model checkpoints.
-    get_checkpoint_callback(checkpoint_dir):
-        Return the model checkpoint callback function.
-    get_best_model_at_window(window):
-        Return the best model at a specific window.
-    get_best_models():
-        Return a list of the best models.
-    set_best_models(loaded_models):
-        Set the best models list using loaded models.
-    get_all_models():
-        Return a list of all models.
-    set_all_models(loaded_models):
-        Set the all models list using loaded models.
-    print_model_info():
-        Print the information of the best models.
-    get_histories():
-        Return the history of all models.
-    save_histories(file_name_nn="nn_history", file_name_cnn="cnn_history", file_name_lstm="lstm_history"):
-        Save the training history of all models into pickle files.
-    load_and_set_histories(file_name_nn="nn_history", file_name_cnn="cnn_history", file_name_lstm="lstm_history"):
-        Load the training history of all models from pickle files and set the histories attribute.
-    train_nn_model_with_window(X_train, y_train, X_val, y_val, window, checkpoint_callback):
-        Train a neural network model with a specific window.
-    check_overfitting(step, history):
-        Check if the model is overfitting.
-    tune_non_nn_model(X_train, X_val, y_train, y_val):
-        Tune a non-neural network model.
-    update_time_consumption(start_time):
-        Update the time consumption attribute.
-    predict_best_models(X):
-        Predict using the best models.
-    weighted_predict_best_models(X):
-        Predict using the best models with weights.
-    vote_predict_best_models(X):
-        Predict using the best models with voting.
-    predict_all_models(X):
-        Predict using all models.
-    generate_mean_df(predictions_all):
-        Generate a dataframe with the mean of all predictions.
+        The scaler class to scale the predictions.
+    X_train_val : DataFrame
+        The feature dataset for training and validation.
+    y_train_val : DataFrame
+        The target dataset for training and validation.
+    train_window : int, optional
+        The size of the training window, by default 100.
+    val_window : int, optional
+        The size of the validation window, by default 20.
+    step_size : int, optional
+        The step size to move the window for each iteration, by default 5.
+    early_stopping_values : dict, optional
+        A dictionary with keys as the model names and values as a dictionary containing early stopping parameters.
+    checkpoint_path : str, optional
+        Path to save the model checkpoints, by default "models/save/checkpoints/".
+    model_list : list, optional
+        A list of models to be trained.
     """
 
     def __init__(
@@ -390,7 +335,7 @@ class RollingWindowTrainer:
 
         Returns
         --------
-        list:
+        list
             List of all validation metrics.
         """
 
@@ -407,7 +352,7 @@ class RollingWindowTrainer:
 
         Returns
         --------
-        tuple:
+        tuple
             Tuple containing the start and end indices for the window.
         """
 
@@ -430,9 +375,10 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        pd.DataFrame, pd.Series:
-            X_train_window: Input data for the training window.
-            y_train_window: Target data for the training window.
+        X_train_window : pd.DataFrame, pd.Series
+            Input data for the training window.
+        y_train_window : pd.DataFrame, pd.Series
+            Target data for the training window.
         """
 
         X_train_window = self.X_train_val.iloc[start:end]
@@ -452,9 +398,10 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        pd.DataFrame, pd.Series:
-            X_val_window: Input data for the validation window.
-            y_val_window: Target data for the validation window.
+        X_val_window : pd.DataFrame, pd.Series
+            Input data for the validation window.
+        y_val_window : pd.DataFrame, pd.Series
+            Target data for the validation window.
         """
 
         X_val_window = self.X_train_val.iloc[start:end]
@@ -467,7 +414,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        str:
+        str
             Checkpoint directory for saving the best model.
         """
 
@@ -484,7 +431,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        ModelCheckpoint:
+        ModelCheckpoint
             Checkpoint callback for saving the best model.
         """
 
@@ -506,7 +453,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        dict or None:
+        model_info : dict or None
             Model information dictionary for the best model at the given window step.
             Returns None if no best model is found for the specified window.
         """
@@ -522,7 +469,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        list:
+        list
             List of best models.
         """
 
@@ -546,7 +493,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        list:
+        list
             List of all models.
         """
 
@@ -580,7 +527,7 @@ class RollingWindowTrainer:
 
         Returns
         -------
-        tuple:
+        tuple
             Tuple containing the histories of neural network, CNN, and LSTM models.
         """
 
@@ -839,10 +786,8 @@ class RollingWindowTrainer:
         Returns
         -------
         pd.DataFrame or pd.Series or None
-            Predicted values of the best models.
-            If input X is pd.DataFrame, returns a DataFrame with the predictions.
-            If input X is np.ndarray, returns a Series with the predictions.
-            Returns None if the input X is neither pd.DataFrame nor np.ndarray.
+            Predicted values of the best models. If input X is pd.DataFrame, returns a DataFrame with the predictions.
+            If input X is np.ndarray, returns a Series with the predictions. Returns None if the input X is neither pd.DataFrame nor np.ndarray.
         """
 
         all_predictions = {}
