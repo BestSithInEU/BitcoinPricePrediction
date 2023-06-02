@@ -1,0 +1,1066 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>functions.utils &#8212; Bitcoin Price Prediction 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/functions/utils';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bitcoin Price Prediction 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../modules.html">BitcoinPricePrediction</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../functions.html">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../models.html">Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <h1>Source code for functions.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">mean_squared_log_error</span><span class="p">,</span>
+    <span class="n">mean_squared_error</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">plotly.figure_factory</span> <span class="k">as</span> <span class="nn">ff</span>
+<span class="kn">from</span> <span class="nn">keras.utils</span> <span class="kn">import</span> <span class="n">plot_model</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+
+<div class="viewcode-block" id="calculate_metrics"><a class="viewcode-back" href="../../functions.html#functions.utils.calculate_metrics">[docs]</a><span class="k">def</span> <span class="nf">calculate_metrics</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) for the given predictions and actual values.</span>
+<span class="sd">    It also calculates daily MSE and RMSE and stores them in a pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    preds : np.ndarray or pd.Series</span>
+<span class="sd">        The predicted values.</span>
+<span class="sd">    y_test : np.ndarray or pd.Series</span>
+<span class="sd">        The actual values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mse : float</span>
+<span class="sd">        The Mean Squared Error.</span>
+<span class="sd">    rmse : float</span>
+<span class="sd">        The Root Mean Squared Error.</span>
+<span class="sd">    metrics_df : pd.DataFrame</span>
+<span class="sd">        A dataframe containing daily MSE and RMSE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Check if the inputs are numpy arrays and convert them to pandas Series</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">preds</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+
+    <span class="c1"># Compute MSE and RMSE</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+
+    <span class="c1"># Compute daily MSE and RMSE</span>
+    <span class="n">daily_mse</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">-</span> <span class="n">preds</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">daily_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">daily_mse</span><span class="p">)</span>
+
+    <span class="c1"># Create a DataFrame to store the results</span>
+    <span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;MSE&quot;</span><span class="p">:</span> <span class="n">daily_mse</span><span class="p">,</span>
+            <span class="s2">&quot;RMSE&quot;</span><span class="p">:</span> <span class="n">daily_rmse</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mse</span><span class="p">,</span> <span class="n">rmse</span><span class="p">,</span> <span class="n">metrics_df</span></div>
+
+
+<div class="viewcode-block" id="resize_and_remove_background"><a class="viewcode-back" href="../../functions.html#functions.utils.resize_and_remove_background">[docs]</a><span class="k">def</span> <span class="nf">resize_and_remove_background</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">800</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resizes an image to the specified size, removes its background, and saves it in the specified output path.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image_path : str</span>
+<span class="sd">        The path to the input image.</span>
+<span class="sd">    output_path : str</span>
+<span class="sd">        The path to save the output image.</span>
+<span class="sd">    size : tuple of int, optional</span>
+<span class="sd">        The desired output size. Default is (800, 800).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Open an image file</span>
+    <span class="k">with</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">img</span><span class="p">:</span>
+        <span class="c1"># Resize the image</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
+
+        <span class="c1"># Assuming that the image is in RGBA format and the background is white</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGBA&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">getdata</span><span class="p">()</span>
+
+        <span class="n">new_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="c1"># Change all white (also shades of whites)</span>
+            <span class="c1"># (also shades of grey if you want) to transparent</span>
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">256</span><span class="p">)):</span>
+                <span class="n">new_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+        <span class="n">img</span><span class="o">.</span><span class="n">putdata</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
+
+        <span class="c1"># Crop the image to the area containing non-transparent pixels</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">getbbox</span><span class="p">())</span>
+
+        <span class="c1"># Save the image</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_subsets"><a class="viewcode-back" href="../../functions.html#functions.utils.create_subsets">[docs]</a><span class="k">def</span> <span class="nf">create_subsets</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">num_subsets</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Divides the features (X) into a specified number of subsets and concatenates each subset with the target (y).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : pd.DataFrame</span>
+<span class="sd">        The input features.</span>
+<span class="sd">    y : pd.Series</span>
+<span class="sd">        The target values.</span>
+<span class="sd">    num_subsets : int</span>
+<span class="sd">        The number of subsets to divide X into.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    subsets : list of pd.DataFrame</span>
+<span class="sd">        A list of dataframes, each consisting of a subset of features and the target.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Calculate number of columns per subset</span>
+    <span class="n">cols_per_subset</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">num_subsets</span>
+
+    <span class="c1"># Create list to store subsets</span>
+    <span class="n">subsets</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_subsets</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">num_subsets</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># for the last subset, add all remaining columns</span>
+            <span class="n">subset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">cols_per_subset</span> <span class="p">:],</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">cols_per_subset</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cols_per_subset</span><span class="p">],</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">)</span>
+        <span class="n">subsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">subsets</span></div>
+
+
+<div class="viewcode-block" id="plot_heatmaps"><a class="viewcode-back" href="../../functions.html#functions.utils.plot_heatmaps">[docs]</a><span class="k">def</span> <span class="nf">plot_heatmaps</span><span class="p">(</span><span class="n">subsets</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots and saves correlation heatmaps for each subset of data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    subsets : list of pd.DataFrame</span>
+<span class="sd">        A list of dataframes for which to plot the correlation heatmaps.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">subset</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subsets</span><span class="p">):</span>
+        <span class="n">corr</span> <span class="o">=</span> <span class="n">subset</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">create_annotated_heatmap</span><span class="p">(</span>
+            <span class="n">z</span><span class="o">=</span><span class="n">corr</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">corr</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+            <span class="n">y</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">corr</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
+            <span class="n">annotation_text</span><span class="o">=</span><span class="n">corr</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">showscale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">colorscale</span><span class="o">=</span><span class="s2">&quot;plotly3&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Correlation Heatmap of Subset </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+            <span class="n">autosize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">paper_bgcolor</span><span class="o">=</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span>
+            <span class="n">plot_bgcolor</span><span class="o">=</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;heatmaps/heatmap_subset_</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="group_by_model"><a class="viewcode-back" href="../../functions.html#functions.utils.group_by_model">[docs]</a><span class="k">def</span> <span class="nf">group_by_model</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Groups the data by model and calculates the cumulative sum of time consumption for each model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The input dataframe containing model information.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_list : list of pd.DataFrame</span>
+<span class="sd">        A list of dataframes, each containing the information for one model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">model_groups</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">model_groups</span><span class="p">:</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># to avoid SettingWithCopyWarning</span>
+        <span class="n">group</span><span class="p">[</span><span class="s2">&quot;total_time_consumption&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s2">&quot;time_consumption&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+        <span class="n">df_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_list</span></div>
+
+
+<div class="viewcode-block" id="format_number"><a class="viewcode-back" href="../../functions.html#functions.utils.format_number">[docs]</a><span class="k">def</span> <span class="nf">format_number</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats a number to a string with suffixes (B for billion, M for million, k for thousand).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    value : int or float</span>
+<span class="sd">        The number to format.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The formatted number.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">1e9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">B&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">1e6</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">M&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="mf">1e6</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">abs</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">k&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_keras_models"><a class="viewcode-back" href="../../functions.html#functions.utils.save_keras_models">[docs]</a><span class="k">def</span> <span class="nf">save_keras_models</span><span class="p">(</span><span class="n">best_models</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves the diagrams of best Keras models in PNG format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    best_models : list of dict</span>
+<span class="sd">        A list of dictionaries, each containing a Keras model and other related information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Create a directory to store the images</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;model_images&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">model_info</span> <span class="ow">in</span> <span class="n">best_models</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Check if the model is a Keras model</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">):</span>
+            <span class="c1"># Generate the image filename</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;model_images/best_models/model_</span><span class="si">{</span><span class="n">model_info</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">.png&#39;</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Create the diagram</span>
+            <span class="n">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">to_file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">show_shapes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Model at step </span><span class="si">{</span><span class="n">model_info</span><span class="p">[</span><span class="s1">&#39;step&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> is not a Keras model and can&#39;t be visualized.&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_dataframe"><a class="viewcode-back" href="../../functions.html#functions.utils.save_dataframe">[docs]</a><span class="k">def</span> <span class="nf">save_dataframe</span><span class="p">(</span><span class="n">df_list</span><span class="p">,</span> <span class="n">image_dir</span><span class="o">=</span><span class="s2">&quot;model_images/all_models/&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves the dataframes as images in the specified directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df_list : list of pd.DataFrame</span>
+<span class="sd">        A list of dataframes to be saved as images.</span>
+<span class="sd">    image_dir : str, optional</span>
+<span class="sd">        The directory to save the images. Default is &#39;model_images/all_models/&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">image_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Mapping of old column names to new column names</span>
+    <span class="n">column_name_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;Model&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="s2">&quot;Step&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;val_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;Validation Metric (MSE)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;time_consumption&quot;</span><span class="p">:</span> <span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;total_time_consumption&quot;</span><span class="p">:</span> <span class="s2">&quot;Total Time&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Mapping of old model names to new model names</span>
+    <span class="n">model_name_mapping</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;AdaBoostRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Ada Boost&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BaggingRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Bagging&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;BayesianRidgeRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Bayesian Ridge&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;CnnRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;CNN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DecisionTreeRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Decision Tree&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ElasticNetRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Elastic Net&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ExtraTreesRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Extra Trees&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GaussianProcessRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Gaussian Process&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GradientBoostingRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Gradient Boosting&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;KNNRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;k-Nearest Neighbors&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;LassoRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Lasso&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;LightGradientBoostingRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;LGBM&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;LstmRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;LSTM&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;NnRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Neural Network&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;NuSVRRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;NuSVR&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;PassiveAggressiveRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Passive Aggressive&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;RandomForestRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Random Forest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;RidgeRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;SupportVectorRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Support Vector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;TweedieRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;Tweedie&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eXtremeGradientBoostingRegressorModel&quot;</span><span class="p">:</span> <span class="s2">&quot;XGB&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">model_df</span> <span class="ow">in</span> <span class="n">df_list</span><span class="p">:</span>
+        <span class="c1"># Rename column names</span>
+        <span class="n">model_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_name_mapping</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Rename model names</span>
+        <span class="n">model_df</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">model_name_mapping</span><span class="p">)</span>
+
+        <span class="c1"># Rename column names</span>
+        <span class="n">model_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">column_name_mapping</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Define the default widths for each column here, in pixels.</span>
+        <span class="n">column_widths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="c1"># Modify the widths for specific columns</span>
+        <span class="n">column_widths</span><span class="p">[</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s2">&quot;Model&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">300</span>
+        <span class="n">column_widths</span><span class="p">[</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s2">&quot;Total Time&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">200</span>
+        <span class="n">column_widths</span><span class="p">[</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s2">&quot;Step&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">50</span>
+        <span class="n">column_widths</span><span class="p">[</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">50</span>
+
+        <span class="c1"># Adjust the width based on the number of columns (assuming 150 pixels per column)</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">column_widths</span><span class="p">)</span> <span class="o">+</span> <span class="mi">50</span>  <span class="c1"># added 50 to account for padding</span>
+
+        <span class="c1"># Format the float columns to desired precision</span>
+        <span class="n">float_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="s2">&quot;Total Time&quot;</span><span class="p">]</span>
+
+        <span class="n">formatted_cols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="o">==</span> <span class="s2">&quot;Validation Metric (MSE)&quot;</span><span class="p">:</span>
+                <span class="n">formatted_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">format_number</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">float_cols</span><span class="p">:</span>
+                <span class="c1"># Convert time in seconds to minutes</span>
+                <span class="n">formatted_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">model_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2"> min&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">60</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">formatted_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Table</span><span class="p">(</span>
+                    <span class="n">columnwidth</span><span class="o">=</span><span class="n">column_widths</span><span class="p">,</span>
+                    <span class="n">header</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">values</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">model_df</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+                        <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;paleturquoise&quot;</span><span class="p">,</span>
+                        <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">cells</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">values</span><span class="o">=</span><span class="n">formatted_cols</span><span class="p">,</span>
+                        <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;lavender&quot;</span><span class="p">,</span>
+                        <span class="n">align</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+            <span class="n">autosize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">paper_bgcolor</span><span class="o">=</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span>
+            <span class="n">plot_bgcolor</span><span class="o">=</span><span class="s2">&quot;rgba(0,0,0,0)&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Use the model&#39;s name as the filename</span>
+        <span class="n">model_name</span> <span class="o">=</span> <span class="n">model_df</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">lowercase_model_name</span> <span class="o">=</span> <span class="n">model_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">image_dir</span><span class="si">}{</span><span class="n">lowercase_model_name</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="read_model_metrics"><a class="viewcode-back" href="../../functions.html#functions.utils.read_model_metrics">[docs]</a><span class="k">def</span> <span class="nf">read_model_metrics</span><span class="p">(</span><span class="n">log_filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads a log file and extracts model metrics into a pandas DataFrame.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    log_filename : str</span>
+<span class="sd">        The path to the log file.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_sorted : pd.DataFrame</span>
+<span class="sd">        A dataframe containing the extracted model metrics, sorted by model and step.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+                <span class="sa">r</span><span class="s2">&quot;(\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2"> \d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">:\d</span><span class="si">{2}</span><span class="s2">,\d</span><span class="si">{3}</span><span class="s2">) - Model: (\w+), Step: (\d+), Val Metric: (\d+.\d+), Time Consumption: (\d+.\d+)&quot;</span><span class="p">,</span>
+                <span class="n">line</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="n">metric</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                    <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span>
+                    <span class="s2">&quot;val_metric&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">4</span><span class="p">)),</span>
+                    <span class="s2">&quot;time_consumption&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span>
+                <span class="p">}</span>
+                <span class="n">metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+
+    <span class="c1"># Sorting by model and step</span>
+    <span class="n">df_sorted</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">df_sorted</span></div>
+
+
+<div class="viewcode-block" id="save_metrics"><a class="viewcode-back" href="../../functions.html#functions.utils.save_metrics">[docs]</a><span class="k">def</span> <span class="nf">save_metrics</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">image_dir</span><span class="o">=</span><span class="s2">&quot;model_images/metrics/&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves each model&#39;s metrics as a separate PNG image in the specified directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pd.DataFrame</span>
+<span class="sd">        The input dataframe containing model information.</span>
+<span class="sd">    image_dir : str, optional</span>
+<span class="sd">        The directory to save the images. Default is &#39;model_images/metrics/&#39;.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Create directory if it doesn&#39;t exist</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">image_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Visualize data</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+        <span class="n">model_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">model</span><span class="p">]</span>
+
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                <span class="n">x</span><span class="o">=</span><span class="n">model_df</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">model_df</span><span class="p">[</span><span class="s2">&quot;val_metric&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">model</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Metrics for </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Step&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Validation Metric&quot;</span><span class="p">,</span>
+            <span class="n">autosize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">_metrics.png&quot;</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># Save each model&#39;s metrics as a separate PNG</span></div>
+
+
+<div class="viewcode-block" id="mean_absolute_percentage_error"><a class="viewcode-back" href="../../functions.html#functions.utils.mean_absolute_percentage_error">[docs]</a><span class="k">def</span> <span class="nf">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Mean Absolute Percentage Error (MAPE) between the true and predicted values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        y_true (np.ndarray): The actual values.</span>
+<span class="sd">        y_pred (np.ndarray): The predicted values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        float: The MAPE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">y_true</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">/</span> <span class="n">y_true</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span></div>
+
+
+<div class="viewcode-block" id="root_mean_squared_log_error"><a class="viewcode-back" href="../../functions.html#functions.utils.root_mean_squared_log_error">[docs]</a><span class="k">def</span> <span class="nf">root_mean_squared_log_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the Root Mean Squared Logarithmic Error (RMSLE) between the true and predicted values.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        y_true (np.ndarray): The actual values.</span>
+<span class="sd">        y_pred (np.ndarray): The predicted values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        float: The RMSLE.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_log_error</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="plot_price_prediction"><a class="viewcode-back" href="../../functions.html#functions.utils.plot_price_prediction">[docs]</a><span class="k">def</span> <span class="nf">plot_price_prediction</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the predicted and actual values for the test data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        X_test (pd.DataFrame): The test features.</span>
+<span class="sd">        y_test (pd.Series): The actual values for the test data.</span>
+<span class="sd">        predictions (pd.Series): The predicted values for the test data.</span>
+<span class="sd">        title (str): The title of the plot.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        plotly.graph_objects._figure.Figure</span>
+<span class="sd">            The figure object of the plot.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Ensure dates are sorted in ascending order</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">//</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">subplot_titles</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">col_pos</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">3</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                    <span class="n">y</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
+                    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Predicted &quot;</span> <span class="o">+</span> <span class="n">col</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span>
+                <span class="n">col</span><span class="o">=</span><span class="n">col_pos</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="c1"># Plot actual test value for each subplot</span>
+            <span class="k">for</span> <span class="n">y_col</span> <span class="ow">in</span> <span class="n">y_test</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                    <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                        <span class="n">x</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                        <span class="n">y</span><span class="o">=</span><span class="n">y_test</span><span class="p">[</span><span class="n">y_col</span><span class="p">],</span>
+                        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Actual &quot;</span> <span class="o">+</span> <span class="n">y_col</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span>
+                    <span class="n">col</span><span class="o">=</span><span class="n">col_pos</span><span class="p">,</span>
+                <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">title_text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">showlegend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Price&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">300</span> <span class="o">*</span> <span class="n">rows</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+        <span class="c1"># Plot each prediction</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+                    <span class="n">y</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
+                    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Predicted &quot;</span> <span class="o">+</span> <span class="n">col</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Plot each actual test value</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">y_test</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+                <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                    <span class="n">x</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_test</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Actual &quot;</span> <span class="o">+</span> <span class="n">col</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Date&quot;</span><span class="p">,</span>
+            <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Price&quot;</span><span class="p">,</span>
+            <span class="n">legend_title</span><span class="o">=</span><span class="s2">&quot;Legend&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="plot_histories"><a class="viewcode-back" href="../../functions.html#functions.utils.plot_histories">[docs]</a><span class="k">def</span> <span class="nf">plot_histories</span><span class="p">(</span><span class="n">histories</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the loss histories for different training epochs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        histories : list of keras.callbacks.History</span>
+<span class="sd">            The list of history objects for each training epoch.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">subplot_titles</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;History at Window </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">histories</span><span class="p">))]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">histories</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">histories</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="nb">len</span><span class="p">(</span><span class="n">histories</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">subplot_titles</span><span class="o">=</span><span class="n">subplot_titles</span><span class="p">)</span>
+    <span class="n">row_counter</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">col_counter</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">history</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">histories</span><span class="p">):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">),</span>
+            <span class="n">row</span><span class="o">=</span><span class="n">row_counter</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="n">col_counter</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+            <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+                <span class="n">y</span><span class="o">=</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Validation loss&quot;</span>
+            <span class="p">),</span>
+            <span class="n">row</span><span class="o">=</span><span class="n">row_counter</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="n">col_counter</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">last_epoch</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">])</span>
+        <span class="n">training_loss</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">validation_loss</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_annotation</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">last_epoch</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">training_loss</span><span class="p">,</span>
+            <span class="n">xref</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+            <span class="n">yref</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Training loss: </span><span class="si">{</span><span class="n">training_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">showarrow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">arrowhead</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+            <span class="n">ax</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">ay</span><span class="o">=-</span><span class="mi">40</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">),</span>
+            <span class="n">row</span><span class="o">=</span><span class="n">row_counter</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="n">col_counter</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_annotation</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">last_epoch</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">validation_loss</span><span class="p">,</span>
+            <span class="n">xref</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+            <span class="n">yref</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Validation loss: </span><span class="si">{</span><span class="n">validation_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">showarrow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">arrowhead</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+            <span class="n">ax</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">ay</span><span class="o">=-</span><span class="mi">40</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">),</span>
+            <span class="n">row</span><span class="o">=</span><span class="n">row_counter</span><span class="p">,</span>
+            <span class="n">col</span><span class="o">=</span><span class="n">col_counter</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">col_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">col_counter</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">col_counter</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">row_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">400</span> <span class="o">*</span> <span class="n">rows</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1600</span><span class="p">,</span> <span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Model losses&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Epoch&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="reverse_values"><a class="viewcode-back" href="../../functions.html#functions.utils.reverse_values">[docs]</a><span class="k">def</span> <span class="nf">reverse_values</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_scaled</span><span class="p">,</span> <span class="n">scaler</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reverses the effect of scaling on the predictions and the scaled features and target.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        predictions : pd.DataFrame</span>
+<span class="sd">            The predicted values.</span>
+<span class="sd">        X_scaled : pd.DataFrame</span>
+<span class="sd">            The scaled features.</span>
+<span class="sd">        y_scaled : pd.Series</span>
+<span class="sd">            The scaled target.</span>
+<span class="sd">        scaler : sklearn.preprocessing</span>
+<span class="sd">            andardScaler): The scaler used to scale the data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        reverse_predictions_df : pd.DataFrame</span>
+<span class="sd">            The unscaled predictions.</span>
+<span class="sd">        reverse_x_df : pd.DataFrame</span>
+<span class="sd">            The unscaled features.</span>
+<span class="sd">        reverse_y_df : pd.Series</span>
+<span class="sd">            The unscaled target.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reverse_predictions_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">predictions</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">reverse_predictions</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
+            <span class="n">predictions</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">reverse_predictions_df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">reverse_predictions</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+    <span class="n">reverse_x</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">reverse_x_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">reverse_x</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_scaled</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">X_scaled</span><span class="o">.</span><span class="n">index</span>
+    <span class="p">)</span>
+
+    <span class="n">reverse_y</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_scaled</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">reverse_y_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">reverse_y</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">y_scaled</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">y_scaled</span><span class="o">.</span><span class="n">index</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">reverse_predictions_df</span><span class="p">,</span> <span class="n">reverse_x_df</span><span class="p">,</span> <span class="n">reverse_y_df</span></div>
+
+
+<div class="viewcode-block" id="find_best_models"><a class="viewcode-back" href="../../functions.html#functions.utils.find_best_models">[docs]</a><span class="k">def</span> <span class="nf">find_best_models</span><span class="p">(</span><span class="n">metric_data</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the best models based on their validation metric.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">        metric_data : list of dict</span>
+<span class="sd">            A list of dictionaries, each containing the information for one model.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        best_models : list of dict</span>
+<span class="sd">            A list of dictionaries, each containing the information for one best model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">best_models</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">best_val_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">metric_data</span><span class="p">:</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
+        <span class="n">val_metric</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;val_metric&quot;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">step</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">best_val_metrics</span> <span class="ow">or</span> <span class="n">val_metric</span> <span class="o">&lt;</span> <span class="n">best_val_metrics</span><span class="p">[</span><span class="n">step</span><span class="p">]:</span>
+            <span class="n">best_val_metrics</span><span class="p">[</span><span class="n">step</span><span class="p">]</span> <span class="o">=</span> <span class="n">val_metric</span>
+            <span class="n">best_model</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="n">step</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="s2">&quot;val_metric&quot;</span><span class="p">:</span> <span class="n">val_metric</span><span class="p">}</span>
+
+            <span class="n">existing_steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;step&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">best_models</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">existing_steps</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">existing_steps</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+                <span class="n">best_models</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">best_model</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">best_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_model</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">best_models</span></div>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Batuhan Edgüer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Batuhan Edgüer.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

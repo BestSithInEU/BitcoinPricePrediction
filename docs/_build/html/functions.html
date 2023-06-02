@@ -1,0 +1,1525 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Functions &#8212; Bitcoin Price Prediction 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'functions';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Models" href="models.html" />
+    <link rel="prev" title="BitcoinPricePrediction" href="modules.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Bitcoin Price Prediction 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">BitcoinPricePrediction</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BestSithInEU/BitcoinPricePrediction" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/functions.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.process_data">functions.process_data module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.rolling_window_trainer">functions.rolling_window_trainer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.save_load_model">functions.save_load_model module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.sentiment_analyzer">functions.sentiment_analyzer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.utils">functions.utils module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.web_scrapper">functions.web_scrapper module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="module-functions.process_data">
+<span id="functions-process-data-module"></span><h2>functions.process_data module<a class="headerlink" href="#module-functions.process_data" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.combine_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">combine_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'combined_data'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bitcoin_price.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_file_name_v2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'headlines_sentiment.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/process_data.html#combine_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.process_data.combine_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Combines two datasets and writes the combined dataset to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_file_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the output file, by default “combined_data”.</p></li>
+<li><p><strong>input_file_name_v1</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the first input file, by default “bitcoin_price.csv”.</p></li>
+<li><p><strong>input_file_name_v2</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the second input file, by default “headlines_sentiment.csv”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.double_quotation_remover">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">double_quotation_remover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/process_data.html#double_quotation_remover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.process_data.double_quotation_remover" title="Permalink to this definition">#</a></dt>
+<dd><p>Removes double quotation marks from specified columns in a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file_name_v1</strong> (<em>str</em>) – Path to the input CSV file.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – Delimiter used in the CSV file, by default “,”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.modify_date_format">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">modify_date_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_file_name_v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_column_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">date_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%b</span> <span class="pre">%d,</span> <span class="pre">%Y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/process_data.html#modify_date_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.process_data.modify_date_format" title="Permalink to this definition">#</a></dt>
+<dd><p>Modifies the date format of a specific column in a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_file_name_v1</strong> (<em>str</em>) – Path to the input CSV file.</p></li>
+<li><p><strong>date_column_name</strong> (<em>str</em>) – Name of the column containing dates to be modified.</p></li>
+<li><p><strong>date_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the dates in the input file, by default “%b %d, %Y”.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – Delimiter used in the CSV file, by default “,”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<ul class="simple">
+<li><p>Format 1: “%Y-%m-%d” (e.g., “2023-05-14”)</p></li>
+<li><p>Format 2: “%m-%d-%Y” (e.g., “05-14-2023”)</p></li>
+<li><p>Format 3: “%d-%m-%Y” (e.g., “14-05-2023”)</p></li>
+<li><p>Format 4: “%Y/%m/%d” (e.g., “2023/05/14”)</p></li>
+<li><p>Format 5: “%m/%d/%Y” (e.g., “05/14/2023”)</p></li>
+<li><p>Format 6: “%d/%m/%Y” (e.g., “14/05/2023”)</p></li>
+<li><p>Format 7: “%Y.%m.%d” (e.g., “2023.05.14”)</p></li>
+<li><p>Format 8: “%m.%d.%Y” (e.g., “05.14.2023”)</p></li>
+<li><p>Format 9: “%d.%m.%Y” (e.g., “14.05.2023”)</p></li>
+<li><p>Format 10: “%Y %m %d” (e.g., “2023 05 14”)</p></li>
+<li><p>Format 11: “%m %d %Y” (e.g., “05 14 2023”)</p></li>
+<li><p>Format 12: “%d %m %Y” (e.g., “14 05 2023”)</p></li>
+<li><p>Format 13: “%b %d, %Y” (e.g., “May 14, 2023”)</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.process_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">process_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rolling_windows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">7,</span> <span class="pre">14]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Price'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datetime_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Date'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Vol.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MinMaxScaler'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/process_data.html#process_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.process_data.process_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Preprocesses a given dataset by performing steps such as loading the data, handling missing values,
+creating lagged features, scaling, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em>) – Path to the CSV file.</p></li>
+<li><p><strong>lags</strong> (<em>list</em><em>, </em><em>optional</em>) – List of lags to create lagged features, by default [1, 2, 3].</p></li>
+<li><p><strong>rolling_windows</strong> (<em>list</em><em>, </em><em>optional</em>) – List of windows to create rolling window features, by default [3, 7, 14].</p></li>
+<li><p><strong>target_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the target column, by default “Price”.</p></li>
+<li><p><strong>datetime_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the datetime column, by default “Date”.</p></li>
+<li><p><strong>volume_col</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the volume column, by default “Vol.”.</p></li>
+<li><p><strong>scaler</strong> (<em>str</em><em>, </em><em>optional</em>) – Scaler to use for scaling the features. Options are ‘StandardScaler’, ‘RobustScaler’,
+and ‘MinMaxScaler’. Defaults to ‘MinMaxScaler’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple containing scaled features, scaled target, and the scaler used.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.process_data.split_data">
+<span class="sig-prename descclassname"><span class="pre">functions.process_data.</span></span><span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_ratio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/process_data.html#split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.process_data.split_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Splits the scaled features and target into training/validation and test sets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_scaled</strong> (<em>DataFrame</em>) – Scaled features.</p></li>
+<li><p><strong>y_scaled</strong> (<em>DataFrame</em>) – Scaled target.</p></li>
+<li><p><strong>test_ratio</strong> (<em>float</em>) – Ratio of the test set size.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple containing training/validation features, training/validation target,
+test features, and test target.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-functions.rolling_window_trainer">
+<span id="functions-rolling-window-trainer-module"></span><h2>functions.rolling_window_trainer module<a class="headerlink" href="#module-functions.rolling_window_trainer" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.rolling_window_trainer.</span></span><span class="sig-name descname"><span class="pre">RollingWindowTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'models/save/checkpoints/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopping_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'cnn':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0003,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">7},</span> <span class="pre">'lstm':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0001,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">10},</span> <span class="pre">'nn':</span> <span class="pre">{'min_delta':</span> <span class="pre">0.0002,</span> <span class="pre">'monitor':</span> <span class="pre">'val_loss',</span> <span class="pre">'patience':</span> <span class="pre">5}}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class provides methods for training and evaluating machine learning models using a rolling window approach.
+The rolling window approach is a time series forecasting technique where the model is retrained at each time step,
+using only the most recent data as training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scaler</strong> (<em>class</em>) – The scaler class to scale the predictions.</p></li>
+<li><p><strong>X_train_val</strong> (<em>DataFrame</em>) – The feature dataset for training and validation.</p></li>
+<li><p><strong>y_train_val</strong> (<em>DataFrame</em>) – The target dataset for training and validation.</p></li>
+<li><p><strong>train_window</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the training window, by default 100.</p></li>
+<li><p><strong>val_window</strong> (<em>int</em><em>, </em><em>optional</em>) – The size of the validation window, by default 20.</p></li>
+<li><p><strong>step_size</strong> (<em>int</em><em>, </em><em>optional</em>) – The step size to move the window for each iteration, by default 5.</p></li>
+<li><p><strong>early_stopping_values</strong> (<em>dict</em><em>, </em><em>optional</em>) – A dictionary with keys as the model names and values as a dictionary containing early stopping parameters.</p></li>
+<li><p><strong>checkpoint_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the model checkpoints, by default “models/save/checkpoints/”.</p></li>
+<li><p><strong>model_list</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of models to be trained.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting">
+<span class="sig-name descname"><span class="pre">check_overfitting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">history</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.check_overfitting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.check_overfitting" title="Permalink to this definition">#</a></dt>
+<dd><p>This method checks for overfitting in the model’s training history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step</strong> (<em>int</em>) – The current step in the rolling window approach.</p></li>
+<li><p><strong>history</strong> (<em>History</em>) – The training history of the model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df">
+<span class="sig-name descname"><span class="pre">generate_mean_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions_all</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.generate_mean_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.generate_mean_df" title="Permalink to this definition">#</a></dt>
+<dd><p>Generates a mean DataFrame from the predictions of all models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>predictions_all</strong> (<em>pd.DataFrame</em>) – DataFrame containing predictions of all models.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Mean DataFrame with averaged predictions per model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_all_models">
+<span class="sig-name descname"><span class="pre">get_all_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the list of all models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of all models.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics">
+<span class="sig-name descname"><span class="pre">get_all_val_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_all_val_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_all_val_metrics" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns all validation metrics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of all validation metrics.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window">
+<span class="sig-name descname"><span class="pre">get_best_model_at_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_best_model_at_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_model_at_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the best model information for the specified window step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>window</strong> (<em>int</em>) – Window step for which to retrieve the best model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model_info</strong> – Model information dictionary for the best model at the given window step.
+Returns None if no best model is found for the specified window.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_best_models">
+<span class="sig-name descname"><span class="pre">get_best_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the list of best models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of best models.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback">
+<span class="sig-name descname"><span class="pre">get_checkpoint_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_checkpoint_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_callback" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the checkpoint callback for saving the best model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>checkpoint_dir</strong> (<em>str</em>) – Directory path for saving the best model checkpoint.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Checkpoint callback for saving the best model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ModelCheckpoint</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir">
+<span class="sig-name descname"><span class="pre">get_checkpoint_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_checkpoint_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_checkpoint_dir" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the checkpoint directory for saving the best model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Checkpoint directory for saving the best model.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_histories">
+<span class="sig-name descname"><span class="pre">get_histories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_histories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_histories" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the histories of neural network, CNN, and LSTM models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Tuple containing the histories of neural network, CNN, and LSTM models.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_train_window">
+<span class="sig-name descname"><span class="pre">get_train_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_train_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_train_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Retrieves the training window data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em>) – Start index of the training window.</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – End index of the training window.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_train_window</strong> (<em>pd.DataFrame, pd.Series</em>) – Input data for the training window.</p></li>
+<li><p><strong>y_train_window</strong> (<em>pd.DataFrame, pd.Series</em>) – Target data for the training window.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_val_window">
+<span class="sig-name descname"><span class="pre">get_val_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_val_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_val_window" title="Permalink to this definition">#</a></dt>
+<dd><p>Retrieves the validation window data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<em>int</em>) – Start index of the validation window.</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – End index of the validation window.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>X_val_window</strong> (<em>pd.DataFrame, pd.Series</em>) – Input data for the validation window.</p></li>
+<li><p><strong>y_val_window</strong> (<em>pd.DataFrame, pd.Series</em>) – Target data for the validation window.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices">
+<span class="sig-name descname"><span class="pre">get_window_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.get_window_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.get_window_indices" title="Permalink to this definition">#</a></dt>
+<dd><p>Returns the start and end indices for the given window step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> (<em>int</em>) – The window step.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple containing the start and end indices for the window.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories">
+<span class="sig-name descname"><span class="pre">load_and_set_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name_nn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_cnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_lstm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm_history'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.load_and_set_histories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.load_and_set_histories" title="Permalink to this definition">#</a></dt>
+<dd><p>This method loads and sets the training history of the models from the specified files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name_nn</strong> (<em>str</em><em>, </em><em>optional</em>) – The file name for the history of the Neural Network model.</p></li>
+<li><p><strong>file_name_cnn</strong> (<em>str</em><em>, </em><em>optional</em>) – The file name for the history of the Convolutional Neural Network model.</p></li>
+<li><p><strong>file_name_lstm</strong> (<em>str</em><em>, </em><em>optional</em>) – The file name for the history of the LSTM model.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models">
+<span class="sig-name descname"><span class="pre">predict_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.predict_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_all_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Predicts all models based on the given input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>pd.DataFrame</em><em> or </em><em>np.ndarray</em>) – Input data for prediction.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Predicted values of all models.
+If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a 2D array with the predictions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame or np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models">
+<span class="sig-name descname"><span class="pre">predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.predict_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.predict_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Predicts the best models based on the given input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>pd.DataFrame</em><em> or </em><em>np.ndarray</em>) – Input data for prediction.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Predicted values of the best models. If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a Series with the predictions. Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame or pd.Series or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.print_model_info">
+<span class="sig-name descname"><span class="pre">print_model_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.print_model_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.print_model_info" title="Permalink to this definition">#</a></dt>
+<dd><p>Prints information about the models.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.save_histories">
+<span class="sig-name descname"><span class="pre">save_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name_nn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_cnn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cnn_history'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name_lstm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm_history'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.save_histories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.save_histories" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves the histories of neural network, CNN, and LSTM models as pickle files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name_nn</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the file to save the neural network history, by default “nn_history”.</p></li>
+<li><p><strong>file_name_cnn</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the file to save the CNN history, by default “cnn_history”.</p></li>
+<li><p><strong>file_name_lstm</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the file to save the LSTM history, by default “lstm_history”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.set_all_models">
+<span class="sig-name descname"><span class="pre">set_all_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_models</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.set_all_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_all_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Sets the list of all models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_models</strong> (<em>list</em>) – List of loaded all models.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.set_best_models">
+<span class="sig-name descname"><span class="pre">set_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_models</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.set_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.set_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Sets the list of best models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_models</strong> (<em>list</em>) – List of loaded best models.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.start_training">
+<span class="sig-name descname"><span class="pre">start_training</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.start_training"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.start_training" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window">
+<span class="sig-name descname"><span class="pre">train_nn_model_with_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_callback</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.train_nn_model_with_window"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.train_nn_model_with_window" title="Permalink to this definition">#</a></dt>
+<dd><p>This method trains a Neural Network model with a rolling window approach.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>DataFrame</em>) – The input training data.</p></li>
+<li><p><strong>y_train</strong> (<em>DataFrame</em>) – The output training data.</p></li>
+<li><p><strong>X_val</strong> (<em>DataFrame</em>) – The input validation data.</p></li>
+<li><p><strong>y_val</strong> (<em>DataFrame</em>) – The output validation data.</p></li>
+<li><p><strong>checkpoint_callback</strong> (<em>Callback</em>) – A callback for saving the model checkpoints.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model">
+<span class="sig-name descname"><span class="pre">tune_non_nn_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.tune_non_nn_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.tune_non_nn_model" title="Permalink to this definition">#</a></dt>
+<dd><p>This method tunes the hyperparameters of a non-Neural Network model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>DataFrame</em>) – The input training data.</p></li>
+<li><p><strong>y_train</strong> (<em>DataFrame</em>) – The output training data.</p></li>
+<li><p><strong>X_val</strong> (<em>DataFrame</em>) – The input validation data.</p></li>
+<li><p><strong>y_val</strong> (<em>DataFrame</em>) – The output validation data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption">
+<span class="sig-name descname"><span class="pre">update_time_consumption</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.update_time_consumption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.update_time_consumption" title="Permalink to this definition">#</a></dt>
+<dd><p>This method updates the time consumption of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>start_time</strong> (<em>float</em>) – The time when the model’s training started.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models">
+<span class="sig-name descname"><span class="pre">vote_predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.vote_predict_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.vote_predict_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Predicts the best models using voting based on the given input data (Not working as expected.).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>pd.DataFrame</em><em> or </em><em>np.ndarray</em>) – Input data for prediction.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Predicted values of the best models using voting.
+If input X is pd.DataFrame, returns a DataFrame with the predictions.
+If input X is np.ndarray, returns a Series with the predictions.
+Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame or pd.Series or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models">
+<span class="sig-name descname"><span class="pre">weighted_predict_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/rolling_window_trainer.html#RollingWindowTrainer.weighted_predict_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.rolling_window_trainer.RollingWindowTrainer.weighted_predict_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Predicts the best models using weighted averaging based on the given input data (Not working as expected.).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>pd.DataFrame</em><em> or </em><em>np.ndarray</em>) – Input data for prediction.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Weighted predictions of the best models.
+If input X is pd.DataFrame, returns a DataFrame with the weighted predictions.
+If input X is np.ndarray, returns a Series with the weighted predictions.
+Returns None if the input X is neither pd.DataFrame nor np.ndarray.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame or pd.Series or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-functions.save_load_model">
+<span id="functions-save-load-model-module"></span><h2>functions.save_load_model module<a class="headerlink" href="#module-functions.save_load_model" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.get_val_metrics_from_log">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">get_val_metrics_from_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/save_load_model.html#get_val_metrics_from_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.save_load_model.get_val_metrics_from_log" title="Permalink to this definition">#</a></dt>
+<dd><p>Extract validation metrics from a given log file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>log_file</strong> (<em>str</em>) – Path to the log file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary where the keys are tuples of (model_name, step) and the values are validation metrics.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.load_trained_models">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">load_trained_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/save_load_model.html#load_trained_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.save_load_model.load_trained_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Loads trained models from a specified directory. The models are filtered based on the
+validation metrics provided in a log file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_dir</strong> (<em>str</em>) – The root directory from where the models will be loaded.</p></li>
+<li><p><strong>log_file</strong> (<em>str</em>) – Path to the log file containing validation metrics.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of dictionaries, where each dictionary contains details about a trained model
+and its validation metric.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.save_load_model.save_trained_models">
+<span class="sig-prename descclassname"><span class="pre">functions.save_load_model.</span></span><span class="sig-name descname"><span class="pre">save_trained_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trained_models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/save_load_model.html#save_trained_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.save_load_model.save_trained_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves trained models to a specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trained_models</strong> (<em>list of dicts</em>) – A list of dictionaries, where each dictionary contains details about a trained model.</p></li>
+<li><p><strong>root_dir</strong> (<em>str</em>) – The root directory where the models will be saved.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-functions.sentiment_analyzer">
+<span id="functions-sentiment-analyzer-module"></span><h2>functions.sentiment_analyzer module<a class="headerlink" href="#module-functions.sentiment_analyzer" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.sentiment_analyzer.</span></span><span class="sig-name descname"><span class="pre">SentimentAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for performing sentiment analysis on text data using VADER sentiment analysis and RoBERTa tokenization.</p>
+<p>The SentimentAnalysis class provides methods for data preprocessing, sentiment score computation,
+tokenization using RoBERTa, and aggregation of sentiment scores. It also includes functionality to save
+the processed data to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – The input dataset containing text data.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – Random seed used for reproducibility.</p></li>
+<li><p><strong>stopwords</strong> (<em>set</em>) – Set of stopwords for text cleaning.</p></li>
+<li><p><strong>sid</strong> (<em>SentimentIntensityAnalyzer</em>) – An instance of the SentimentIntensityAnalyzer from the NLTK library.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.aggregate_by_date">
+<span class="sig-name descname"><span class="pre">aggregate_by_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.aggregate_by_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.aggregate_by_date" title="Permalink to this definition">#</a></dt>
+<dd><p>Aggregates VADER sentiment scores by date.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The aggregated dataframe.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.compute_vader_scores">
+<span class="sig-name descname"><span class="pre">compute_vader_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.compute_vader_scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.compute_vader_scores" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes VADER sentiment scores (negative, neutral, positive, compound) for each tweet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – The dataframe.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – The column in the dataframe containing the text to analyze.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The dataframe with the added VADER sentiment scores.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.preprocess" title="Permalink to this definition">#</a></dt>
+<dd><p>Preprocesses the data by cleaning text and computing VADER sentiment scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The processed dataframe.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.process_inputs">
+<span class="sig-name descname"><span class="pre">process_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_len</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.process_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.process_inputs" title="Permalink to this definition">#</a></dt>
+<dd><p>Tokenizes inputs using RoBERTa for training, validation, and testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_len</strong> (<em>int</em>) – Maximum length for tokenization.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.save_df">
+<span class="sig-name descname"><span class="pre">save_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.save_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.save_df" title="Permalink to this definition">#</a></dt>
+<dd><p>Aggregates the dataframe by date and saves it to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the output CSV file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.tweet_to_words">
+<span class="sig-name descname"><span class="pre">tweet_to_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tweet</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.tweet_to_words"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.tweet_to_words" title="Permalink to this definition">#</a></dt>
+<dd><p>Cleans a tweet by removing non-alphanumeric characters and stopwords,
+and applies stemming.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tweet</strong> (<em>str</em>) – A tweet.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of cleaned words from the tweet.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.sentiment_analyzer.SentimentAnalysis.unlist">
+<span class="sig-name descname"><span class="pre">unlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/sentiment_analyzer.html#SentimentAnalysis.unlist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.sentiment_analyzer.SentimentAnalysis.unlist" title="Permalink to this definition">#</a></dt>
+<dd><p>Joins a list of words into a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list</strong> (<em>list</em>) – A list of words.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string with words separated by spaces.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-functions.utils">
+<span id="functions-utils-module"></span><h2>functions.utils module<a class="headerlink" href="#module-functions.utils" title="Permalink to this headline">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.calculate_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">calculate_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#calculate_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.calculate_metrics" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates Mean Squared Error (MSE) and Root Mean Squared Error (RMSE) for the given predictions and actual values.
+It also calculates daily MSE and RMSE and stores them in a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preds</strong> (<em>np.ndarray</em><em> or </em><em>pd.Series</em>) – The predicted values.</p></li>
+<li><p><strong>y_test</strong> (<em>np.ndarray</em><em> or </em><em>pd.Series</em>) – The actual values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>mse</strong> (<em>float</em>) – The Mean Squared Error.</p></li>
+<li><p><strong>rmse</strong> (<em>float</em>) – The Root Mean Squared Error.</p></li>
+<li><p><strong>metrics_df</strong> (<em>pd.DataFrame</em>) – A dataframe containing daily MSE and RMSE.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.create_subsets">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">create_subsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_subsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#create_subsets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.create_subsets" title="Permalink to this definition">#</a></dt>
+<dd><p>Divides the features (X) into a specified number of subsets and concatenates each subset with the target (y).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>pd.DataFrame</em>) – The input features.</p></li>
+<li><p><strong>y</strong> (<em>pd.Series</em>) – The target values.</p></li>
+<li><p><strong>num_subsets</strong> (<em>int</em>) – The number of subsets to divide X into.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>subsets</strong> – A list of dataframes, each consisting of a subset of features and the target.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.find_best_models">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">find_best_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#find_best_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.find_best_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Finds the best models based on their validation metric.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>metric_data</strong> (<em>list of dict</em>) – A list of dictionaries, each containing the information for one model.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>best_models</strong> – A list of dictionaries, each containing the information for one best model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.format_number">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">format_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#format_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.format_number" title="Permalink to this definition">#</a></dt>
+<dd><p>Formats a number to a string with suffixes (B for billion, M for million, k for thousand).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>int</em><em> or </em><em>float</em>) – The number to format.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The formatted number.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.group_by_model">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">group_by_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#group_by_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.group_by_model" title="Permalink to this definition">#</a></dt>
+<dd><p>Groups the data by model and calculates the cumulative sum of time consumption for each model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input dataframe containing model information.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df_list</strong> – A list of dataframes, each containing the information for one model.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.mean_absolute_percentage_error">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">mean_absolute_percentage_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#mean_absolute_percentage_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.mean_absolute_percentage_error" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the Mean Absolute Percentage Error (MAPE) between the true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>np.ndarray</strong><strong>)</strong> (<em>y_pred</em>) – </p></li>
+<li><p><strong>(</strong><strong>np.ndarray</strong><strong>)</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>float</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The MAPE.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_heatmaps">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_heatmaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsets</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#plot_heatmaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.plot_heatmaps" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots and saves correlation heatmaps for each subset of data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>subsets</strong> (<em>list of pd.DataFrame</em>) – A list of dataframes for which to plot the correlation heatmaps.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_histories">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_histories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histories</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#plot_histories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.plot_histories" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots the loss histories for different training epochs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>histories</strong> (<em>list of keras.callbacks.History</em>) – The list of history objects for each training epoch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.plot_price_prediction">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">plot_price_prediction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#plot_price_prediction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.plot_price_prediction" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots the predicted and actual values for the test data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>pd.DataFrame</strong><strong>)</strong> (<em>X_test</em>) – </p></li>
+<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> (<em>predictions</em>) – </p></li>
+<li><p><strong>(</strong><strong>pd.Series</strong><strong>)</strong> – </p></li>
+<li><p><strong>(</strong><strong>str</strong><strong>)</strong> (<em>title</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The figure object of the plot.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>plotly.graph_objects._figure.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.read_model_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">read_model_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#read_model_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.read_model_metrics" title="Permalink to this definition">#</a></dt>
+<dd><p>Reads a log file and extracts model metrics into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>log_filename</strong> (<em>str</em>) – The path to the log file.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>df_sorted</strong> – A dataframe containing the extracted model metrics, sorted by model and step.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.resize_and_remove_background">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">resize_and_remove_background</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(800,</span> <span class="pre">800)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#resize_and_remove_background"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.resize_and_remove_background" title="Permalink to this definition">#</a></dt>
+<dd><p>Resizes an image to the specified size, removes its background, and saves it in the specified output path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> (<em>str</em>) – The path to the input image.</p></li>
+<li><p><strong>output_path</strong> (<em>str</em>) – The path to save the output image.</p></li>
+<li><p><strong>size</strong> (<em>tuple of int</em><em>, </em><em>optional</em>) – The desired output size. Default is (800, 800).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.reverse_values">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">reverse_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#reverse_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.reverse_values" title="Permalink to this definition">#</a></dt>
+<dd><p>Reverses the effect of scaling on the predictions and the scaled features and target.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> (<em>pd.DataFrame</em>) – The predicted values.</p></li>
+<li><p><strong>X_scaled</strong> (<em>pd.DataFrame</em>) – The scaled features.</p></li>
+<li><p><strong>y_scaled</strong> (<em>pd.Series</em>) – The scaled target.</p></li>
+<li><p><strong>scaler</strong> (<em>sklearn.preprocessing</em>) – andardScaler): The scaler used to scale the data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>reverse_predictions_df</strong> (<em>pd.DataFrame</em>) – The unscaled predictions.</p></li>
+<li><p><strong>reverse_x_df</strong> (<em>pd.DataFrame</em>) – The unscaled features.</p></li>
+<li><p><strong>reverse_y_df</strong> (<em>pd.Series</em>) – The unscaled target.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.root_mean_squared_log_error">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">root_mean_squared_log_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#root_mean_squared_log_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.root_mean_squared_log_error" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the Root Mean Squared Logarithmic Error (RMSLE) between the true and predicted values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>(</strong><strong>np.ndarray</strong><strong>)</strong> (<em>y_pred</em>) – </p></li>
+<li><p><strong>(</strong><strong>np.ndarray</strong><strong>)</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>float</strong></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The RMSLE.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_dataframe">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model_images/all_models/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#save_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.save_dataframe" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves the dataframes as images in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df_list</strong> (<em>list of pd.DataFrame</em>) – A list of dataframes to be saved as images.</p></li>
+<li><p><strong>image_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory to save the images. Default is ‘model_images/all_models/’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_keras_models">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_keras_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">best_models</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#save_keras_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.save_keras_models" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves the diagrams of best Keras models in PNG format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>best_models</strong> (<em>list of dict</em>) – A list of dictionaries, each containing a Keras model and other related information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functions.utils.save_metrics">
+<span class="sig-prename descclassname"><span class="pre">functions.utils.</span></span><span class="sig-name descname"><span class="pre">save_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'model_images/metrics/'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/utils.html#save_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.utils.save_metrics" title="Permalink to this definition">#</a></dt>
+<dd><p>Saves each model’s metrics as a separate PNG image in the specified directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – The input dataframe containing model information.</p></li>
+<li><p><strong>image_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory to save the images. Default is ‘model_images/metrics/’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-functions.web_scrapper">
+<span id="functions-web-scrapper-module"></span><h2>functions.web_scrapper module<a class="headerlink" href="#module-functions.web_scrapper" title="Permalink to this headline">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.web_scrapper.</span></span><span class="sig-name descname"><span class="pre">StoppableThread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#StoppableThread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.StoppableThread" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></p>
+<p>A thread that can be stopped by setting the internal stop flag
+through stop() method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#StoppableThread.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.StoppableThread.stop" title="Permalink to this definition">#</a></dt>
+<dd><p>Set the stop flag to stop the thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.StoppableThread.stopped">
+<span class="sig-name descname"><span class="pre">stopped</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#StoppableThread.stopped"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.StoppableThread.stopped" title="Permalink to this definition">#</a></dt>
+<dd><p>Check if the thread is stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the thread is stopped, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functions.web_scrapper.</span></span><span class="sig-name descname"><span class="pre">WebScraper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://www.coindesk.com/search?s=bitcoin&amp;sort=1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3096</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'headlines'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A web scraper for scraping headlines from coindesk.</p>
+<p>The WebScraper class provides methods for starting, stopping, pausing, and resuming the scraping process.
+It uses the Selenium library to navigate through web pages, find required elements, and write scraped data to a CSV file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.pause_scraping">
+<span class="sig-name descname"><span class="pre">pause_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper.pause_scraping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper.pause_scraping" title="Permalink to this definition">#</a></dt>
+<dd><p>Pause the scraping process by setting the pause flag to True.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.resume_scraping">
+<span class="sig-name descname"><span class="pre">resume_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper.resume_scraping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper.resume_scraping" title="Permalink to this definition">#</a></dt>
+<dd><p>Resume the scraping process by setting the pause flag to False.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.start_scraping">
+<span class="sig-name descname"><span class="pre">start_scraping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper.start_scraping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper.start_scraping" title="Permalink to this definition">#</a></dt>
+<dd><p>Start the scraping process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – URL to scrape from.</p></li>
+<li><p><strong>starting_page_number</strong> (<em>int</em>) – Page number to start scraping from.</p></li>
+<li><p><strong>ending_page_number</strong> (<em>int</em>) – Page number to end scraping at.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – Name of the file to output scraped headlines.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.stop_scraping">
+<span class="sig-name descname"><span class="pre">stop_scraping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper.stop_scraping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper.stop_scraping" title="Permalink to this definition">#</a></dt>
+<dd><p>Stop the scraping process by stopping the thread in which it runs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="functions.web_scrapper.WebScraper.webScrapper">
+<span class="sig-name descname"><span class="pre">webScrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending_page_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/functions/web_scrapper.html#WebScraper.webScrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#functions.web_scrapper.WebScraper.webScrapper" title="Permalink to this definition">#</a></dt>
+<dd><p>The main method for scraping the website. It navigates through the pages
+of the given url, finds the required elements, and writes the data to a CSV file.
+It also handles cases like file not found, consent button, and handles exceptions like
+TimeoutException. The scraping process can also be paused, resumed and stopped.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The base url from where the scraping starts.</p></li>
+<li><p><strong>starting_page_number</strong> (<em>int</em>) – The starting page number for scraping.</p></li>
+<li><p><strong>ending_page_number</strong> (<em>int</em>) – The ending page number for scraping.</p></li>
+<li><p><strong>output_file_name</strong> (<em>str</em>) – The name of the output file where the scraped data is stored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-functions">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-functions" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">BitcoinPricePrediction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="models.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Models</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.process_data">functions.process_data module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.rolling_window_trainer">functions.rolling_window_trainer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.save_load_model">functions.save_load_model module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.sentiment_analyzer">functions.sentiment_analyzer module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.utils">functions.utils module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions.web_scrapper">functions.web_scrapper module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-functions">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Batuhan Edgüer
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023, Batuhan Edgüer.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

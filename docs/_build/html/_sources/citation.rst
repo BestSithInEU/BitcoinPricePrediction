@@ -1,0 +1,15 @@
+Citation
+========
+
+If you use our software in your research, please cite it using the following metadata:
+
+.. code-block:: yaml
+
+    cff-version: 1.2.0
+    message: "If you use this software, please cite it as below."
+    authors:
+      - family-names: "Edgüer"
+        given-names: "Batuhan"
+    title: "Bitcoin Price Prediction with Rolling Window Approach"
+    date-released: 2023-06-01
+    url: "https://github.com/BestSithInEU/BitcoinPricePrediction"
